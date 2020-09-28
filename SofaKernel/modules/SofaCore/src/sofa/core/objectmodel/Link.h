@@ -25,6 +25,7 @@
 #include <sofa/core/objectmodel/BaseLink.h>
 #include <sofa/helper/stable_vector.h>
 
+#include <sofa/core/PathResolver.h>
 #include <sstream>
 #include <utility>
 #include <vector>
@@ -265,40 +266,6 @@ public:
     }
 };
 
-template<class OwnerType, class DestType, bool data>
-class LinkTraitsFindDest;
-
-template<class OwnerType, class DestType>
-class LinkTraitsFindDest<OwnerType, DestType, false>
-{
-public:
-    static bool findLinkDest(OwnerType* owner, DestType*& ptr, const std::string& path, const BaseLink* link)
-    {
-        return owner->findLinkDest(ptr, path, link);
-    }
-    template<class TContext>
-    static bool checkPath(const std::string& path, TContext* context)
-    {
-        DestType* ptr = nullptr;
-        return context->findLinkDest(ptr, path, nullptr);
-    }
-};
-
-template<class OwnerType, class DestType>
-class LinkTraitsFindDest<OwnerType, DestType, true>
-{
-public:
-    static bool findLinkDest(OwnerType* owner, DestType*& ptr, const std::string& path, const BaseLink* link)
-    {
-        return owner->findDataLinkDest(ptr, path, link);
-    }
-    template<class TContext>
-    static bool checkPath(const std::string& path, TContext* context)
-    {
-        DestType* ptr = nullptr;
-        return context->findDataLinkDest(ptr, path, nullptr);
-    }
-};
 
 template<class Type>
 class LinkTraitsPtrCasts;
@@ -323,7 +290,6 @@ public:
     typedef typename TraitsContainer::T Container;
     typedef typename Container::const_iterator const_iterator;
     typedef typename Container::const_reverse_iterator const_reverse_iterator;
-    typedef LinkTraitsFindDest<OwnerType, DestType, ACTIVEFLAG(FLAG_DATALINK)> TraitsFindDest;
     typedef LinkTraitsPtrCasts<TOwnerType> TraitsOwnerCasts;
     typedef LinkTraitsPtrCasts<TDestType> TraitsDestCasts;
 #undef ACTIVEFLAG
@@ -423,7 +389,7 @@ public:
         if (path.empty()) return false;
         DestType* ptr = nullptr;
         if (m_owner)
-            TraitsFindDest::findLinkDest(m_owner, ptr, path, this);
+            PathResolver::FindLinkDest(m_owner, ptr, path, this);
         return add(ptr, path);
     }
 
@@ -533,7 +499,7 @@ public:
             {
                 return false;
             }
-            else if (m_owner && !TraitsFindDest::findLinkDest(m_owner, ptr, str, this))
+            else if (m_owner && !PathResolver::FindLinkDest(m_owner, ptr, str, this))
             {
                 // This is not an error, as the destination can be added later in the graph
                 // instead, we will check for failed links after init is completed
@@ -562,7 +528,7 @@ public:
             while (istr >> path)
             {
                 DestType *ptr = nullptr;
-                if (m_owner && !TraitsFindDest::findLinkDest(m_owner, ptr, path, this))
+                if (m_owner && !PathResolver::FindLinkDest(m_owner, ptr, path, this))
                 {
                     // This is not an error, as the destination can be added later in the graph
                     // instead, we will check for failed links after init is completed
@@ -623,7 +589,7 @@ public:
         }
         else
         {
-            return TraitsFindDest::checkPath(path, context);
+            return PathResolver::CheckPath(path, context);
         }
     }
 
@@ -680,7 +646,6 @@ public:
     typedef typename Inherit::Container Container;
     typedef typename Inherit::TraitsOwnerCasts TraitsOwnerCasts;
     typedef typename Inherit::TraitsDestCasts TraitsDestCasts;
-    typedef typename Inherit::TraitsFindDest TraitsFindDest;
 
     typedef void (OwnerType::*ValidatorFn)(DestPtr v, std::size_t index, bool add);
 
@@ -736,7 +701,7 @@ public:
                 DestType* ptr = TraitsDestPtr::get(TraitsValueType::get(value));
                 if (!ptr)
                 {
-                    TraitsFindDest::findLinkDest(this->m_owner, ptr, path, this);
+                    PathResolver::FindLinkDest(this->m_owner, ptr, path, this);
                     if (ptr)
                     {
                         DestPtr v = ptr;
@@ -805,7 +770,6 @@ public:
     typedef typename Inherit::Container Container;
     typedef typename Inherit::TraitsOwnerCasts TraitsOwnerCasts;
     typedef typename Inherit::TraitsDestCasts TraitsDestCasts;
-    typedef typename Inherit::TraitsFindDest TraitsFindDest;
     using Inherit::updateCounter;
     using Inherit::m_value;
     using Inherit::m_owner;
@@ -885,7 +849,7 @@ public:
         if (path.empty()) { reset(); return; }
         DestType* ptr = nullptr;
         if (m_owner)
-            TraitsFindDest::findLinkDest(m_owner, ptr, path, this);
+            PathResolver::FindLinkDest(m_owner, ptr, path, this);
         set(ptr, path);
     }
 
@@ -902,7 +866,7 @@ public:
             DestType* ptr = TraitsDestPtr::get(TraitsValueType::get(value));
             if (!ptr)
             {
-                TraitsFindDest::findLinkDest(m_owner, ptr, path, this);
+                PathResolver::FindLinkDest(m_owner, ptr, path, this);
                 if (ptr)
                 {
                     set(ptr, path);
