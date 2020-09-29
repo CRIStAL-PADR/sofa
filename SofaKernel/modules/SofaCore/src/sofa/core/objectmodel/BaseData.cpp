@@ -125,6 +125,7 @@ bool BaseData::setParent(BaseData* parent, const std::string& path)
         return false;
     }
 
+
     if (path.empty())
         parentData.setTarget(parent);
     else
@@ -146,7 +147,7 @@ bool BaseData::setParent(BaseData* parent, const std::string& path)
 bool BaseData::setParent(const std::string& path)
 {
     parentData.setPath(path);
-    return true;
+    return setParent(parentData.getTarget(), parentData.getPath());
 }
 
 void BaseData::doDelInput(DDGNode* n)
