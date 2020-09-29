@@ -87,5 +87,16 @@ void* PathResolver::FindLinkDestClass(Base* context, const BaseClass* destType, 
     return context->findLinkDestClass(destType, path, link);
 }
 
+/// Check that a given path is valid, that the pointed object exists and is of the right type
+//bool PathResolver::CheckPath(sofa::core::objectmodel::Base* context, const std::string& path)
+//{
+//}
+
+bool PathResolver::CheckPath(sofa::core::objectmodel::Base* context, const sofa::core::objectmodel::BaseClass* classType, const std::string& path)
+{
+    void* tmp = PathResolver::FindLinkDestClass(context, classType, path, nullptr);
+    return tmp != nullptr;
+}
+
 
 }

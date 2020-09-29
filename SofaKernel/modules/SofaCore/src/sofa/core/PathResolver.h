@@ -72,7 +72,7 @@ public:
     {
         if (path.empty())
             return false;
-        return CheckPath(path, T::GetClass(), context);
+        return CheckPath(context, T::GetClass(), path);
     }
 
     template<class T>
@@ -87,6 +87,9 @@ public:
 
     /// Check that a given path is valid, that the pointed object exists and is of the right type
     static bool CheckPath(sofa::core::objectmodel::Base* context, const std::string& path);
+
+    /// Check that a given path is valid, that the pointed object exists and is of the right type
+    static bool CheckPath(sofa::core::objectmodel::Base* context, const BaseClass* classType, const std::string& path);
 };
 
 }
