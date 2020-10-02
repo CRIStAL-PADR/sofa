@@ -303,7 +303,6 @@ public:
     }
 
     [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-
     size_t size(const core::ExecParams*) const { return size(); }
     size_t size() const
     {
@@ -311,7 +310,6 @@ public:
     }
 
     [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-
     bool empty(const core::ExecParams* param) const ;
     bool empty() const
     {
@@ -319,7 +317,6 @@ public:
     }
 
     [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-
     const Container& getValue(const core::ExecParams*) const { return getValue(); }
     const Container& getValue() const
     {
@@ -327,7 +324,6 @@ public:
     }
 
     [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-
     const_iterator begin(const core::ExecParams*) const { return begin(); }
     const_iterator begin() const
     {
@@ -335,7 +331,6 @@ public:
     }
 
     [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-
     const_iterator end(const core::ExecParams*) const { return end(); }
     const_iterator end() const
     {
@@ -343,7 +338,6 @@ public:
     }
 
     [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-
     const_reverse_iterator rbegin(const core::ExecParams*) const { return rbegin(); }
     const_reverse_iterator rbegin() const
     {
@@ -351,7 +345,6 @@ public:
     }
 
     [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-
     const_reverse_iterator rend(const core::ExecParams*) const { return rend(); }
     const_reverse_iterator rend() const
     {
@@ -463,8 +456,8 @@ public:
         return getIndex(index);
     }
 
-    [[deprecated("")]]
-    BaseData* getLinkedData(std::size_t index=0) const override
+    [[deprecated("This function has been deprecated in PR#1503 and will be removed soon. Link<> cannot hold BaseData anymore. To make link between Data use DataLink instead.")]]
+    BaseData* getLinkedData(std::size_t =0) const override
     {
         return nullptr;
     }
@@ -595,7 +588,7 @@ public:
         return m_owner;
     }
 
-    [[deprecated("")]]
+    [[deprecated("This function has been deprecated in PR#1503 and will be removed soon. Link<> cannot hold BaseData anymore. To make link between Data use DataLink instead.")]]
     sofa::core::objectmodel::BaseData* getOwnerData() const override
     {
         return nullptr;
