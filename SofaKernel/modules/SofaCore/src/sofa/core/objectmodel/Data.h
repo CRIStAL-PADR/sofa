@@ -160,7 +160,14 @@ public:
     using TData<T>::updateIfDirty;
     using TData<T>::notifyEndEdit;
 
+==== BASE ====
+    static std::string templateName(const TData<T>* = nullptr)
+    {
+        T* ptr = nullptr;
+        return BaseData::typeName(ptr);
+    }
 
+==== BASE ====
     /// @name Construction / destruction
     /// @{
 
@@ -175,12 +182,8 @@ public:
         T value;
     };
 
-    static std::string templateName()
-    {
-        return sofa::core::objectmodel::BaseData::typeName<Data<T>>();
-    }
-
-
+==== BASE ====
+==== BASE ====
     // It's used for getting a new instance from an existing instance. This function is used by the communication plugin
     virtual BaseData* getNewInstance() { return new Data();}
 
