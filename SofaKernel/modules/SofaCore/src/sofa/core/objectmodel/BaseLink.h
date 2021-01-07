@@ -90,6 +90,12 @@ public:
     /// Set help message
     void setHelp(const std::string& val) { m_help = val; }
 
+    Base* getOwner(){ return m_owner; }
+
+    virtual bool contains(Base*) = 0;
+    virtual bool add(Base*, const std::string&) = 0;
+    virtual void clear() = 0;
+
     virtual Base* getOwnerBase() const = 0;
 
     [[deprecated("2020-10-03: Deprecated since PR #1503. BaseLink cannot hold Data anymore. Use DataLink instead. Please update your code. ")]]
@@ -148,7 +154,7 @@ public:
     /// @{
 
     /// Read the command line
-    virtual bool read( const std::string& str ) = 0;
+    bool read( const std::string& str );
 
     /// Update pointers in case the pointed-to objects have appeared
     /// @return false if there are broken links
@@ -195,6 +201,8 @@ protected:
     {
         ++m_counter;
     }
+
+    Base* m_owner;
 };
 
 } // namespace objectmodel

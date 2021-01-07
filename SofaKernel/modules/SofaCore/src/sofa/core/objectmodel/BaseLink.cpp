@@ -224,6 +224,95 @@ std::string BaseLink::CreateString(Base* object, BaseData* data, Base* from)
     return CreateString(CreateStringPath(object,from),CreateStringData(data));
 }
 
+bool BaseLink::read( const std::string& str )
+{
+    if (str.empty())
+        return true;
+
+    bool ok = true;
+
+    // Allows spaces in links values for single links
+    if (!getFlag(BaseLink::FLAG_MULTILINK))
+    {
+        Base* ptr = nullptr;
+
+        if (str[0] != '@')
+        {
+            return false;
+        }
+        else if (m_owner && !PathResolver::FindLinkDest(m_owner, ptr, str, this))
+        {
+            // This is not an error, as the destination can be added later in the graph
+            // instead, we will check for failed links after init is completed
+            add(ptr, str);
+            return true;
+        }
+        else
+        {
+            // read should return false if link is not properly added despite
+            // already having an owner and being able to look for linkDest
+            add(ptr, str);
+            return ptr != nullptr;
+        }
+
+    }
+    else
+    {
+        //> Container& container = m_value;
+        std::istringstream istr(str.c_str());
+        std::string path;
+
+        // Find the target of each path, and store those targets in
+        // a temporary vector of (pointer, path) pairs
+        std::vector< std::pair<Base*, std::string> > entries;
+        while (istr >> path)
+        {
+            Base* ptr = nullptr;
+            if (m_owner && !PathResolver::FindLinkDest(m_owner, ptr, path, this))
+            {
+                // This is not an error, as the destination can be added later in the graph
+                // instead, we will check for failed links after init is completed
+                //ok = false;
+            }
+            else if (path[0] != '@')
+            {
+                ok = false;
+            }
+            entries.push_back({ptr, path});
+        }
+
+        // Add the objects that are not already present to the container of this Link
+        clear();
+        for (auto& [base, path] : entries)
+        {
+            if(contains(base))
+                add(base, path);
+        }
+
+        // Remove the objects from the container that are not in the new list
+        // TODO epernod 2018-08-01: This cast from size_t to unsigned int remove a large amount of warnings.
+        // But need to be rethink in the future. The problem is if index i is a site_t, then we need to template container<size_t> which impact the whole architecture.
+//        std::size_t csize = container.size();
+//        for (std::size_t i = 0; i != csize; i++)
+//        {
+//            DestPtr dest(container[i]);
+//            bool destFound = false;
+//            typename PairVector::iterator j = newList.begin();
+//            while (j != newList.end() && !destFound)
+//            {
+//                if (j->first == dest)
+//                    destFound = true;
+//                j++;
+//            }
+
+//            if (!destFound)
+//                remove(dest);
+//        }
+    }
+
+    return ok;
+}
+
 void BaseLink::setLinkedBase(Base* link)
 {
     auto owner = getOwnerBase();

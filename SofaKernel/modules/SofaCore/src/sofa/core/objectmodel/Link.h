@@ -353,6 +353,34 @@ public:
     }
     SOFA_END_DEPRECATION_AS_ERROR
 
+    void clear() override
+    {
+        TraitsContainer::clear(m_value);
+    }
+
+    bool contains(Base* baseptr) override
+    {
+        auto destptr = dynamic_cast<DestType*>(baseptr);
+        return TraitsContainer::find(m_value, destptr) < m_value.size();
+    }
+
+    /// Set a new link entry from a Base*
+    bool add(Base* baseptr, const std::string& path) override
+    {
+        /// If the pointer is null and the path empty we do nothing
+        if(!baseptr && path.empty())
+            return false;
+
+        /// If there is a pointer of compatible type we add it in the link
+        auto destptr = dynamic_cast<DestType*>(baseptr);
+        if(baseptr && destptr)
+        {
+            //std::cout << "Setting the link is not possible because of invalid type";
+            return false;
+        }
+
+        return TLink::add(destptr, path);
+    }
 
     bool add(DestPtr v)
     {
@@ -473,98 +501,6 @@ public:
     /// @name Serialization API
     /// @{
 
-    /// Read the command line
-    virtual bool read( const std::string& str ) override
-    {
-        if (str.empty())
-            return true;
-
-        bool ok = true;
-
-        // Allows spaces in links values for single links
-        if (!getFlag(BaseLink::FLAG_MULTILINK))
-        {
-            DestType* ptr = nullptr;
-
-            if (str[0] != '@')
-            {
-                return false;
-            }
-            else if (m_owner && !PathResolver::FindLinkDest(m_owner, ptr, str, this))
-            {
-                // This is not an error, as the destination can be added later in the graph
-                // instead, we will check for failed links after init is completed
-                add(ptr, str);
-                return true;
-            }
-            else
-            {
-                // read should return false if link is not properly added despite
-                // already having an owner and being able to look for linkDest
-                add(ptr, str);
-                return ptr != nullptr;
-            }
-
-        }
-        else
-        {
-            Container& container = m_value;
-            std::istringstream istr(str.c_str());
-            std::string path;
-
-            // Find the target of each path, and store those targets in
-            // a temporary vector of (pointer, path) pairs
-            typedef std::vector< std::pair<DestPtr, std::string> > PairVector;
-            PairVector newList;
-            while (istr >> path)
-            {
-                DestType *ptr = nullptr;
-                if (m_owner && !PathResolver::FindLinkDest(m_owner, ptr, path, this))
-                {
-                    // This is not an error, as the destination can be added later in the graph
-                    // instead, we will check for failed links after init is completed
-                    //ok = false;
-                }
-                else if (path[0] != '@')
-                {
-                    ok = false;
-                }
-                newList.push_back(std::make_pair(ptr, path));
-            }
-
-            // Add the objects that are not already present to the container of this Link
-            for (typename PairVector::iterator i = newList.begin(); i != newList.end(); i++)
-            {
-                const DestPtr ptr = i->first;
-                const std::string& path = i->second;
-
-                if (TraitsContainer::find(container, ptr) == container.size()) // Not found
-                    add(ptr, path);
-            }
-
-            // Remove the objects from the container that are not in the new list
-            // TODO epernod 2018-08-01: This cast from size_t to unsigned int remove a large amount of warnings.
-            // But need to be rethink in the future. The problem is if index i is a site_t, then we need to template container<size_t> which impact the whole architecture.
-            std::size_t csize = container.size();
-            for (std::size_t i = 0; i != csize; i++)
-            {
-                DestPtr dest(container[i]);
-                bool destFound = false;
-                typename PairVector::iterator j = newList.begin();
-                while (j != newList.end() && !destFound)
-                {
-                    if (j->first == dest)
-                        destFound = true;
-                    j++;
-                }
-
-                if (!destFound)
-                    remove(dest);
-            }
-        }
-
-        return ok;
-    }
 
 
     /// Check that a given path is valid, that the pointed object exists and is of the right type
