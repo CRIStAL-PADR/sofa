@@ -93,7 +93,7 @@ void LabelPointImageToolBoxAction::selectionPointButtonClick(bool b)
 void LabelPointImageToolBoxAction::addOnGraphs()
 {
 
-//    std::cout << "addOnGraph"<<std::endl;
+
 
     lineH[0] = GraphXY->addLine(0,0,0,0);
     lineH[1] = GraphXZ->addLine(0,0,0,0);
@@ -118,7 +118,7 @@ void LabelPointImageToolBoxAction::updateGraphs()
     
     //QRectF boundaryXY = GraphXY->itemsBoundingRect();
     
-//    std::cout << "updateOnGraphs"<<std::endl;
+
     
     lineH[0]->setVisible(true);
     lineH[0]->setLine(pos.x()-4,pos.y(),pos.x()+4,pos.y());
@@ -153,7 +153,7 @@ void LabelPointImageToolBoxAction::updateColor()
 
 void LabelPointImageToolBoxAction::sectionButtonClick()
 {
-   // std::cout << "LabelPointImageToolBoxAction::sectionButtonClick()"<<std::endl;
+
     sofa::defaulttype::Vec3d pos = LPITB()->d_ip.getValue();
     
     sofa::defaulttype::Vec3i pos2(sofa::helper::round(pos.x()),sofa::helper::round(pos.y()),sofa::helper::round(pos.z()));

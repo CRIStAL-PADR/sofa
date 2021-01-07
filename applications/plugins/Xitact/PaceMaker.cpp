@@ -81,7 +81,7 @@ void stimulus(void* param)
         nextTime = time1 + dt;
 
         time2 = PaceMaker::CLOCK;
-        //std::cout <<"nextTime: " << nextTime << " time2: " << time2 << " time1: " << time1 << std::endl;
+
         /*		while(time2 < nextTime)
         		{
         			time2 = PaceMaker::CLOCK;

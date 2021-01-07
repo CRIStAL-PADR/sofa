@@ -176,7 +176,7 @@ int main(int argc, char** argv)
 
 //    while( end >> input && end >>nbsteps && end >> output  )
 //    {
-//        std::cout<<"input "<<input<<std::endl;
+
 //        sofa::helper::system::DataRepository.findFile(input);
 //        apply(input, nbsteps, output);
 //    }

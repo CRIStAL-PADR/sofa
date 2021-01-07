@@ -103,7 +103,7 @@ namespace sofa {
                 VoronoiShapeFunction::SPtr voronoiShapeFctSptr = modeling::addNew <VoronoiShapeFunction> (patchNode,"shapeFunction");
                 sofa::modeling::setDataLink(&Inherited::inDofs->x0,&voronoiShapeFctSptr->f_position);
 
-                //std::cout << "voronoiShapeFctSptr->f_position size = " << voronoiShapeFctSptr->f_position.getValue().size() << std::endl;
+
 
 
                 voronoiShapeFctSptr->setSrc("@"+imageContainerSptr->getName(), imageContainerSptr.get());

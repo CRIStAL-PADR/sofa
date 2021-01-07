@@ -319,7 +319,7 @@ public:
         }
         ++it; step = true;
         lasttime = getContext()->getTime();
-        //std::cout << "Sending FlowVRBeginIteration"<<std::endl;
+
         FlowVRBeginIterationEvent ev;
         ev.from = this;
         ev.module = module;
@@ -331,7 +331,7 @@ public:
         if (module==NULL) return;
         if (!step) return;
         step = false;
-        //std::cout << "Sending FlowVREndIteration"<<std::endl;
+
         FlowVREndIterationEvent ev;
         ev.from = this;
         ev.module = module;
@@ -451,7 +451,7 @@ public:
 
     virtual void flowvrBeginIteration(flowvr::ModuleAPI* module)
     {
-        //std::cout << "Received FlowVRBeginIteration"<<std::endl;
+
         flowvr::Message points, facets;
         double time = getContext()->getTime();
 
@@ -493,12 +493,12 @@ public:
                 sofa::core::behavior::MechanicalState<Vec3dTypes>* mm;
                 if (doComputeV)
                 {
-                    //std::cout << "Copying "<<nbv<<" vertices and estimate velocity"<<std::endl;
+
                     mm = newPoints; // put new data in newPoints state
                 }
                 else
                 {
-                    //std::cout << "Copying "<<nbv<<" vertices to mmodel3d"<<std::endl;
+
                     mm = mmodel3d;
                 }
                 mm->resize(nbv);
@@ -538,7 +538,7 @@ public:
                     intersection->setAlarmDistance(dmax); // make sure the distance is up-to-date
                     intersection->setContactDistance(0);
                     newPointsCM->computeBoundingTree( 6 ); // compute a bbox tree of depth 6
-                    //std::cout << "computeV: "<<newPointsCM->end().getIndex()<<" points"<<std::endl;
+
                     detection->beginNarrowPhase();
                     for (CMIterator it = node->collisionModel.begin(), itend = node->collisionModel.end(); it != itend ; ++it)
                     {
@@ -595,7 +595,7 @@ public:
 
             if ((mmodel3f = dynamic_cast<sofa::core::behavior::MechanicalState<Vec3fTypes>*>(mmodel))!=NULL)
             {
-                //std::cout << "Copying "<<nbv<<" vertices to mmodel3f"<<std::endl;
+
                 mmodel3f->resize(nbv);
                 Vec3fTypes::VecCoord& x = *mmodel3f->getX();
                 if (matrixLastIt==-20)
@@ -646,7 +646,7 @@ public:
                 mesh->clear();
                 if (valid)
                 {
-                    //std::cout << "Copying "<<nbi/3<<" triangles to mesh"<<std::endl;
+
                     for (unsigned int i=0; i<nbi; i+=3)
                     {
                         mesh->addTriangle(indices[i  ],indices[i+1],indices[i+2]);
@@ -658,7 +658,7 @@ public:
                         if (indices[i+2] < indices[i  ])
                             mesh->addLine(indices[i+2],indices[i  ]);
                     }
-                    //std::cout << "Copying "<<mesh->getNbLines()<<" edges to mesh"<<std::endl;
+
                 }
             }
         }
@@ -786,7 +786,7 @@ public:
 
     virtual void flowvrBeginIteration(flowvr::ModuleAPI* module)
     {
-        //std::cout << "Received FlowVRBeginIteration"<<std::endl;
+
         flowvr::Message distance;
         double time = getContext()->getTime();
 

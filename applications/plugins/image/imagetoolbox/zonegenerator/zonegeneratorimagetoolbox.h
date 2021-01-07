@@ -165,7 +165,7 @@ public:
     void generate() override
     {
 
-        //std::cout << "generate"<<std::endl;
+
         raImage im_in(this->d_image);
         waImage im_out(this->d_imageOut);
 
@@ -226,13 +226,13 @@ public:
 
         // Step3
 
- //       std::cout << "Step 3" << std::endl;
+
 //        unsigned int count=1;
         while(vecId.size())
         {
             Vec2d baseSample = BG[vecId.front()];
             vecId.pop_front();
-//            std::cout << "    baseSample"<<baseSample<< " ( "<<vecId.size()<<" ) "<<std::endl;
+
 
             for(unsigned int j=0;j<k;)
             {
@@ -279,8 +279,8 @@ public:
                             BG[index]=samples;
                             vecId.push_back(index);
 
-//                            std::cout << "         samples "<< samples << std::endl;
-//                            std::cout << "         index"<< index << std::endl;
+
+
 
 //                            count ++;
                         }
@@ -288,7 +288,7 @@ public:
                 }
             }
         }
-//        std::cout << " count " << count << std::endl;
+
 
 
         // init backgroundColor;
@@ -297,7 +297,7 @@ public:
         {
             T* pColor = new T[dimS];// = {0};//(unsigned short)(((float)i/(float)dimX)*(float)USHRT_MAX)};
             for(int c=0;c<(int)dimS;c++)pColor[c]=color(0,1);
-            //std::cout <<pColor[0]<<std::endl;
+
 
             im_out->getCImg().draw_point(i, j, 0, pColor);
             delete [] pColor;
@@ -309,7 +309,7 @@ public:
         {
             if(BG[i] != Vec2d(0,0) && BG[i].x()>=0 && BG[i].y()>=0 && BG[i].x()<dimX && BG[i].y()<dimY)
             {
-                //std::cout << "BG " << BG[i] << std::endl;
+
 
                 Vec2d position(BG[i].x()/size.x(),BG[i].y()/size.y());
                 Vec2i pospixel(position.x()*dimX,position.y()*dimY);
@@ -317,10 +317,10 @@ public:
                 p.position = pospixel;
                 p.last.push_back(pospixel);
                 listPosition.push_back(p);
-                //std::cout << "pospixel "<<pospixel<<std::endl;
+
 
                 //const T pColor[] = {1};//(unsigned short)(((float)i/(float)dimX)*(float)USHRT_MAX)};
-                //std::cout <<pColor[0]<<std::endl;
+
 
                 //im_out->getCImg().draw_point(pospixel.x(), pospixel.y(), 0, pColor);
             }
@@ -334,9 +334,9 @@ public:
 
             T* pColor = new T[dimS];// = {0};//(unsigned short)(((float)i/(float)dimX)*(float)USHRT_MAX)};
             for(unsigned int c=0;c<dimS;c++)pColor[c]=listPosition[i].color;
-            //std::cout <<pColor[0]<<std::endl;
 
-            //std::cout << listPosition[i].color <<std::endl;
+
+
 
             im_out->getCImg().draw_point(listPosition[i].position.x() , listPosition[i].position.y(), 0, pColor);
             delete [] pColor;
@@ -372,7 +372,7 @@ public:
                 Vec2i v = p.last.front();
                 p.last.pop_front();
 
-   //             std::cout <<v.x()<<std::endl;
+
 
                 uint random = rand()%16;
 
@@ -486,7 +486,7 @@ public:
 
         }*/
 
-        //for(unsigned int i=0;i<sizemax;i++)std::cout << "test " << i << " :" << test[i]<<std::endl;
+
 
         
         
@@ -507,7 +507,7 @@ public:
 
 
 
-     //   std::cout << "generate"<<std::endl;
+
     }
 
 /*

@@ -115,7 +115,7 @@ void ContourImageToolBoxAction::selectionPointButtonClick(bool b)
 void ContourImageToolBoxAction::addOnGraphs()
 {
 
-//    std::cout << "addOnGraph"<<std::endl;
+
 
     cursor[0] = GraphXY->addPath(QPainterPath());
     cursor[1] = GraphXZ->addPath(QPainterPath());
@@ -210,7 +210,7 @@ void ContourImageToolBoxAction::updateGraphs()
     
     //QRectF boundaryXY = GraphXY->itemsBoundingRect();
     
-    //std::cout << "updateOnGraphs"<<std::endl;
+
     
     cursor[0]->setVisible(true);
     cursor[0]->setPath(drawCursor(pos.x(),pos.y()));
@@ -238,7 +238,7 @@ void ContourImageToolBoxAction::updateColor()
 
 void ContourImageToolBoxAction::sectionButtonClick()
 {
-    //std::cout << "ContourImageToolBoxAction::sectionButtonClick()"<<std::endl;
+
     sofa::defaulttype::Vec3d pos = CITB()->d_ip.getValue();
     
     sofa::defaulttype::Vec3i pos2(sofa::helper::round(pos.x()),sofa::helper::round(pos.y()),sofa::helper::round(pos.z()));
@@ -328,7 +328,7 @@ void ContourImageToolBoxAction::createThreshold()
 
 void ContourImageToolBoxAction::positionModified()
 {
-    //std::cout << "positionModified" << std::endl;
+
     sofa::defaulttype::Vec3d v(vecX->value(),vecY->value(),vecZ->value());
     
     sofa::component::engine::ContourImageToolBoxNoTemplated* lp = CITB();
@@ -343,7 +343,7 @@ void ContourImageToolBoxAction::positionModified()
 
 void ContourImageToolBoxAction::radiusModified()
 {
-    //std::cout << "radiusModified" << std::endl;
+
 
     sofa::component::engine::ContourImageToolBoxNoTemplated* lp = CITB();
 
@@ -357,7 +357,7 @@ void ContourImageToolBoxAction::radiusModified()
 
 void ContourImageToolBoxAction::thresholdModified()
 {
-    //std::cout << "thresholdModified" << std::endl;
+
 
     sofa::component::engine::ContourImageToolBoxNoTemplated* lp = CITB();
 

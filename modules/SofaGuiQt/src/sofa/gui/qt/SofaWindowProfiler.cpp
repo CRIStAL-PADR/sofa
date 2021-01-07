@@ -222,8 +222,8 @@ bool SofaWindowProfiler::AnimationStepData::processData(const std::string& idStr
         if (rec.type == Record::RBEGIN || rec.type == Record::RSTEP_BEGIN || rec.type == Record::RSTEP)
         {
 //            for (int i=0; i<level; ++i)
-//                std::cout << ".";
-//            std::cout << level << " Begin: " << rec.label << " at " << rec.time << " obj: " << rec.obj << " val: " << rec.val << std::endl;
+
+
 
             AnimationSubStepData* currentSubStep = new AnimationSubStepData(level, rec.label, tCurr);
             if (rec.obj)
@@ -258,8 +258,8 @@ bool SofaWindowProfiler::AnimationStepData::processData(const std::string& idStr
         {
             --level;
 //            for (int i=0; i<level; ++i)
-//                std::cout << ".";
-//            std::cout << level << " End: " << rec.label << " at " << rec.time << " obj: " << rec.obj << " val: " << rec.val << std::endl;
+
+
 
             if (processStack.empty())
             {

@@ -77,20 +77,20 @@ public:
     {
         DEBUG_TEXT("OpenCLMemoryManager::hostAlloc");
         *hPointer = (host_pointer) malloc(n);
-        //std::cout << "[" <<*hPointer << "]" << std::endl;
+
     }
 
     static void memsetHost(host_pointer hPointer, int value,size_t n)
     {
         DEBUG_TEXT("OpenCLMemoryManager::memsetHost");
         memset((void*) hPointer, value, n);
-        //std::cout << "[" <<hPointer << "]" << std::endl;
+
     }
 
     static void hostFree(const host_pointer hSrcPointer)
     {
         DEBUG_TEXT("OpenCLMemoryManager::hostFree");
-        //std::cout << "[" <<hSrcPointer << "]" << std::endl;
+
         free(hSrcPointer);
     }
 

@@ -194,7 +194,7 @@ HDCallbackCode HDCALLBACK stateCallback(void * userData)
         for (int u=0; u<4; u++)
             autreOmniDriver[i]->data.servoDeviceData.quat[u] = rot[u];
 
-        //std::cout << pos << "    " << rot << std::endl;
+
         sofa::defaulttype::SolidTypes<double>::Transform baseOmni_H_endOmni(pos* autreOmniDriver[i]->data.scale, rot);
         sofa::defaulttype::SolidTypes<double>::Transform world_H_virtualTool = autreOmniDriver[i]->data.world_H_baseOmni * baseOmni_H_endOmni * autreOmniDriver[i]->data.endOmni_H_virtualTool;
    

@@ -54,7 +54,7 @@ public:
         for(int i=0; i<numElements; i++)
         {
             //		float *t = (float*)(valueVector+i);
-            //		std::cout << "#" << keyVector[i] << " " << t[0] << "." << t[1] << "." << t[2] << "\n";
+
             Element e;
             e.key = keyVector[i];
             e.value = valueVector[i];
@@ -63,11 +63,11 @@ public:
 
         std::sort( vecsort.begin(), vecsort.end(), compare);
 
-//	std::cout << "-----------------\n";
+
         for (unsigned int j=0; j<vecsort.size(); j++)
         {
             //		float *t = (float*)(&(vecsort[j].value));
-            //		std::cout << " " << vecsort[j].key <<":"<< t[0] << "#" << t[1] << "#" << t[2] << "\n";
+
             keyVector[j] = vecsort[j].key;
             valueVector[j] = vecsort[j].value;
         }

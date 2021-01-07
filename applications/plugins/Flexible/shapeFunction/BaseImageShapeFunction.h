@@ -135,7 +135,7 @@ struct BaseImageShapeFunctionSpecialization<defaulttype::Image<T>>
                 // fit weights
                 helper::vector<Real> coeff;
                 defaulttype::PolynomialFit(coeff,val,pos, order);
-                //std::cout<<ind<<":"<<coeff[0]<<", err= "<<getPolynomialFit_Error(coeff,val,pos)<< std::endl;
+
                 if(!dw) defaulttype::getPolynomialFit_differential(coeff,w[index]);
                 else if(!ddw) defaulttype::getPolynomialFit_differential(coeff,w[index],&(*dw)[index]);
                 else defaulttype::getPolynomialFit_differential(coeff,w[index],&(*dw)[index],&(*ddw)[index]);

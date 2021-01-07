@@ -71,7 +71,7 @@ void PlaneForceField_CreateProgramWithFloat()
         PlaneForceFieldOpenCLFloat_program->buildProgram();
         sofa::gpu::opencl::myopenclShowError(__FILE__,__LINE__);
         std::cout << PlaneForceFieldOpenCLFloat_program->buildLog(0);
-        //	std::cout << PlaneForceFieldOpenCLFloat_program->sourceLog();
+
 
 
         //create kernels

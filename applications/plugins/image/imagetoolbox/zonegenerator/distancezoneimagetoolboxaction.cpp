@@ -29,7 +29,7 @@ DistanceZoneImageToolBoxAction::DistanceZoneImageToolBoxAction(sofa::component::
 
 void DistanceZoneImageToolBoxAction::createMainCommands()
 {
-    //std::cout << "createMainCommand" << std::endl;
+
     generate = new QPushButton("Generate");
     generate->setCheckable(true);
     connect(generate,SIGNAL(clicked()),this,SLOT(selectionPointButtonClick()));
@@ -50,7 +50,7 @@ void DistanceZoneImageToolBoxAction::createMainCommands()
 
     this->addWidget(gb);
 
-    //std::cout << "end of createMainMenu"<<std::endl;
+
 }
 
 DistanceZoneImageToolBoxAction::~DistanceZoneImageToolBoxAction()
@@ -115,7 +115,7 @@ void DistanceZoneImageToolBoxAction::generatePointButtonClick()
 void DistanceZoneImageToolBoxAction::addOnGraphs()
 {
 
-//    std::cout << "addOnGraph"<<std::endl;
+
 /*
     cursor[0] = GraphXY->addPath(QPainterPath());
     cursor[1] = GraphXZ->addPath(QPainterPath());
@@ -210,7 +210,7 @@ void DistanceZoneImageToolBoxAction::updateGraphs()
     
     //QRectF boundaryXY = GraphXY->itemsBoundingRect();
     
-    //std::cout << "updateOnGraphs"<<std::endl;
+
     
     cursor[0]->setVisible(true);
     cursor[0]->setPath(drawCursor(pos.x(),pos.y()));
@@ -238,7 +238,7 @@ void DistanceZoneImageToolBoxAction::updateColor()
 
 void DistanceZoneImageToolBoxAction::sectionButtonClick()
 {
-    //std::cout << "DistanceZoneImageToolBoxAction::sectionButtonClick()"<<std::endl;
+
     sofa::defaulttype::Vec3d pos = CITB()->d_ip.getValue();
     
     sofa::defaulttype::Vec3i pos2(round(pos.x()),round(pos.y()),round(pos.z()));
@@ -328,7 +328,7 @@ void DistanceZoneImageToolBoxAction::createThreshold()
 
 void DistanceZoneImageToolBoxAction::positionModified()
 {
-    //std::cout << "positionModified" << std::endl;
+
     sofa::defaulttype::Vec3d v(vecX->value(),vecY->value(),vecZ->value());
     
     sofa::component::engine::ZoneGeneratorImageToolBoxNoTemplated* lp = CITB();
@@ -343,7 +343,7 @@ void DistanceZoneImageToolBoxAction::positionModified()
 
 void DistanceZoneImageToolBoxAction::radiusModified()
 {
-    //std::cout << "radiusModified" << std::endl;
+
 
     sofa::component::engine::ZoneGeneratorImageToolBoxNoTemplated* lp = CITB();
 
@@ -357,7 +357,7 @@ void DistanceZoneImageToolBoxAction::radiusModified()
 
 void DistanceZoneImageToolBoxAction::thresholdModified()
 {
-    //std::cout << "thresholdModified" << std::endl;
+
 
     sofa::component::engine::ZoneGeneratorImageToolBoxNoTemplated* lp = CITB();
 

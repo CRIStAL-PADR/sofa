@@ -49,8 +49,8 @@ public:
 //        const Vector3 & min = this->mstate->f_bbox.getValue().minBBox();
 //        const Vector3 & max = this->mstate->f_bbox.getValue().maxBBox();
 
-//        std::cout<<"min "<<min<<std::endl;
-//        std::cout<<"max "<<max<<std::endl;
+
+
 
 //        btVector3 btmin(min[0],min[1],min[2]);
 //        btVector3 btmax(max[0],max[1],max[2]);

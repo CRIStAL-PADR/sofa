@@ -123,8 +123,8 @@ void FixedConstraintOpenCL3f_projectResponseIndexed(unsigned int size, const _de
     size_t work_size[1];
     work_size[0]=((size%BSIZE)==0)?size:BSIZE*(size/BSIZE+1);
 
-    //std::cout << __LINE__ << __FILE__ << " " << size << " " << nbSpringPerVertex << " " << springs.offset << " " << f.offset << " " <<  x.offset << " " <<  v.offset<< " " << dfdx.offset << "\n";
-    //std::cout << local_size[0] << " " << size << " " <<work_size[0] << "\n";
+
+
 
     FixedConstraintOpenCL3f_addForce_kernel->execute(0,1,NULL,work_size,local_size);	//note: num_device = const = 0
 

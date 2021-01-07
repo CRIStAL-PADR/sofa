@@ -246,7 +246,7 @@ void Mesh::clearEdges()
 
 bool Mesh::addEdgeFace(int p0, int p1, int f)
 {
-  //std::cerr << "addEdgeFace("<<p0<<","<<p1<<","<<f<<")" << std::endl;
+
   if (getAttrib(MESH_POINTS_GROUP))
   {
     p0 = getGP0(getPG(p0));
@@ -254,21 +254,21 @@ bool Mesh::addEdgeFace(int p0, int p1, int f)
   }
   if ((int)edges.size() <= p0 || (int)edges.size() < p1)
     edges.resize(nbp());
-  //std::cerr << "getEdgeFace("<<p0<<","<<p1<<")" << std::endl;
+
   int f2 = getEdgeFace(p0,p1);
   if (f2>=0) { std::cerr << "Overlapping faces "<<f2<<" and "<<f<<std::endl; return false; }
-  //std::cerr << "edges("<<p0<<","<<p1<<")" << std::endl;
+
   if (p0<p1)
     edges[p0][p1].f1=f;
   else
     edges[p1][p0].f2=f;
-  //std::cerr << "<addEdgeFace("<<p0<<","<<p1<<","<<f<<")" << std::endl;
+
   return true;
 }
 
 int Mesh::getEdgeFace(int p0, int p1)
 {
-  //std::cerr << "getEdgeFace("<<p0<<","<<p1<<")" << std::endl;
+
   if (getAttrib(MESH_POINTS_GROUP))
   {
     p0 = getGP0(getPG(p0));
@@ -279,7 +279,7 @@ int Mesh::getEdgeFace(int p0, int p1)
     r = edges[p0][p1].f1;
   else
     r = edges[p1][p0].f2;
-  //std::cerr << "<getEdgeFace("<<p0<<","<<p1<<")="<< r << std::endl;
+
   return r;
 }
 
@@ -288,7 +288,7 @@ void Mesh::calcEdges()
   clearEdges();
   for (int i=0;i<nbf();i++)
   {
-    //std::cout << i << std::endl;
+
     addEdgeFace(getFP(i)[0],getFP(i)[1],i);
     addEdgeFace(getFP(i)[1],getFP(i)[2],i);
     addEdgeFace(getFP(i)[2],getFP(i)[0],i);
@@ -461,12 +461,12 @@ void Mesh::closeLoop(const std::vector<int>& loop, float dist)
 	f[0] = loopIn[j];
 	f[1] = loopOut[j];
 	f[2] = loopOut[(j+1)%loop.size()];
-	//std::cout << "f "<<f[0]+1<<" "<<f[1]+1<<" "<<f[2]+1<<std::endl;
+
 	addF(f);
 	f[0] = loopIn[j];
 	f[1] = loopOut[(j+1)%loop.size()];
 	f[2] = loopIn[(j+1)%loop.size()];
-	//std::cout << "f "<<f[0]+1<<" "<<f[1]+1<<" "<<f[2]+1<<std::endl;
+
 	addF(f);
       }
       //loopOut = loopIn;
@@ -477,7 +477,7 @@ void Mesh::closeLoop(const std::vector<int>& loop, float dist)
     {
       f[1] = loopOut[j];
       f[2] = loopOut[(j+1)%loop.size()];
-      //std::cout << "f "<<f[0]+1<<" "<<f[1]+1<<" "<<f[2]+1<<std::endl;
+
       addF(f);
     }
   }
@@ -906,7 +906,7 @@ void Mesh::mergeVertices(float dist)
         }
         if (new_p != -1)
         {
-            //std::cout << "vertex " << p0 << " merged, dist=" << sqrtf(new_d2) << std::endl;
+
             new_pos_sum[new_p] += pos;
             new_pos_count[new_p] += 1;
             if (new_d2 > 0.0f)

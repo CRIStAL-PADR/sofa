@@ -287,7 +287,7 @@ bool FileRepository::findFile(std::string& filename, const std::string& basedir,
         if (findFileIn(filename, *it)) return true;
     if (errlog)
     {
-        // hack to use logging rather than directly writing in std::cerr/std::cout
+
         // @todo do something cleaner
 
         std::stringstream tmplog;

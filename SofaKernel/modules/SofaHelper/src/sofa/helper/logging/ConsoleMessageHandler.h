@@ -42,7 +42,7 @@ class MessageFormatter;
 
 /// Print the message on the console using a specified formatter.
 /// The Message::Error, Message::Fatal are going to std:cerr while the others
-/// are going to std::cout.
+
 class SOFA_HELPER_API ConsoleMessageHandler : public MessageHandler
 {
 public:

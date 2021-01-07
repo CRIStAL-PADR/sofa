@@ -40,10 +40,10 @@ TimeoutWatchdog::~TimeoutWatchdog()
 {
     if(timeout_sec > 0)
     {
-        //std::cout << "Waiting for watchdog thread" << std::endl;
+
         watchdogThread.interrupt();
         watchdogThread.join();
-        //std::cout << "Watchdog thread closed" << std::endl;
+
     }
 }
 
@@ -59,7 +59,7 @@ void TimeoutWatchdog::start(unsigned timeout_sec)
 
 void TimeoutWatchdog::threadProc()
 {
-    //std::cout << "Entering watchdog thread" << std::endl;
+
 
     // sleep method is interruptible, when calling interrupt() from another thread
     // this thread should end inside the sleep method.

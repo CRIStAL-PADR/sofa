@@ -637,7 +637,7 @@ protected:
             ImageGaussPointSamplerSpec::fillPolynomialFactors(this,i,!this->f_clearData.getValue());
             this->Reg[i].solve(this->fitOrder());
             err+=this->Reg[i].getError();
-            //if(this->f_printLog.getValue()) std::cout<<this->getName()<<"GaussPointSampler: weight fitting error on sample "<<i<<" = "<<this->Reg[i].getError()<< std::endl;
+
         }
         //        waDist werr(this->f_error);        typename DistTypes& errimg = werr.wref();
         //        cimg_forXYZ(errimg,x,y,z) if(errimg(x,y,z)==-1) errimg(x,y,z)=0; // clean error output image (used as a container for distances)

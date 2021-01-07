@@ -49,7 +49,7 @@ bool GraphVisitor::load(std::string &file)
     TiXmlDocument doc;
     doc.Parse(file.c_str());
 
-    //std::cerr << "GRAPH:"<< std::endl << file << std::endl;
+
 
     TiXmlHandle hDoc(&doc);
     TiXmlNode* pElem;

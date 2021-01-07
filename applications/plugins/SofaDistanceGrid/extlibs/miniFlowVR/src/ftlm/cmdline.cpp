@@ -164,7 +164,7 @@ bool CmdLine::parse(int argc, char** argv, bool* error)
   options[nopts].flag = NULL;
   options[nopts].val = 0;
 
-  //std::cerr << "ShortOptions: "<<shortoptions<<std::endl;
+
 
   int option_index = -1;
   int c;

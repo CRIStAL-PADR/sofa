@@ -243,8 +243,8 @@ void StiffSpringForceFieldOpenCL3f_addDForce(unsigned int size, unsigned int nbS
     size_t work_size[1];
     work_size[0]=((size%BSIZE)==0)?size:BSIZE*(size/BSIZE+1);
 
-    //std::cout << __LINE__ << __FILE__ << " " << size << " " << nbSpringPerVertex << " " << springs.offset << " " << f.offset << " " <<  x.offset << " " << " " << dfdx.offset << "\n";
-    //std::cout << local_size[0] << " " << size << " " <<work_size[0] << "\n";
+
+
 
     StiffSpringForceFieldOpenCL3f_addDForce_kernel->execute(0,1,NULL,work_size,local_size);	//note: num_device = const = 0
 
@@ -270,7 +270,7 @@ void SpringForceFieldOpenCL3f_addExternalForce(unsigned int /*nbVertex*/, unsign
 OpenCLKernel * StiffSpringForceFieldOpenCL3f_addExternalForce_kernel = NULL;
 void StiffSpringForceFieldOpenCL3f_addExternalForce(unsigned int size, unsigned int nbSpringPerVertex, const _device_pointer springs, unsigned int offset1, _device_pointer f1, const _device_pointer x1, const _device_pointer v1, unsigned int offset2, const _device_pointer x2, const _device_pointer v2, _device_pointer dfdx)
 {
-    //std::cerr << "StiffSpringForceFieldOpenCL3f_addExternalForce not implemented" << std::endl; exit(703);
+
 
     int BSIZE = component::interactionforcefield::SpringForceFieldInternalData<sofa::gpu::opencl::OpenCLVec3fTypes>::BSIZE;
     DEBUG_TEXT("StiffSpringForceFieldOpenCL3f_addExternalForce");
@@ -302,7 +302,7 @@ void StiffSpringForceFieldOpenCL3f_addExternalForce(unsigned int size, unsigned 
 OpenCLKernel * StiffSpringForceFieldOpenCL3f_addExternalDForce_kernel = NULL;
 void StiffSpringForceFieldOpenCL3f_addExternalDForce(unsigned int size, unsigned int nbSpringPerVertex, const _device_pointer springs, unsigned int offset1, _device_pointer f1, const _device_pointer dx1, const _device_pointer x1, unsigned int offset2, const _device_pointer dx2, const _device_pointer x2, const _device_pointer dfdx, float factor)
 {
-    //std::cerr << "StiffSpringForceFieldOpenCL3f_addExternalDForce not implemented" << std::endl; //exit(703);
+
     int BSIZE = component::interactionforcefield::SpringForceFieldInternalData<sofa::gpu::opencl::OpenCLVec3fTypes>::BSIZE;
     DEBUG_TEXT("StiffSpringForceFieldOpenCL3f_addExternalDForce");
 
@@ -330,8 +330,8 @@ void StiffSpringForceFieldOpenCL3f_addExternalDForce(unsigned int size, unsigned
     size_t work_size[1];
     work_size[0]=((size%BSIZE)==0)?size:BSIZE*(size/BSIZE+1);
 
-    //std::cout << __LINE__ << __FILE__ << " " << size << " " << nbSpringPerVertex << " " << springs.offset << " " << f.offset << " " <<  x.offset << " " << " " << dfdx.offset << "\n";
-    //std::cout << local_size[0] << " " << size << " " <<work_size[0] << "\n";
+
+
 
     StiffSpringForceFieldOpenCL3f_addExternalDForce_kernel->execute(0,1,NULL,work_size,local_size);	//note: num_device = const = 0
 

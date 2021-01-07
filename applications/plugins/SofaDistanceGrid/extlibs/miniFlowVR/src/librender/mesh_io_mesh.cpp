@@ -41,12 +41,12 @@ static bool swap = false;
 
 static bool swapread(void* ptr, size_t size, FILE* fp)
 {
-  //std::cout << "Reading "<<size<<std::endl;
+
   if (fread(ptr, size, 1, fp)<=0) return false;
-  //std::cout << "Reading "<<size<<" OK"<<std::endl;
+
   if (swap)
   {
-    //std::cout << "Swapping "<<size<<std::endl;
+
     unsigned int* p = (unsigned int*)ptr;
     while (size>=sizeof(unsigned int))
     {
@@ -71,7 +71,7 @@ static bool swapread(std::vector<T>& dest, FILE* fp)
 {
   int size=0;
   if (!swapread(&size,sizeof(int),fp)) return false;
-  //std::cout << "size = "<<size<<std::endl;
+
   return swapread(dest, size, fp);
 }
 
@@ -183,13 +183,13 @@ bool Mesh::loadMesh(const char* filename)
       ++p0;
     }
   }
-  //std::cout << "Load Faces"<<std::endl;
+
   if (getAttrib(MESH_FACES))
     if (!swapread(faces_p,fp)) return false;
-  //std::cout << "Load DistMap"<<std::endl;
+
   if (getAttrib(MESH_DISTMAP))
     if (!swapread_malloc(distmap,true,fp)) return false;
-  //std::cout << "Load Voxel"<<std::endl;
+
   if (getAttrib(MESH_VOXEL))
     if (!swapread_malloc(voxel,false,fp)) return false;
   fclose(fp);

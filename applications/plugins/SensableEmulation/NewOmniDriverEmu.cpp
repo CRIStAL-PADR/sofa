@@ -222,7 +222,7 @@ void *hapticSimuExecute( void *ptr )
             {
                 double realFreq = 1.0/( (realTimeAct - realTimePrev)*timeScale );
                 averageFreq += realFreq;
-                //std::cout << "actual frequency = " << realFreq << std::endl;
+
                 if (realFreq < minimalFreq)
                     minimalFreq = realFreq;
 
@@ -442,7 +442,7 @@ void NewOmniDriverEmu::onKeyReleasedEvent(core::objectmodel::KeyreleasedEvent *k
 void NewOmniDriverEmu::handleEvent(core::objectmodel::Event *event)
 {
 
-    //std::cout<<"NewEvent detected !!"<<std::endl;
+
 
 
     if (dynamic_cast<sofa::simulation::AnimateBeginEvent *>(event))

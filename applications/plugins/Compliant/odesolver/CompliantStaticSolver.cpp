@@ -137,7 +137,7 @@ void CompliantStaticSolver::ls_secant(helper& op,
         
         const SReal g = op.dot(op.f, dir);
 
-        // std::cout << "line search (secant) " << k << " "  << total << " " << g << std::endl;
+
 
         // are we done ?
         if( std::abs(g) <= info.precision ) break;
@@ -216,7 +216,7 @@ struct CompliantStaticSolver::potential_energy {
         SReal dummy, result;
         op.mec.computeEnergy(dummy, result);
 
-        // std::cout << "potential energy: " << x << ", " << result << std::endl;
+
         
         return result;
     }
@@ -251,7 +251,7 @@ void CompliantStaticSolver::ls_brent(helper& op,
 
         opt::minimum_bracket(a, b, c, f);
 
-        // std::cout << "bracketing: " << a.x << ", " << c.x << std::endl;
+
     
         // TODO compute this from precision
         const int bits = 32;
@@ -261,7 +261,7 @@ void CompliantStaticSolver::ls_brent(helper& op,
                                                                a.x, c.x,
                                                                bits,
                                                                iter);
-            // std::cout << "brent: " << res.x << std::endl;
+
         }
 
     }
@@ -394,7 +394,7 @@ int CompliantStaticSolverClass = core::RegisterObject("Static solver")
             getContext()->executeVisitor(&vis, true);
 
             // core::behavior::MultiVecDeriv ext(&op.vec, core::VecDerivId::externalForce() );
-            // std::cout << ext << std::endl;
+
         }
         
         // obtain (projected) gradient

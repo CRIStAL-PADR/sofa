@@ -189,7 +189,7 @@ void LabelGridImageToolBoxAction::executeButtonClick()
     l->executeAction();
     updateGraphs();
 
-    //std::cout << "exitButton"<<std::endl;
+
 }
 
 void LabelGridImageToolBoxAction::selectionPointEvent(int /*mouseevent*/, const unsigned int /*axis*/,const sofa::defaulttype::Vec3d& /*imageposition*/,const sofa::defaulttype::Vec3d& /*position3D*/,const QString& /*value*/)
@@ -228,7 +228,7 @@ void LabelGridImageToolBoxAction::selectionPointButtonClick(bool b)
 void LabelGridImageToolBoxAction::addOnGraphs()
 {
 
-//    std::cout << "addOnGraph"<<std::endl;
+
 
     path[0] = GraphXY->addPath(QPainterPath());
     path[1] = GraphXZ->addPath(QPainterPath());
@@ -331,7 +331,7 @@ void LabelGridImageToolBoxAction::updateColor()
 /*
 void LabelGridImageToolBoxAction::sectionButtonClick()
 {
-   // std::cout << "LabelGridImageToolBoxAction::sectionButtonClick()"<<std::endl;
+
     sofa::defaulttype::Vec3d pos = LGITB()->d_ip.getValue();
     
     sofa::defaulttype::Vec3i pos2(round(pos.x()),round(pos.y()),round(pos.z()));

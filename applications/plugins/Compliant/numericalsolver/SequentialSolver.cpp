@@ -251,7 +251,7 @@ SReal BaseSequentialSolver::step(vec& lambda,
         // fix net to avoid error accumulations ?
 	}
 
-	// std::cerr << "sanity check: " << (net - mapping_response * lambda).norm() << std::endl;
+
 
 	// TODO is this needed to avoid error accumulation ?
 	// net = mapping_response * lambda;

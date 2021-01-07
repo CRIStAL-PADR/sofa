@@ -102,7 +102,7 @@ public:
     {
         m_previousPosition = this->fromModel->read(core::ConstVecCoordId::position())->getValue();
 
-//         std::cout<<"applyJT   m_previousPosition = "<<m_previousPosition<<std::endl;
+
 
         Inherit::applyJT(cparams  /* PARAMS FIRST */, out, in);
     }

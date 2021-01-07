@@ -58,7 +58,7 @@ using sofa::core::objectmodel::DDGNode;
 ///
 ///   In constructor:
 ///   cb.addCallback([&a,&b](DataCallback*){
-///                     std::cout << "sum is:" << a.getValue()+b.getValue() << std::endl;
+
 ///                   });
 ///
 ///   cb.addInputs({&a,&b});  or cb.addInput(&a);  cb.addInput(&b);

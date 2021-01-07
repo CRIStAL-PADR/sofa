@@ -556,7 +556,7 @@ public:
 	if (!simple)
 	{
 	    smoothgroup = atoi(skip(c));
-	    //std::cout << "smooth group "<<smoothgroup << std::endl;
+
 	}
 	break;
       case 'u':

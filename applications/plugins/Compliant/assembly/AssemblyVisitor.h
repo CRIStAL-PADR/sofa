@@ -68,7 +68,7 @@ public:
 	// reset state
 	void clear();
 	
-	// outputs data to std::cout
+
 	void debug() const; 
 	
 public:

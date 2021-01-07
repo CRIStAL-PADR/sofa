@@ -533,7 +533,7 @@ void OmniDriver::handleEvent(core::objectmodel::Event *event)
                 xfree[currentToolIndex].getCenter() = world_H_virtualTool.getOrigin();
                 x[currentToolIndex].getCenter() = world_H_virtualTool.getOrigin();
 
-                //      std::cout << world_H_virtualTool << std::endl;
+
 
                 xfree[currentToolIndex].getOrientation() = world_H_virtualTool.getOrientation();
                 x[currentToolIndex].getOrientation() = world_H_virtualTool.getOrientation();

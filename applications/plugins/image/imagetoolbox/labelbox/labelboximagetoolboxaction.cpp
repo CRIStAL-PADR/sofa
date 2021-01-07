@@ -111,7 +111,7 @@ void LabelBoxImageToolBoxAction::selectionPointButtonClick(bool b)
 void LabelBoxImageToolBoxAction::addOnGraphs()
 {
 
-//    std::cout << "addOnGraph"<<std::endl;
+
 
     path[0] = GraphXY->addPath(QPainterPath());
     path[1] = GraphXZ->addPath(QPainterPath());
@@ -271,7 +271,7 @@ void LabelBoxImageToolBoxAction::updateColor()
 
 void LabelBoxImageToolBoxAction::deleteButtonClick()
 {
-   // std::cout << "LabelBoxImageToolBoxAction::sectionButtonClick()"<<std::endl;
+
 
     sofa::component::engine::LabelBoxImageToolBox* l = LBITB();
     helper::vector<sofa::defaulttype::Vec3d>& vip = *(l->d_ip.beginEdit());

@@ -321,7 +321,7 @@ void genericColoredGSImpl(ImageType& img, const MaskType& mask, unsigned iterati
         std::swap( KO, OK );
     }
 
-//    std::cerr<<"DiffusionSolver::solveGaussSeidel "<<it<<" iterations"<<std::endl;
+
 }
 
 
@@ -375,7 +375,7 @@ void genericGSImpl(ImageType& img, const MaskType& mask, unsigned iterations, Re
         }
     }
 
-//    std::cerr<<"DiffusionSolver::solveGaussSeidel "<<it<<" iterations"<<std::endl;
+
 }
 
 
@@ -441,7 +441,7 @@ void genericJacobiImpl(ImageType& img, const MaskType& mask, unsigned iterations
         std::swap( current, previous );
     }
 
-//    std::cerr<<"DiffusionSolver::solveJacobi "<<it<<" iterations"<<std::endl;
+
 }
 
 
@@ -659,7 +659,7 @@ void genericCGImpl(ImageType& img, const MaskType& mask, unsigned iterations, Re
     unsigned it=0;
     for(  ; it<iterations ; ++it )
     {
-//        std::cerr<<"CG norm: "<<rnormold<<std::endl;
+
 
         matrixmult<Real,ImageType,MaskType,Value>( Ap, p, mask, lineSize, sliceSize, spacingX, spacingY, spacingZ, material ); // Ap = A * p
 
@@ -678,7 +678,7 @@ void genericCGImpl(ImageType& img, const MaskType& mask, unsigned iterations, Re
         rnormold = rnorm;
     }
 
-//    std::cerr<<"DiffusionSolver::solveCG "<<it<<" iterations"<<std::endl;
+
 }
 
 

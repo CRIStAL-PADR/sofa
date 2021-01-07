@@ -279,7 +279,7 @@ TEST(MapMapSparseMatrixEigenUtilsTest, checkAddMultTransposeEigenForCumulativeWr
     jacobian.makeCompressed();
 
 
-    //std::cout << jacobian << std::endl;
+
 
     typedef sofa::defaulttype::Rigid3Types::Deriv RigidDeriv;
     typedef sofa::defaulttype::Vec3Types::Deriv  Deriv;

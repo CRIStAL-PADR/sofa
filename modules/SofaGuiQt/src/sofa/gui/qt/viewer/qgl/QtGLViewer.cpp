@@ -611,7 +611,7 @@ void QtGLViewer::DisplayOBJs()
 
     if (!initTexturesDone)
     {
-        //		std::cout << "-----------------------------------> initTexturesDone\n";
+
         //---------------------------------------------------
         simulation::getSimulation()->initTextures(groot.get());
         //---------------------------------------------------

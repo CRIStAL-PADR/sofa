@@ -176,7 +176,7 @@ struct TestSparseMatrices : public Sofa_test<_Real>
     /// Create the context for the matrix tests.
     TestSparseMatrices()
     {
-        //std::cout<<"Matrix_test "<<NumRows<<" "<<NumCols<<" "<<BlockRows<<" "<<BlockCols<<std::endl << "seed number = " << BaseSofa_test::seed<<std::endl;
+
 
         // resize and fill the matrices
         generateRandomMat( mat, true );

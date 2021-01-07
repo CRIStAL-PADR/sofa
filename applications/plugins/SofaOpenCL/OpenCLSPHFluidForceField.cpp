@@ -75,7 +75,7 @@ void SPHFluidForceFieldOpenCL3f_computeDensity(unsigned int size, const _device_
 
     int BSIZE = gpu::opencl::OpenCLMemoryManager<float>::BSIZE;
     SPHFluidForceField_CreateProgramWithFloat();
-//std::cout << BSIZE << " " << stringBSIZE << "\n";
+
     if(SPHFluidForceFieldOpenCL3f_computeDensity_kernel==NULL)SPHFluidForceFieldOpenCL3f_computeDensity_kernel
             = new OpenCLKernel(SPHFluidForceFieldOpenCLFloat_program,"SPHFluidForceField_computeDensity");
 
@@ -95,9 +95,9 @@ void SPHFluidForceFieldOpenCL3f_computeDensity(unsigned int size, const _device_
     size_t work_size[1];
     work_size[0]=60*BSIZE;
 
-//	std::cout << "COMPUTE DENSITY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
-    //std::cout << __LINE__ << __FILE__ << " " << size << " " << nbSpringPerVertex << " " << springs.offset << " " << f.offset << " " <<  x.offset << " " <<  v.offset<< " " << dfdx.offset << "\n";
-    //std::cout << local_size[0] << " " << size << " " <<work_size[0] << "\n";
+
+
+
 
     SPHFluidForceFieldOpenCL3f_computeDensity_kernel->execute(0,1,NULL,work_size,local_size);	//note: num_device = const = 0
 
@@ -161,8 +161,8 @@ void SPHFluidForceFieldOpenCL3f_addForce (unsigned int size, const _device_point
     size_t work_size[1];
     work_size[0]=60*BSIZE;
 
-    //std::cout << __LINE__ << __FILE__ << " " << size << " " << nbSpringPerVertex << " " << springs.offset << " " << f.offset << " " <<  x.offset << " " <<  v.offset<< " " << dfdx.offset << "\n";
-    //std::cout << local_size[0] << " " << size << " " <<work_size[0] << "\n";
+
+
 
     SPHFluidForceFieldOpenCL3f_addForce_kernel->execute(0,1,NULL,work_size,local_size);	//note: num_device = const = 0
 

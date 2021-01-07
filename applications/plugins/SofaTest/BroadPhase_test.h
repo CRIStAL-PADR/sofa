@@ -231,34 +231,34 @@ bool GENTest(sofa::core::CollisionModel * cm1,sofa::core::CollisionModel * cm2,D
     //cm1 self intersections
     for(unsigned int i = 0 ; i < boxes.size() ; ++i){
         for(unsigned int j = i + 1 ; j < boxes.size() ; ++j){
-//            std::cout<<"colliding models "<<boxes[i].cube.getCollisionModel()->getLast()<<" "<<boxes[j].cube.getCollisionModel()->getLast()<<std::endl;
-//            std::cout<<"colliding indices "<<boxes[i].cube.getIndex()<<" "<<boxes[j].cube.getIndex()<<std::endl;
-//            std::cout<<"min/max vect"<<std::endl;
+
+
+
 //            boxes[i].show();
 //            boxes[j].show();
             if(boxes[i].squaredDistance(boxes[j]) <= alarmDist * alarmDist){
                 brutInter.push_back(std::make_pair((sofa::core::CollisionElementIterator)(boxes[i].cube),(sofa::core::CollisionElementIterator)(boxes[j].cube)));
-//                std::cout<<"\tCOLLIDING"<<std::endl;
-//                std::cout<<"boxi"<<std::endl;
+
+
 //                boxes[i].show();
-//                std::cout<<"boxj"<<std::endl;
+
 //                boxes[j].show();
             }
             else{
-                //std::cout<<"\tNOT"<<std::endl;
+
             }
         }
-        //std::cout<<"=========>>"<<std::endl;
+
     }
 
-//    std::cout<<"SORTED BRUTE"<<std::endl;
+
     CItCompare c;
     std::sort(brutInter.begin(),brutInter.end(),c);
 //    for(unsigned int i = 0 ; i < brutInter.size() ; ++i){
-//        std::cout<<"colliding models "<<brutInter[i].first.getCollisionModel()->getLast()<<" "<<brutInter[i].second.getCollisionModel()->getLast()<<std::endl;
-//        std::cout<<"colliding indices "<<brutInter[i].first.getIndex()<<" "<<brutInter[i].second.getIndex()<<std::endl;
+
+
 //    }
-//    std::cout<<"========SORTED BRUTE"<<std::endl;
+
 
     col_detection.beginBroadPhase();
     col_detection.addCollisionModel(cm1->getFirst());
@@ -401,7 +401,7 @@ sofa::component::collision::OBBCollisionModel<sofa::defaulttype::Rigid3Types>::S
 //dVecCoord.endEdit();
     obbCollisionModel->computeBoundingTree(0);
 
-    //std::cout<<"the proximity "<<obbCollisionModel->getProximity()<<std::endl;
+
     return obbCollisionModel;
 }
 
@@ -457,7 +457,7 @@ bool BroadPhaseTest<BroadPhase>::randDense(){
     ////*!randTest(i,20,20,Vector3(-5,-5,-5),Vector3(5,5,5))*/
     for(int i = 0 ; i < 100 ; ++i){
         if(/*!randTest(i,2,2,Vector3(-2,-2,-2),Vector3(2,2,2))*/!randTest(i,40,20,sofa::defaulttype::Vector3(-5,-5,-5),sofa::defaulttype::Vector3(5,5,5))){
-            //std::cout<<"FAIL seed number "<<i<<std::endl;
+
             ADD_FAILURE() <<"FAIL seed number "<<i<< std::endl;
             return false;
         }
@@ -470,7 +470,7 @@ template <class BroadPhase>
 bool BroadPhaseTest<BroadPhase>::randSparse(){
     for(int i = 0 ; i < 1000 ; ++i){
         if(/*!randTest(i,1,1,Vector3(-2,-2,-2),Vector3(2,2,2))*/!randTest(i,2,1,sofa::defaulttype::Vector3(-5,-5,-5),sofa::defaulttype::Vector3(5,5,5))){
-            //std::cout<<"FAIL seed number "<<i<<std::endl;
+
             ADD_FAILURE() <<"FAIL seed number "<<i<< std::endl;
             return false;
         }

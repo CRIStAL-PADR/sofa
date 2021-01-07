@@ -375,7 +375,7 @@ void ManifoldTriangleSetTopologyContainer::createEdgesAroundVertexArray()
         {
             m_edgesAroundVertex[vertexIndex].push_back(map_NextEdgeVertex[vertexIndex][nextVertex]);
             nextVertex = (*(it_map = map_OppositeEdgeVertex[vertexIndex].find(nextVertex))).second;
-            //std::cout << "nextVertex: " << nextVertex;
+
             //si different de fin
         }
 

@@ -104,13 +104,13 @@ public:
 
     bool createWidgets(DataWidget* /*parent*/, const ImageToolBoxDataType& d, bool /*readOnly*/)
     {
-        //std::cout << "imagetoolbox_data_widget_container::createWidgets" << std::endl;
+
         main = new QMainWindow();
         
-        // std::cout << "a" << main << std::endl;
+
         central = new CentralWidget();
         
-         //std::cout << "b" << central << std::endl;
+
         central->createLayout();
         central->createWidgets(d.getPlane());
         central->insertWidgets();
@@ -205,10 +205,10 @@ public:
     virtual bool createWidgets()
     {
     
-    //std::cout << "ImageToolBoxWidget::createWidgets" << std::endl;
+
         bool b = Inherit::createWidgets();
         
-    //std::cout << "~ImageToolBoxWidget::createWidgets" << std::endl;
+
     
  //       imagetoolbox_data_widget_container* s = dynamic_cast<imagetoolbox_data_widget_container *>(&this->container);
         //this->connect(s,SIGNAL(updateImage()),this,SLOT(setWidgetDirty()));

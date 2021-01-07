@@ -69,7 +69,7 @@ void THMPGSpatialHashing::sumEdgeLength_template(core::CollisionModel *cm){
     const sofa::core::topology::BaseMeshTopology::SeqEdges & seq_edges = bmt->getEdges();
 
     for(unsigned int i = 0 ; i < seq_edges.size() ; ++i){
-        //std::cout<<"one edge length "<< (DataTypes::getCPos(coords[seq_edges[i][0]]) - DataTypes::getCPos(coords[seq_edges[i][1]])).norm()<<std::endl;
+
         _total_edges_length += (DataTypes::getCPos(coords[seq_edges[i][0]]) - DataTypes::getCPos(coords[seq_edges[i][1]])).norm();
     }
 
@@ -118,8 +118,8 @@ void THMPGSpatialHashing::endBroadPhase(){
         THMPGHashTable::setAlarmDistance(intersectionMethod->getAlarmDistance());
         _params_initialized = true;
 
-//        std::cout<<"cell size "<<_cell_size<<std::endl;
-//        std::cout<<"nb elems "<<_nb_elems<<std::endl;
+
+
     }
 }
 

@@ -218,7 +218,7 @@ bool Mesh::saveLwo(const char* filename) const
       */
       out.openChunk(ID("PNTS"));
       {
-          //std::cout<<nbp()<<" points, "<<nbf()<<" faces"<<std::endl;
+
           //fprintf(fp,"#Face Count %d\n",nbf());
           if (group)
           {

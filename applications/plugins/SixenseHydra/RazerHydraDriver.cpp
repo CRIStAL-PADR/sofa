@@ -88,7 +88,7 @@ void controller_manager_setup_callback( sixenseUtils::ControllerManager::setup_s
 
 
 sixenseUtils::IControllerManager::setup_callback(controller_manager_setup_callback_ONE_CONTROLLER )(sixenseUtils::IControllerManager::setup_step step) {
-	//std::cout << " --> step: " << sixenseUtils::getTheControllerManager()->getCurrentStep();
+
 	if(step == sixenseUtils::IControllerManager::P1C2_AIM_P1L) {
 		std::cout << sixenseUtils::getTheControllerManager()->getCurrentStep() << std::endl;
 	}
@@ -196,9 +196,9 @@ void RazerHydraDriver::handleEvent(core::objectmodel::Event *event)
 		first_controller_index = sixenseUtils::getTheControllerManager()->getIndex( sixenseUtils::ControllerManager::P1L );
 		second_controller_index = sixenseUtils::getTheControllerManager()->getIndex( sixenseUtils::ControllerManager::P1R );
 
-		//std::cout << this->getName() << " --> (" << first_controller_index << "," << second_controller_index << ")";
-		//std::cout << this->getName() << " --> step: " << sixenseUtils::getTheControllerManager()->getCurrentStep();
-		//std::cout << std::endl;
+
+
+
 
 
 		for( int base=0; base<sixenseGetMaxBases(); base++ ) {
@@ -237,22 +237,22 @@ void RazerHydraDriver::check_for_button_presses( sixenseAllControllerData *acd )
 	second_controller_states.update( &acd->controllers[second_controller_index] );
 
 	if(first_controller_index != -1) {
-		//std::cout << fabs(acd->controllers[first_controller_index].trigger) << std::endl;
+
 		triggerValueFirstTool.setValue( fabs(acd->controllers[first_controller_index].trigger) );
 	} else { triggerValueFirstTool.setValue(0.0); }
 
 	if(second_controller_index != -1) { //acd->controllers[second_controller_index].buttons & SIXENSE_BUTTON_BUMPER) {
-		//std::cout << fabs(acd->controllers[second_controller_index].trigger) << std::endl;
+
 		triggerValueSecondTool.setValue( fabs(acd->controllers[second_controller_index].trigger) );
 	} else { triggerValueSecondTool.setValue(0.0); }
 
 	if( acd->controllers[second_controller_index].trigger != 0) {//first_controller_states.triggerJustPressed() ) {
-		//std::cout<< "TRIGGER of first tool pressed" << std::endl;
+
 		triggerJustPressedFirstTool.setValue(true);
 	} else { triggerJustPressedFirstTool.setValue(false);	}
 
 	if( second_controller_states.triggerJustPressed() ) {
-		//std::cout<< "TRIGGER of second tool pressed" << std::endl;
+
 		triggerJustPressedSecondTool.setValue(true);
 	} else { triggerJustPressedSecondTool.setValue(false); }
 }

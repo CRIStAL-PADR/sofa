@@ -149,7 +149,7 @@ public:
     /// @return true if the file was found in one of the directories, false otherwise
     bool findFileFromFile(std::string& filename, const std::string& basefile, std::ostream* errlog=&std::cerr);
 
-    /// Print the list of path to std::cout
+
     void print();
 
 

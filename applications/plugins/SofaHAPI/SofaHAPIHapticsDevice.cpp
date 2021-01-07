@@ -271,7 +271,7 @@ namespace sofa
 				}
 				if (force.norm() > 0 && drawForceScale.getValue() != 0.0f)
 				{
-					//std::cout << "F = " << force << std::endl;
+
 					Vec3d fscaled = force*(drawForceScale.getValue()*data.scale);
 					Transform baseDevice_H_endDeviceF(pos*data.scale+fscaled, quat);
 					Transform world_H_virtualToolF = data.world_H_baseDevice * baseDevice_H_endDeviceF * data.endDevice_H_virtualTool;
@@ -421,7 +421,7 @@ namespace sofa
 					xfree[currentToolIndex].getCenter() = world_H_virtualTool.getOrigin();
 					x[currentToolIndex].getCenter() = world_H_virtualTool.getOrigin();
 
-					//      std::cout << world_H_virtualTool << std::endl;
+
 
 					xfree[currentToolIndex].getOrientation() = world_H_virtualTool.getOrientation();
 					x[currentToolIndex].getOrientation() = world_H_virtualTool.getOrientation();

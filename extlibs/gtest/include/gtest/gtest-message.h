@@ -74,7 +74,7 @@ namespace testing {
 //
 //   testing::Message foo;
 //   foo << 1 << " != " << 2;
-//   std::cout << foo;
+
 //
 // will print "1 != 2".
 //

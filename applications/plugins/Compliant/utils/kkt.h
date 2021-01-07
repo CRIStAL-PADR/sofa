@@ -230,7 +230,7 @@ struct kkt_opt {
 		{ 
 		result.resize( m + n );
 		assert( n );
-		// std::cerr << sys.C << std::endl; 
+
 	}
 	
 

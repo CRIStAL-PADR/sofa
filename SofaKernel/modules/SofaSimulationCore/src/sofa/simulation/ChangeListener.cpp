@@ -47,19 +47,19 @@ void ChangeListener::removeObject(Node* /*parent*/, core::objectmodel::BaseObjec
 /*****************************************************************************************************************/
 bool ChangeListener::changed()
 {
-//       std::cerr<<"print difference"<<std::endl;
+
 //       	std::set<core::objectmodel::BaseObject*>::iterator ibeg=added.begin();
 //       	std::set<core::objectmodel::BaseObject*>::iterator iend=added.end();
-// 	std::cerr<<"added"<<std::endl;
+
 // 	while(ibeg!=iend){
-// 			std::cerr<<(*ibeg)->getName()<<std::endl;
+
 // 		ibeg++;
 // 	}
 //       	 ibeg=removed.begin();
 //       	 iend=removed.end();
-// 	std::cerr<<"removed"<<std::endl;
+
 // 	while(ibeg!=iend){
-// 			std::cerr<<*ibeg<<std::endl;
+
 // 		ibeg++;
 // 	}
 

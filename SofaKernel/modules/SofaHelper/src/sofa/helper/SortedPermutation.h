@@ -73,7 +73,7 @@ helper::vector<unsigned> sortedPermutation( const Container& values )
 ///     values.push_back(1);
 ///     vector<unsigned> permutation = sortedPermutation(values);
 ///    //The following prints: 3 2 0 1
-///     std::cout << permutation << "\n";
+
 
 
 

@@ -539,7 +539,7 @@ void SimpleGUI::DrawAxis(double xpos, double ypos, double zpos,
 // ---------------------------------------------------
 void SimpleGUI::DrawBox(SReal* minBBox, SReal* maxBBox, double r)
 {
-    //std::cout << "box = < " << minBBox[0] << ' ' << minBBox[1] << ' ' << minBBox[2] << " >-< " << maxBBox[0] << ' ' << maxBBox[1] << ' ' << maxBBox[2] << " >"<< std::endl;
+
     if (r==0.0)
         r = (Vector3(maxBBox) - Vector3(minBBox)).norm() / 500;
     Enable<GL_DEPTH_TEST> depth;
@@ -848,7 +848,7 @@ void SimpleGUI::resizeGL(int width, int height)
     if(currentCamera)
         currentCamera->setViewport(width, height);
 
-//     std::cout << "GL window: " <<width<<"x"<<height <<std::endl;
+
 
     calcProjection();
 }

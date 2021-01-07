@@ -289,7 +289,7 @@ void SparsePARDISOSolver<TMatrix,TVector>::invert(Matrix& M)
         std::ofstream f;
         char name[100];
         sprintf(name, "%s/matrix_PARD_%s.txt", exportDir.c_str(), suffix.c_str());
-        //std::cout << this->getName() << ": Exporting to " << name << std::endl;
+
         f.open(name);
         f << M;
         f.close();
@@ -328,10 +328,10 @@ void SparsePARDISOSolver<TMatrix,TVector>::invert(Matrix& M)
     /* -------------------------------------------------------------------- */
 
     numActNZ = data->Mfiltered.getRowBegin().back();
-    //std::cout << this->getName() << "Actual NNZ = " << numActNZ << " previous NNZ = " << numPrevNZ << std::endl;
+
     if (numPrevNZ != numActNZ)
     {
-        //std::cout << "[" << this->getName() << "] analyzing the matrix" << std::endl;
+
         //sout << "Analyzing the matrix" << std::endl;
         if (callPardiso(data, 11)) return;
         data->factorized = true;        
@@ -377,7 +377,7 @@ void SparsePARDISOSolver<TMatrix,TVector>::solve (Matrix& M, Vector& z, Vector& 
     /* -------------------------------------------------------------------- */
     data->pardiso_iparm[7] = 0;       /* Max numbers of iterative refinement steps. */
 
-    //std::cout << "[" << this->getName() << "] solve the matrix" << std::endl;
+
     if (callPardiso(data, 33, &z, &r)) return;
     sofa::helper::AdvancedTimer::stepEnd("PardisoSolve");
 

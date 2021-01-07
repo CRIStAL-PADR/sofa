@@ -46,7 +46,7 @@ bool DiscoverNodes::VisitEnter(const TiXmlElement& element, const TiXmlAttribute
     }
     if( is_leafnode)
     {
-        //std::cout << element << std::endl;
+
         leaves.push_back(const_cast<TiXmlElement*>(&element));
     }
     nodes.push_back(const_cast<TiXmlElement*>(&element));

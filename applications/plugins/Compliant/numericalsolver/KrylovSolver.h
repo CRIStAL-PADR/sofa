@@ -25,7 +25,7 @@ class SOFA_Compliant_API KrylovSolver : public IterativeSolver {
 	
 	KrylovSolver();				
 	
-	Data<bool> verbose; ///< print debug stuff on std::cerr
+
     Data<unsigned> restart; ///< restart every n steps
 	
 	void init() override;

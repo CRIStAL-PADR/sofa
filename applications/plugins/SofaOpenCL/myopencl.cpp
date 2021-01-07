@@ -474,7 +474,7 @@ void myopenclReleaseBuffer(int /*device*/,cl_mem p)
 void myopenclEnqueueWriteBuffer(int device,cl_mem ddest,size_t offset,const void* hsrc,size_t n)
 {
     DEBUG_TEXT("myopenclEnqueueWriteBuffer");
-//std::cout << "clEnqueueWriteBuffer(" << device << ", " << ddest << ", " << offset << ", " << hsrc << ", " << n << ")" << std::endl;
+
     _error = clEnqueueWriteBuffer(_queues[device], ddest, CL_TRUE, offset, n, hsrc,0,NULL,NULL);
     myopenclShowError(__FILE__, __LINE__);
     DEBUG_TEXT("~myopenclEnqueueWriteBuffer");
@@ -536,7 +536,7 @@ void myopenclSetKernelArg<_device_pointer>(cl_kernel kernel, int num_arg, const 
 void myopenclSetKernelArg(cl_kernel kernel,int num_arg,int size,void* arg)
 {
     DEBUG_TEXT("myopenclSetKernelArg");
-//std::cout << "clSetKernelArg(kernel, " << num_arg << ", " << size << ", " << arg << ");" << std::endl;
+
     if (myopenclVerboseLevel>=LOG_TRACE)
     {
         if (size == (int)sizeof(cl_mem) && myopenclBufferId.find(*(cl_mem*)arg) != myopenclBufferId.end())

@@ -886,7 +886,7 @@ void SofaPhysicsSimulation::calcProjection()
     xFactor *= 0.01;
     yFactor *= 0.01;
 
-    //std::cout << xNear << " " << yNear << std::endl;
+
 
     zForeground = -vparams->zNear() - offset;
     zBackground = -vparams->zFar() + offset;

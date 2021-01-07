@@ -244,7 +244,7 @@ std::string ExportDotVisitor::getName(core::objectmodel::BaseObject* obj)
 
 void ExportDotVisitor::processObject(Node* /*node*/, core::objectmodel::BaseObject* obj)
 {
-    //std::cout << ' ' << obj->getName() << '(' << sofa::helper::gettypename(typeid(*obj)) << ')';
+
     const char* color=nullptr;
     if (display(obj,&color))
     {

@@ -60,7 +60,7 @@ static std::shared_ptr<DataModelRegistry> registerDataModels()
     ret->registerModel<SofaComponentNodeModel>();
     //for (auto compo : results)
     //{
-    //    std::cout << compo->className << std::endl;
+
     //    ret->registerModel<SofaComponentNodeModel>(QString::fromStdString(compo->className));
     //}
  

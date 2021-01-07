@@ -157,7 +157,7 @@ void DepthImageToolBoxAction::createNewRow(int layer)
 
 void DepthImageToolBoxAction::createNewRow()
 {
-    //std::cout << "createNewRow"<<std::endl;
+
 
     sofa::component::engine::DepthImageToolBox *l = DITB();
     
@@ -168,7 +168,7 @@ void DepthImageToolBoxAction::createNewRow()
     listLayers->update();
 
     l->createLayer();
-    //std::cout << l->layers.size()<<std::endl;
+
 
     this->connect(row,SIGNAL(valueChanged(int,QString,int,QString,int,QString,int,int)),this,SLOT(changeRow(int,QString,int,QString,int,QString,int,int)));
     row->change();
@@ -220,7 +220,7 @@ void DepthImageToolBoxAction::textToOffset(QString text, double &outValue, int &
 
 void DepthImageToolBoxAction::changeRow(int index,QString name,int layer1,QString offset1,int layer2,QString offset2,int base,int nbSlice)
 {
-    //std::cout << "DepthImageToolBoxAction::changeRow " << index << " "<< name.toStdString() << " "<<layer1<<" "<<offset1.toStdString()<<" "<<layer2<<" "<<offset2.toStdString()<<std::endl;
+
 
     sofa::component::engine::DepthImageToolBox *l = DITB();
 
@@ -237,7 +237,7 @@ void DepthImageToolBoxAction::changeRow(int index,QString name,int layer1,QStrin
     textToOffset(offset1,layer.offset1,layer.typeOffset1);
     textToOffset(offset2,layer.offset2,layer.typeOffset2);
 
-    //std::cout << layer.name << " " << layer.offset1 << " " << layer.typeOffset1 <<layer.offset2 << " " << layer.typeOffset2 <<std::endl;
+
 }
 
 DepthImageToolBoxAction::~DepthImageToolBoxAction()
@@ -256,17 +256,17 @@ void DepthImageToolBoxAction::executeButtonClick()
     l->executeAction();
     //updateGraphs();
 
-    //std::cout << "exitButton"<<std::endl;
+
 }
 
 void DepthImageToolBoxAction::saveButtonClick()
 {
-    //std::cout << "saveButtonClick"<<std::endl;
+
     sofa::component::engine::DepthImageToolBox *l = DITB();
     l->saveFile();
     //updateGraphs();
 
-    //std::cout << "exitButton"<<std::endl;
+
 }
 
 void DepthImageToolBoxAction::loaduttonClick()
@@ -275,7 +275,7 @@ void DepthImageToolBoxAction::loaduttonClick()
     l->loadFile();
     updateGraphs();
 
-    //std::cout << "exitButton"<<std::endl;
+
 }
 
 void DepthImageToolBoxAction::saveSceneButtonClick()
@@ -320,7 +320,7 @@ void DepthImageToolBoxAction::selectionPointButtonClick(bool b)
 void DepthImageToolBoxAction::addOnGraphs()
 {
 
-//    std::cout << "addOnGraph"<<std::endl;
+
 
     path[0] = GraphXY->addPath(QPainterPath());
     path[1] = GraphXZ->addPath(QPainterPath());
@@ -433,7 +433,7 @@ void DepthImageToolBoxAction::updateColor()
 /*
 void DepthImageToolBoxAction::sectionButtonClick()
 {
-   // std::cout << "DepthImageToolBoxAction::sectionButtonClick()"<<std::endl;
+
     sofa::defaulttype::Vec3d pos = LGITB()->d_ip.getValue();
     
     sofa::defaulttype::Vec3i pos2(round(pos.x()),round(pos.y()),round(pos.z()));

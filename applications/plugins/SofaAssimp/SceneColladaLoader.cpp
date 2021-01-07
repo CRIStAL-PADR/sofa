@@ -225,7 +225,7 @@ bool SceneColladaLoader::readDAE (std::ifstream &/*file*/, const char* /*filenam
                         nameStream << childIndex++;
                     currentNode->setName(nameStream.str());
 
-                    //std::cout << currentNode->getName() << std::endl;
+
                 }
 
                 // extract the node transformation to apply them later on its meshes
@@ -778,7 +778,7 @@ bool SceneColladaLoader::readDAE (std::ifstream &/*file*/, const char* /*filenam
                                         }
                                     }
 
-                                    //                                std::cerr<<"MESH "<<meshId<<" - DOF "<<k<<": "<<boneW<<std::endl;
+
 
                                 }
 

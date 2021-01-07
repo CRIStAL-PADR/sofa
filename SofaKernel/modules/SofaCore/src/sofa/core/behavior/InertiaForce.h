@@ -71,7 +71,7 @@ defaulttype::Vec<3, double>,
             )
 {
     const objectmodel::BaseContext::Vec3& omega=sv.getAngularVelocity();
-    //std::cerr<<"inertiaForce, sv = "<<sv<<", omega ="<<omega<<", a = "<<a<<", m= "<<m<<", x= "<<x<<", v= "<<v<<std::endl;
+
     return -( a + omega.cross( omega.cross(x) + v*2 ))*m;
 }
 
@@ -93,7 +93,7 @@ defaulttype::Vec<3, float>,
             )
 {
     const objectmodel::BaseContext::Vec3& omega=sv.getAngularVelocity();
-    //std::cerr<<"inertiaForce, sv = "<<sv<<", omega ="<<omega<<", a = "<<a<<", m= "<<m<<", x= "<<x<<", v= "<<v<<std::endl;
+
     return -( a + omega.cross( omega.cross(x) + v*2 ))*m;
 }
 

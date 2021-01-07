@@ -130,7 +130,7 @@ void RegistrationExporter::handleEvent(sofa::core::objectmodel::Event *event)
     if (sofa::core::objectmodel::KeypressedEvent::checkEventType(event))
     {
         sofa::core::objectmodel::KeypressedEvent* ev = static_cast<sofa::core::objectmodel::KeypressedEvent*>(event);
-        //std::cout << "key pressed " << ev->getKey() << std::endl;
+
         switch(ev->getKey())
         {
 

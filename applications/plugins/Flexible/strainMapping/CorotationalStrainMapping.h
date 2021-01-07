@@ -227,7 +227,7 @@ protected:
             for( int i=0 ; i < static_cast<int>(jacobianBlock.size()) ; i++ )
             {
                 out[i] = typename Inherit::OutCoord();
-                //std::cout << "applyBlock_polar : Index : " << i << std::endl;
+
                 jacobianBlock[i].addapply_polar( out[i], in[i] );
             }
             break;

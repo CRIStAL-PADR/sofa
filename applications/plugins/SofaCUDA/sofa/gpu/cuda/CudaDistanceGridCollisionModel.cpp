@@ -145,7 +145,7 @@ CudaDistanceGrid* CudaDistanceGrid::load(const std::string& filename, double sca
             std::cerr << "ERROR loading FlowVR mesh file "<<filename<<std::endl;
             return NULL;
         }
-        //std::cout << "bbox = "<<mesh.bb<<std::endl;
+
 
         if (!mesh.getAttrib(flowvr::render::Mesh::MESH_DISTMAP))
         {
@@ -388,7 +388,7 @@ void CudaDistanceGrid::calcCubeDistance(Real dim, int np)
     if (np > 1)
     {
         int nbp = np*np*np - (np-2)*(np-2)*(np-2);
-        //std::cout << "Copying "<<nbp<<" cube vertices."<<std::endl;
+
         meshPts.resize(nbp);
 
         for (int i=0,z=0; z<np; z++)
@@ -398,7 +398,7 @@ void CudaDistanceGrid::calcCubeDistance(Real dim, int np)
                         meshPts[i++] = Coord(x*dim*2/(np-1) - dim, y*dim*2/(np-1) - dim, z*dim*2/(np-1) - dim);
     }
 
-    //std::cout << "Computing distance field."<<std::endl;
+
 
     Real dim2 = dim; //*0.75f; // add some 'roundness' to the cubes corner
 
@@ -622,7 +622,7 @@ void CudaRigidDistanceGridCollisionModel::computeBoundingTree(int maxDepth)
         }
         if (elems[i].isTransformed)
         {
-            //std::cout << "Grid "<<i<<" transformation: <"<<elems[i].rotation<<"> x + <"<<elems[i].translation<<">"<<std::endl;
+
             Vector3 corner = elems[i].translation + elems[i].rotation * elems[i].grid->getBBCorner(0);
             emin = corner;
             emax = emin;
@@ -640,7 +640,7 @@ void CudaRigidDistanceGridCollisionModel::computeBoundingTree(int maxDepth)
             emax = elems[i].grid->getBBMax();
         }
         cubeModel->setParentOf(i, emin, emax); // define the bounding box of the current element
-        //std::cout << "Grid "<<i<<" within  <"<<emin<<">-<"<<emax<<">"<<std::endl;
+
     }
     cubeModel->computeBoundingTree(maxDepth);
     modified = false;

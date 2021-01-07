@@ -93,7 +93,7 @@ Error : libQGLViewer requires a minimum Qt version of 5.4 Error
 
 // For deprecated methods
 // #define __WHERE__ "In file "<<__FILE__<<", line "<<__LINE__<<": "
-// #define orientationAxisAngle(x,y,z,a) { std::cout << __WHERE__ <<
+
 // "getOrientationAxisAngle()." << std::endl; exit(0); }
 
 // Patch for gcc version <= 2.95. Seems to no longer be needed with recent Qt

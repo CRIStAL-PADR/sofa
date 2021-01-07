@@ -137,7 +137,7 @@ public:
             while((n=function.find(first)) != -1 && first.size()!=0) {function.replace(n,first.size(),second); std::cout << function <<"\n";}
         }
 
-        //std::cout << "replaceArg\n" << function;
+
         return function;
     }
 

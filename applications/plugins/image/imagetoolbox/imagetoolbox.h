@@ -201,7 +201,7 @@ public:
         VecLabel vec;
         context->get<Label, VecLabel >(&vec, sofa::core::objectmodel::BaseContext::SearchUp);
         wtoolbox->setLabels(vec);
-        //std::cout << "vec<Label>" <<vec.size() << " "<< wtoolbox->getLabels().size() << std::endl;
+
 
         //updateTextures();
         

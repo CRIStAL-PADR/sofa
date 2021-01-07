@@ -88,7 +88,7 @@ public:
         int i = cast_contacts.size();
         cast_contacts.resize(i + contPts.getNumContacts());
 
-        //std::cout<<"contPts.getNumContacts() "<<contPts.getNumContacts()<<std::endl;
+
 
         if(swapContPts){
             for(int j = 0 ; j < contPts.getNumContacts() ; ++j){
@@ -103,16 +103,16 @@ public:
                 dec_out.id = _id;++_id;
                 dec_out.elem = std::pair<typename CModel1::Element,typename CModel2::Element>(e1,e2);
                 //manpt.M
-//                std::cout<<"world 1 "<<std::endl;
+
 //                display(manpt.m_positionWorldOnA);
-//                std::cout<<"world 2 "<<std::endl;
+
 //                display(manpt.m_positionWorldOnB);
-//                std::cout<<"point 1 "<<std::endl;
+
 //                display(manpt.m_localPointA);
-//                std::cout<<"point 2 "<<std::endl;
+
 //                display(manpt.m_localPointB);
-//                std::cout<<"the normal ";display(manpt.m_normalWorldOnB);
-//                std::cout<<"distance "<<manpt.m_distance1<<std::endl;
+
+
 
                 dec_out.point[1].set(manpt.m_positionWorldOnA[0],manpt.m_positionWorldOnA[1],manpt.m_positionWorldOnA[2]);
                 dec_out.value = (manpt.m_distance1) - intersectionMethod.getContactDistance();
@@ -130,15 +130,15 @@ public:
                 //dec_out.value = std::max<SReal>(fabs(manpt.m_distance1) - intersectionMethod.getContactDistance(),(SReal)0.0);
                 //dec_out.value = (dec_out.point[0] - dec_out.point[1]).norm() - intersectionMethod.getContactDistance();
 
-//                std::cout<<cm1->name.getValue()<<" infos"<<std::endl;
-//                std::cout<<"point 0"<<std::endl;
+
+
 //                display(dec_out.point[0]);
-//                std::cout<<cm2->name.getValue()<<" infos"<<std::endl;
-//                std::cout<<"point 1"<<std::endl;
+
+
 //                display(dec_out.point[1]);
-//                std::cout<<"norm"<<std::endl;
+
 //                display(dec_out.normal);
-//                std::cout<<"value "<<dec_out.value<<std::endl;
+
                 //this is the end
 //                //this is the end
 
@@ -155,23 +155,23 @@ public:
                 //dec_out.id = getId(e1,e2);
                 dec_out.id = _id;++_id;
                 dec_out.elem = std::pair<typename CModel1::Element,typename CModel2::Element>(e1,e2);
-    //            std::cout<<"world 1 "<<std::endl;
+
     //            display(manpt.m_positionWorldOnA);
-    //            std::cout<<"world 2 "<<std::endl;
+
     //            display(manpt.m_positionWorldOnB);
-    //            std::cout<<"point 1 "<<std::endl;
+
     //            display(manpt.m_localPointA);
-    //            std::cout<<"point 2 "<<std::endl;
+
     //            display(manpt.m_localPointB);
-    //            std::cout<<"the normal ";display(manpt.m_normalWorldOnB);
-    //            std::cout<<"distance "<<manpt.m_distance1<<std::endl;
+
+
 
 
                 dec_out.point[1].set(manpt.m_positionWorldOnB[0],manpt.m_positionWorldOnB[1],manpt.m_positionWorldOnB[2]);
                 //dec_out.value = fabs(manpt.m_distance1) - intersectionMethod.getContactDistance();
                 //dec_out.value = fabs(manpt.m_distance1) - intersectionMethod.getContactDistance();
                 //dec_out.value = 1;
-                //std::cout<<"dist "<<manpt.m_distance1<<std::endl;
+
                 dec_out.normal.set(-manpt.m_normalWorldOnB[0],-manpt.m_normalWorldOnB[1],-manpt.m_normalWorldOnB[2]);
 
                 //dec_out.point[0] = dec_out.point[1] - dec_out.value * dec_out.normal;
@@ -185,15 +185,15 @@ public:
                 //dec_out.value = std::max<SReal>(fabs(manpt.m_distance1) - intersectionMethod.getContactDistance(),(SReal)0.0);
                 //dec_out.value = (dec_out.point[0] - dec_out.point[1]).norm() - intersectionMethod.getContactDistance();
 
-//                std::cout<<cm1->name.getValue()<<" infos"<<std::endl;
-//                std::cout<<"point 0"<<std::endl;
+
+
 //                display(dec_out.point[0]);
-//                std::cout<<cm2->name.getValue()<<" infos"<<std::endl;
-//                std::cout<<"point 1"<<std::endl;
+
+
 //                display(dec_out.point[1]);
-//                std::cout<<"norm"<<std::endl;
+
 //                display(dec_out.normal);
-//                std::cout<<"value "<<dec_out.value<<std::endl;
+
 //                //this is the end
                 ++i;
             }

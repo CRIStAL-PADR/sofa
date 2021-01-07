@@ -123,7 +123,7 @@ public:
         for(unsigned int i=0; i<vecLabel.size();i++)
         {
             Label *v = vecLabel[i];
-            //std::cout << "class" <<v->getName()<<std::endl;
+
             labelSelection->addItem(QString::fromStdString(v->getName()));
 
             LabelAction *la = v->createTBAction(this);
@@ -153,7 +153,7 @@ public:
 public slots:
     void setValueOnPlane(unsigned int axis,sofa::defaulttype::Vec3d ip,sofa::defaulttype::Vec3d p ,QString val)
     {
-        //std::cout << "testOnPlane: axis=" << axis << " ; ip=" << ip << " ; p="<<p<< " ; val="<<val.toStdString()<<std::endl; 
+
         
         currentAxis=axis;
         currentImagePosition = ip;

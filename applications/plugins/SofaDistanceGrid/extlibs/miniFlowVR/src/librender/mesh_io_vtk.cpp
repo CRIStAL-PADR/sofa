@@ -242,7 +242,7 @@ bool Mesh::loadVtk(const char* filename)
             nbf += nv - 2;
         i += nv;
     }
-    //std::cout << "init " << nbp << " points and " << nbf << " faces ( flags = " << flags << " )" << std::endl;
+
     init(nbp, nbf, flags);
     inputPoints->copyTo(points_p);
     nbf = 0;
@@ -257,7 +257,7 @@ bool Mesh::loadVtk(const char* filename)
             for (int j=2;j<nv;j++)
             {
                 f[2] = inFP[i+j];
-                //std::cout << "face " << nbf << " = " << f << std::endl;
+
                 FP(nbf++)=f;
                 f[1] = f[2];
             }

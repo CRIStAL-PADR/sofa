@@ -59,20 +59,20 @@ float Mesh::calcDist(Vec3f pos) const
   for (int i=0;i<nbf();i++)
   {
     dp = pos-getPP(getFP(i)[0]);
-    //std::cout << "dp="<<dp<<std::endl;
+
     Vec3f n = getFN(i);
-    //std::cout << "n="<<n<<std::endl;
-    //std::cout << "fu="<<getFU(i)<<std::endl;
-    //std::cout << "fv="<<getFV(i)<<std::endl;
+
+
+
     float d = dot(dp,n);
-    //std::cout << "d="<<d<<std::endl;
+
     float d2 = d*d;
     if (d2>=dist2) continue; // too far anyway
     float u = dot(dp,getFU(i));
-    //std::cout << "u="<<u<<std::endl;
+
     if (u<0.0f || u>1.0f) continue; // not in triangle
     float v = dot(dp,getFV(i));
-    //std::cout << "v="<<v<<std::endl;
+
     if (v<0.0f || u+v>1.0f) continue; // not in triangle
     // in triangle and nearest point
     dist2 = d2;

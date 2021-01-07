@@ -105,7 +105,7 @@ void BulletCollisionDetection::beginNarrowPhase(){
             continue;
 
         if(swapModels){
-            //std::cout<<"SWAPPING !!"<<std::endl;
+
             std::swap(finalcm1,finalcm2);
         }
 

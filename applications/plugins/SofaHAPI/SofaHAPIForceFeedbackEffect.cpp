@@ -60,7 +60,7 @@ namespace sofa
 				input.orientation.axis.y != input.orientation.axis.y ||
 				input.orientation.axis.z != input.orientation.axis.z )
 			{
-				//std::cerr << "Invalid data received from haptic device" << std::endl;
+
 				res.force.x = 0.0;
 				res.force.y = 0.0;
 				res.force.z = 0.0;

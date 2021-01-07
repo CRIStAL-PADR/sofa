@@ -117,7 +117,7 @@ void OpenCLProgram::createProgram()
     if(_source.size()==0) {std::cerr << "Error: no source\n"; exit(0);}
     if(_types.size()>0)_source = createTypes(&_types) + _source;
 
-    //std::cout << "\n--------------\nSOURCE\n---------------\n" << _source << "\n---------\n";
+
 
     createProgram(&_source);
 }
@@ -189,7 +189,7 @@ void OpenCLProgram::buildProgram(char* flags)
 bool OpenCLProgram::loadSource(const std::string& file_source, std::string* dest)
 {
     std::cout << "OPENCL: Loading " << file_source << std::endl;
-//std::cout << __FILE__ << " " << __LINE__ << " nom du source:" << file_source << "\n";
+
     std::string file_name = sofa::gpu::opencl::myopenclPath();
     file_name+= file_source;
 

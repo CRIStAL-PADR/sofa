@@ -181,7 +181,7 @@ public:
         {
             unsigned int currentColor = im_in->getCImg()(i,j,0,0,0);
 
-            //std::cout << currentColor << std::endl;
+
 
             double currentDistance = 1;
 
@@ -210,7 +210,7 @@ public:
             delete [] pColor; 
         }
 
-        //for(unsigned int i=0;i<sizemax;i++)std::cout << "test " << i << " :" << test[i]<<std::endl;
+
 
         
         
@@ -231,7 +231,7 @@ public:
 
 
 
-       // std::cout << "generate"<<std::endl;
+
     }
 
 

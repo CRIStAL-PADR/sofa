@@ -115,7 +115,7 @@ void ZoneGeneratorImageToolBoxAction::generatePointButtonClick()
 void ZoneGeneratorImageToolBoxAction::addOnGraphs()
 {
 
-//    std::cout << "addOnGraph"<<std::endl;
+
 /*
     cursor[0] = GraphXY->addPath(QPainterPath());
     cursor[1] = GraphXZ->addPath(QPainterPath());
@@ -210,7 +210,7 @@ void ZoneGeneratorImageToolBoxAction::updateGraphs()
     
     //QRectF boundaryXY = GraphXY->itemsBoundingRect();
     
-    //std::cout << "updateOnGraphs"<<std::endl;
+
     
     cursor[0]->setVisible(true);
     cursor[0]->setPath(drawCursor(pos.x(),pos.y()));
@@ -238,7 +238,7 @@ void ZoneGeneratorImageToolBoxAction::updateColor()
 
 void ZoneGeneratorImageToolBoxAction::sectionButtonClick()
 {
-    //std::cout << "ZoneGeneratorImageToolBoxAction::sectionButtonClick()"<<std::endl;
+
     sofa::defaulttype::Vec3d pos = CITB()->d_ip.getValue();
     
     sofa::defaulttype::Vec3i pos2(round(pos.x()),round(pos.y()),round(pos.z()));
@@ -328,7 +328,7 @@ void ZoneGeneratorImageToolBoxAction::createThreshold()
 
 void ZoneGeneratorImageToolBoxAction::positionModified()
 {
-    //std::cout << "positionModified" << std::endl;
+
     sofa::defaulttype::Vec3d v(vecX->value(),vecY->value(),vecZ->value());
     
     sofa::component::engine::ZoneGeneratorImageToolBoxNoTemplated* lp = CITB();
@@ -343,7 +343,7 @@ void ZoneGeneratorImageToolBoxAction::positionModified()
 
 void ZoneGeneratorImageToolBoxAction::radiusModified()
 {
-    //std::cout << "radiusModified" << std::endl;
+
 
     sofa::component::engine::ZoneGeneratorImageToolBoxNoTemplated* lp = CITB();
 
@@ -357,7 +357,7 @@ void ZoneGeneratorImageToolBoxAction::radiusModified()
 
 void ZoneGeneratorImageToolBoxAction::thresholdModified()
 {
-    //std::cout << "thresholdModified" << std::endl;
+
 
     sofa::component::engine::ZoneGeneratorImageToolBoxNoTemplated* lp = CITB();
 

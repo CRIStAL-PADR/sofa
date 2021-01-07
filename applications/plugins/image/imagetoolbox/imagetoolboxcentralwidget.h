@@ -214,7 +214,7 @@ public:
     {
         QWidget* parent = this;
     
-        //std::cout << "TImageToolBoxCentralWidget::createWidgets" << std::endl;
+
         info = new ImagePlaneInfoWidget(parent);
         
         QObject::connect(this,SIGNAL(onPlane(unsigned int,sofa::defaulttype::Vec3d,sofa::defaulttype::Vec3d,QString)),info,SLOT(onPlane(unsigned int,sofa::defaulttype::Vec3d,sofa::defaulttype::Vec3d,QString)));
@@ -326,7 +326,7 @@ public:
             QObject::connect(graphZY,SIGNAL(mousereleaseevent()),this,SIGNAL(mousereleaseevent()));
         }
 
-       // std::cout << "~TImageToolBoxCentralWidget::createWidgets" << std::endl;
+
         return true;
     }
     

@@ -257,7 +257,7 @@ void VisibilityOptimizer::optimize(vector<PtrPrimitive>& primitives,VRenderParam
                                 }
                                 catch(exception& )
                                 {
-                                        ; // std::cout << "Could not treat primitive " << pindex << ": internal gpc error." << endl ;
+
                                 }
                         }
 

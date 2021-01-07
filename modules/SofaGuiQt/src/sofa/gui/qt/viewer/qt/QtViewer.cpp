@@ -134,7 +134,7 @@ QGLFormat QtViewer::setupGLFormat(const unsigned int nbMSAASamples)
 #if defined(QT_VERSION) && QT_VERSION >= 0x040700
     int vmajor = 3, vminor = 2;
     //int vmajor = 4, vminor = 2;
-    //std::cout << "QtViewer: Trying to open an OpenGL " << vmajor << "." << vminor << " compatibility profile context" << std::endl;
+
     f.setVersion(vmajor,vminor);
     f.setProfile(QGLFormat::CompatibilityProfile);
 #endif
@@ -248,7 +248,7 @@ void QtViewer::initializeGL(void)
 
     if (!initialized)
     {
-        //std::cout << "progname=" << sofa::gui::qt::progname << std::endl;
+
         //sofa::helper::system::SetDirectory cwd(sofa::helper::system::SetDirectory::GetProcessFullPath(sofa::gui::qt::progname));
 
         // Define light parameters
@@ -452,7 +452,7 @@ void QtViewer::DrawAxis(double xpos, double ypos, double zpos, double arrowSize)
 // ---------------------------------------------------
 void QtViewer::DrawBox(SReal* minBBox, SReal* maxBBox, SReal r)
 {
-    //std::cout << "box = < " << minBBox[0] << ' ' << minBBox[1] << ' ' << minBBox[2] << " >-< " << maxBBox[0] << ' ' << maxBBox[1] << ' ' << maxBBox[2] << " >"<< std::endl;
+
     if (r == 0.0)
         r = (Vector3(maxBBox) - Vector3(minBBox)).norm() / 500;
 
@@ -652,7 +652,7 @@ void QtViewer::DisplayOBJs()
 
     if (!initTexturesDone)
     {
-        // 		std::cout << "-----------------------------------> initTexturesDone\n";
+
         //---------------------------------------------------
         getSimulation()->initTextures(groot.get());
         //---------------------------------------------------
@@ -813,7 +813,7 @@ void QtViewer::drawScene(void)
                 smode = sofa::component::visualmodel::BaseCamera::STEREO_INTERLACED;
                 if (smode != prevsmode) std::cout << "AUTO Stereo mode: Interlaced" << std::endl;
                 //smode = STEREO_SYDE_BY_SIDE_HALF;
-                //if (smode != prevsmode) std::cout << "AUTO Stereo mode: Side by Side Half" << std::endl;
+
             }
             prevsmode = smode;
         }
@@ -871,7 +871,7 @@ void QtViewer::drawScene(void)
 
     GLdouble mat[16];
 
-    //std::cout << "Default" << this->defaultFramebufferObject() << std::endl;
+
     currentCamera->getOpenGLModelViewMatrix(mat);
     glMultMatrixd(mat);
 
@@ -993,7 +993,7 @@ void QtViewer::resizeGL(int width, int height)
     if(currentCamera)
         currentCamera->setViewport(width, height);
 
-    // 	std::cout << "GL window: " <<width<<"x"<<height <<std::endl;
+
 
     calcProjection(width, height);
 
@@ -1460,7 +1460,7 @@ bool QtViewer::mouseEvent(QMouseEvent * e)
             {
                 //g_DepthBias[0] += dx*0.01;
                 //g_DepthBias[1] += dy * 0.01;
-                //std::cout << "Depth bias = " << g_DepthBias[0] << " "
+
                 //          << g_DepthBias[1] << std::endl;
                 update();
                 _mouseInteractorSavedPosX = eventX;
@@ -1476,7 +1476,7 @@ bool QtViewer::mouseEvent(QMouseEvent * e)
             {
                 //g_DepthOffset[0] += dx * 0.01;
                 //g_DepthOffset[1] += dy * 0.01;
-                //std::cout << "Depth offset = " << g_DepthOffset[0] << " "
+
                 //          << g_DepthOffset[1] << std::endl;
                 update();
                 _mouseInteractorSavedPosX = eventX;

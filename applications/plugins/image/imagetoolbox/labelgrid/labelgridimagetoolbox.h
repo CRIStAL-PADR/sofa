@@ -173,7 +173,7 @@ public:
             }
             else if(list[i]<list[i+1])
             {
-                //std::cout << "swap " << list[i] << " " << list[i+1] << std::endl;
+
 
                 std::swap(list[i],list[i+1]);
                 if(i!=0) i--;
@@ -185,12 +185,12 @@ public:
         while(list.back()==-1)list.pop_back();
 
         /////////////////////////////////////////
-        //std::cout << "list sorted = [ ";
+
         /*for(unsigned int i=0;i<list.size();i++)
         {
-          //  std::cout << list[i] << " ";
+
         }*/
-        //std::cout << "]" << std::endl;
+
         /////////////////////////////////////////
 
         return list;
@@ -200,9 +200,9 @@ public:
     {
         if(!labelpoints)return false;
 
-//        std::cout << "hahahaha" << labelpoints->d_ip.getValue().size()<<std::endl;
+
         if(labelpoints->d_ip.getValue().size()==0)return false;
-//        std::cout << "hahahaha" << labelpoints->d_ip.getValue().size()<<std::endl;
+
 
         Vec2ui reso = d_reso.getValue();
         if(reso.x()==0 || reso.y()==0)return false;
@@ -225,7 +225,7 @@ public:
             double minBox = labelbox->d_ipbox.getValue()[axis];
             double maxBox = labelbox->d_ipbox.getValue()[3+axis];
 
-            //std::cout << minBox << " "<<maxBox << std::endl;
+
 
             if(maxBox<=max)
             {
@@ -253,12 +253,12 @@ public:
             minIsBox = false;
         }
 
-        //std::cout << "min-max " << min << " " <<max << " "<<minIsBox<< " "<<maxIsBox<<std::endl;
+
 
         // create first item of section interpolation
         if(minIsBox)
         {
-          //  std::cout << "ooo"<<std::endl;
+
             interpolationItemList.push_back( calculteII(min,list));
         }
         else
@@ -285,7 +285,7 @@ public:
         // create last item of section interpolation
         if(maxIsBox)
         {
-            //std::cout << "lo"<<std::endl;
+
             interpolationItemList.push_back( calculteII(max,list));
         }
         else
@@ -329,7 +329,7 @@ public:
 
     InterpolationItem calculteII(double current,helper::vector<int>& list)
     {
-        //std::cout << "--------------" <<std::endl << "current "<<current<<std::endl;
+
 
         InterpolationItem it;
         int c = current;
@@ -337,15 +337,15 @@ public:
 
         for(unsigned int i=0;i<list.size()-1;i++)
         {
-          //  std::cout << i << std::endl;
-           // std::cout << list[i] << "/"<<list[i+1] << " "<< (list[i]>= c && c>=list[i+1]) << std::endl;
+
+
             if(list[i]>= c && c>=list[i+1])
             {
 
                 it.sections = Vec2ui(list[i+1],list[i]);
                 it.ratio = (current- (double)list[i+1])/((double)list[i]-(double)list[i+1]);
 
-             //   std::cout << "sec-rat  "<< list[i+1] << " " << list[i]<<" - "<<it.ratio<<std::endl;
+
 
                 return it;
             }
@@ -393,10 +393,10 @@ public:
         }
 
         MapSection::iterator it = currentMap.begin();
-        //std::cout << "---------------"<<std::endl<< "copysection"<< std::endl;
+
         while(it != currentMap.end())
         {
-          //  std::cout << it->first << " " << it->second.size()<<std::endl;
+
             ++it;
         }
         return true;
@@ -448,24 +448,24 @@ public:
 
         const Vec6d &box = labelbox->d_ipbox.getValue();
 
-        //std::cout << "==============================================="<<std::endl<< "Cut Section"<<std::endl;
+
         MapSection::iterator it = currentMap.begin();
         while(it != currentMap.end())
         {
-          //  std::cout << it->first << " " << it->second.size()<< " "<< axis <<std::endl;
+
             VecCoord3 &vecIn = it->second;
             VecCoord3 vecOut;
 
 
 
-            //std::cout << "box " << box << std::endl;
-            //std::cout << "oldcurrentMap["<<it->first<<"] = | ";
+
+
 
             for(unsigned int i=0;i<vecIn.size()-1;i++)
             {
                 bool v0 = isInBox(vecIn[i],box,axis);
                 bool v1 = isInBox(vecIn[i+1],box,axis);
-              //  std::cout << vecIn[i] <<"#"<< v0<<"#"<<v1<<" | ";
+
                 if( v0 )
                 {
                     vecOut.push_back(vecIn[i]);
@@ -514,16 +514,16 @@ public:
     double calculateDistance(VecCoord3 & vec)
     {
         double distance = 0;
-  //      std::cout << "distance = ";
+
         for(unsigned int i=1;i<vec.size();i++)
         {
             Coord3 dx = vec[i]-vec[i-1];
 
             distance += dx.norm();
 
-    //        std::cout << dx.norm() << " ";
+
         }
-      //  std::cout << " = "<<distance<<std::endl;
+
         return distance;
     }
 
@@ -539,7 +539,7 @@ public:
         for(unsigned int i=0;i<vecDistance.size()-1;i++)
         {
             distanceGoal += vecDistance[i];
-            //std::cout << "next distance: "<<i<< " " <<distanceGoal << std::endl;
+
 
 
             while( (distance < distanceGoal) && (j != vin.size()-1) )
@@ -547,7 +547,7 @@ public:
                 v1 = vin[j]; v2 = vin[j+1];
                 dx = v2-v1;
                 distance += dx.norm();
-                //std::cout << "while " << v1 << " " << v2 << " " << dx << distance<<std::endl;
+
                 ++j;
             }
 
@@ -558,7 +558,7 @@ public:
                 double distance_max = distance;
 
                 double ratio = (distanceGoal-distance_min)/(distance_max-distance_min);
-                //std::cout << "goal " << ratio << std::endl;
+
 
                 Coord3 result = v1 + dx*ratio;
 
@@ -589,26 +589,26 @@ public:
         unsigned int resolution = d_reso.getValue().y();
 
         MapSection::iterator it = currentMap.begin();
-        //std::cout << std::endl<<"========================="<<std::endl;
+
         while(it != currentMap.end())
         {
             VecCoord3 &vecIn = it->second;
             VecCoord3 vecOut;
             VecReal vecDistance; vecDistance.assign(resolution,0);
 
-          //  std::cout << resolution << "###"<< vecIn.size() << std::endl;
+
 
 
             //calculate distance total;
             double distance = calculateDistance(vecIn);
             VecReal vecDistError; vecDistError.assign(resolution,distance/(double)resolution);
 
-            //std::cout << resolution << "##"<< vecIn.size() << std::endl;
+
 
 
             calculateVecReso(vecIn,vecOut,vecDistError);
 
-            //std::cout << resolution << "##"<< vecIn.size() << std::endl;
+
 
             if(vecOut.size() != (resolution+1) )
                 std::cerr << "BUG: "<<__FILE__ <<":l" <<__LINE__<< " ->  resolution problem (" << vecOut.size() << "instead of" << resolution+1 << ")" << std::endl;
@@ -626,7 +626,7 @@ public:
     {
         helper::vector<sofa::defaulttype::Vec3d>& out = *(d_outImagePosition.beginEdit());
 
-        //std::cout << "jhj"<<std::endl;
+
         out.clear();
         for(unsigned int i=0;i<interpolationItemList.size();i++)
         {
@@ -644,7 +644,7 @@ public:
                 out.push_back(v);
             }
         }
-        //std::cout << "jhj"<<std::endl;
+
 
         d_outImagePosition.endEdit();
     }
@@ -753,7 +753,7 @@ public:
             {
                 unsigned int id = i*resoy + j;
                 unsigned int id1 = id+1;
-                //std::cout << id << " "<<id1<<std::endl;
+
                 Deriv3 d = pos[id1]-pos[id];
 
                 Deriv3 normal;

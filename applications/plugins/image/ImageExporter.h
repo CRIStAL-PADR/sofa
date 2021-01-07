@@ -280,7 +280,7 @@ protected:
         {
             sofa::core::objectmodel::KeypressedEvent *ev = static_cast<sofa::core::objectmodel::KeypressedEvent *>(event);
 
-            //std::cout << "key pressed " << std::endl;
+
             switch(ev->getKey())
             {
 

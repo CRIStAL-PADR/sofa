@@ -98,7 +98,7 @@ void LabelPointsBySectionImageToolBoxAction::selectionPointButtonClick(bool b)
 void LabelPointsBySectionImageToolBoxAction::addOnGraphs()
 {
 
-//    std::cout << "addOnGraph"<<std::endl;
+
 
 
     path[0] = GraphZY->addPath(QPainterPath());
@@ -140,7 +140,7 @@ void LabelPointsBySectionImageToolBoxAction::updateColor()
 
 /*void LabelPointsBySectionImageToolBoxAction::sectionButtonClick()
 {
-   // std::cout << "LabelPointsBySectionImageToolBoxAction::sectionButtonClick()"<<std::endl;
+
     sofa::defaulttype::Vec3d pos = LPBSITB()->d_ip.getValue();
     
     sofa::defaulttype::Vec3i pos2(round(pos.x()),round(pos.y()),round(pos.z()));

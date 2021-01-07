@@ -114,7 +114,7 @@ public:
     void toTableWidgetRow(QTableWidget *listLayers)
     {
         index = listLayers->rowCount();
-        //std::cout << "index"<<index<<std::endl;
+
 
 
         listLayers->insertRow(index);
