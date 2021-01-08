@@ -42,7 +42,6 @@ class BaseObjectDescription;
 
 /**
  *  \brief Abstract base class for all links in the scene grapn, independently of their type.
- *
  */
 class SOFA_CORE_API BaseLink
 {
@@ -91,11 +90,10 @@ public:
     void setHelp(const std::string& val) { m_help = val; }
 
     Base* getOwner(){ return m_owner; }
+    bool add(Base* baseptr, const std::string& path) { return _doAdd_(baseptr, path); }
 
     virtual bool contains(Base*) = 0;
-    virtual bool add(Base*, const std::string&) = 0;
     virtual void clear() = 0;
-
     virtual Base* getOwnerBase() const = 0;
 
     [[deprecated("2020-10-03: Deprecated since PR #1503. BaseLink cannot hold Data anymore. Use DataLink instead. Please update your code. ")]]
@@ -191,18 +189,20 @@ public:
     /// @}
     ///
     SOFA_END_DEPRECATION_AS_ERROR
+
 protected:
+    virtual bool _doAdd_(Base*, const std::string&) = 0;
+    void updateCounter() { ++m_counter; }
+
+    Base* m_owner {nullptr}; ///< The Base that holds the Link.
+
     unsigned int m_flags;
     std::string m_name;
     std::string m_help;
+
+
     /// Number of changes since creation
     int m_counter;
-    void updateCounter()
-    {
-        ++m_counter;
-    }
-
-    Base* m_owner;
 };
 
 } // namespace objectmodel

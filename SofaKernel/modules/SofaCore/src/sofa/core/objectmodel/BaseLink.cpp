@@ -224,92 +224,61 @@ std::string BaseLink::CreateString(Base* object, BaseData* data, Base* from)
     return CreateString(CreateStringPath(object,from),CreateStringData(data));
 }
 
+/// Returns false if:
+///     -  one or multiple string entries fails to be read. In this case the valid
+///        link address are initialized.
+/// Returns true if:
+///     - string is empty
+///     - all the linkpath are leading to a valid object or not available there.
 bool BaseLink::read( const std::string& str )
 {
     if (str.empty())
         return true;
 
-    bool ok = true;
+    std::istringstream istr(str.c_str());
+    std::string path;
 
-    // Allows spaces in links values for single links
-    if (!getFlag(BaseLink::FLAG_MULTILINK))
+    /// Find the target of each path, and stores each targets in
+    /// a temporary vector of (pointer, path) pairs.
+    /// A boolean is used to indicates if one of the target has been
+    /// found but is of invalid type.
+    bool ok = true;
+    std::vector< std::pair<Base*, std::string> > entries;
+
+    /// Cut the path using space as a separator. THis has several
+    /// questionnable consequence among which space are not allowed in part of a path (so no name containing space)
+    /// tokenizing the path using '@' as a separator would solve  the issue.
+    while (istr >> path)
     {
         Base* ptr = nullptr;
-
-        if (str[0] != '@')
+        /// Check if the path is pointing to any object of Base type.
+        if (m_owner && !PathResolver::FindLinkDest(m_owner, ptr, path, this))
         {
-            return false;
+            /// If not, this is not an error, as the destination can be added later in the graph
+            /// instead, we will check for failed links after init is completed
         }
-        else if (m_owner && !PathResolver::FindLinkDest(m_owner, ptr, str, this))
+        else if (path[0] != '@')
         {
-            // This is not an error, as the destination can be added later in the graph
-            // instead, we will check for failed links after init is completed
-            add(ptr, str);
-            return true;
+            ok = false;
         }
-        else
-        {
-            // read should return false if link is not properly added despite
-            // already having an owner and being able to look for linkDest
-            add(ptr, str);
-            return ptr != nullptr;
-        }
-
+        /// We found either a valid Base object or none.
+        entries.push_back({ptr, path});
     }
-    else
+
+    /// Check for the case where multiple link has been read while we are a single multilink.
+    /// In that case we return false to indicate the parsing error and keep only one of the link.
+    if(entries.size() > 1 && !getFlag(BaseLink::FLAG_MULTILINK))
     {
-        //> Container& container = m_value;
-        std::istringstream istr(str.c_str());
-        std::string path;
-
-        // Find the target of each path, and store those targets in
-        // a temporary vector of (pointer, path) pairs
-        std::vector< std::pair<Base*, std::string> > entries;
-        while (istr >> path)
-        {
-            Base* ptr = nullptr;
-            if (m_owner && !PathResolver::FindLinkDest(m_owner, ptr, path, this))
-            {
-                // This is not an error, as the destination can be added later in the graph
-                // instead, we will check for failed links after init is completed
-                //ok = false;
-            }
-            else if (path[0] != '@')
-            {
-                ok = false;
-            }
-            entries.push_back({ptr, path});
-        }
-
-        // Add the objects that are not already present to the container of this Link
-        clear();
-        for (auto& [base, path] : entries)
-        {
-            if(contains(base))
-                add(base, path);
-        }
-
-        // Remove the objects from the container that are not in the new list
-        // TODO epernod 2018-08-01: This cast from size_t to unsigned int remove a large amount of warnings.
-        // But need to be rethink in the future. The problem is if index i is a site_t, then we need to template container<size_t> which impact the whole architecture.
-//        std::size_t csize = container.size();
-//        for (std::size_t i = 0; i != csize; i++)
-//        {
-//            DestPtr dest(container[i]);
-//            bool destFound = false;
-//            typename PairVector::iterator j = newList.begin();
-//            while (j != newList.end() && !destFound)
-//            {
-//                if (j->first == dest)
-//                    destFound = true;
-//                j++;
-//            }
-
-//            if (!destFound)
-//                remove(dest);
-//        }
+        ok = false;
+        entries.resize(1);
     }
 
+    /// Add the detected objects that are not already present to the container of this Link
+    clear();
+    for (auto& [base, path] : entries)
+    {
+        ok = add(base, path)?ok:false;
+    }
     return ok;
 }
 
