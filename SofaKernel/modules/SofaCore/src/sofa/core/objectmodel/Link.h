@@ -29,6 +29,7 @@
 #include <sstream>
 #include <utility>
 #include <vector>
+#include <iostream> /// TOREMOVE
 namespace sofa
 {
 
@@ -365,20 +366,24 @@ public:
     }
 
     /// Set a new link entry from a Base*
-    bool add(Base* baseptr, const std::string& path) override
+    /// returns false if neither base & path are provided or if the provided base object has the wrong type.
+    bool _doAdd_(Base* baseptr, const std::string& path) override
     {
+        std::cout << "do add ... " << path << std::endl;
+
         /// If the pointer is null and the path empty we do nothing
         if(!baseptr && path.empty())
             return false;
 
-        /// If there is a pointer of compatible type we add it in the link
+        /// Downcast the pointer to a compatible type and
+        /// If the types are not compatible with the Link we returns false
         auto destptr = dynamic_cast<DestType*>(baseptr);
-        if(baseptr && destptr)
-        {
-            //std::cout << "Setting the link is not possible because of invalid type";
+        if(baseptr && !destptr)
             return false;
-        }
 
+        std::cout << "really do add ... " << path << std::endl;
+
+        /// TLink:adding accepts nullptr (for a not yet resolved link).
         return TLink::add(destptr, path);
     }
 
@@ -574,6 +579,8 @@ public:
     typedef typename Inherit::Container Container;
 
     typedef void (OwnerType::*ValidatorFn)(DestPtr v, std::size_t index, bool add);
+
+    MultiLink() : m_validator{nullptr} {}
 
     MultiLink(const BaseLink::InitLink<OwnerType>& init)
         : Inherit(init), m_validator(nullptr)
