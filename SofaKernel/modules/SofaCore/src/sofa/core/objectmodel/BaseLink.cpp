@@ -278,49 +278,10 @@ bool BaseLink::read( const std::string& str )
     clear();
     for (auto& [base, path] : entries)
     {
-        std::cout << "NON NULL BASE => " << base << std::endl;
         ok = add(base, path)?ok:false;
-        if(!ok)
-        {
-            if(base)
-            {
-                std::cout << "NON NULL BASE" << std::endl;
-                std::cout << base->getName() << " -> " << base->getClassName() << std::endl;
-            }else{
-                std::cout << "NULL BASE" << std::endl;
-            }
-            std::cout << "PROBLEMATIC LINK: " << path << std::endl;
-        }
     }
     return ok;
 }
-
-/// Update pointers in case the pointed-to objects have appeared
-/// @return false if there are broken links
-//virtual bool updateLinks()
-//{
-//    if (!m_owner) return false;
-//    bool ok = true;
-//    ValueType& value = m_value.get();
-//    std::string path;
-//    if (TraitsValueType::path(value, path))
-//    {
-//        DestType* ptr = TraitsDestPtr::get(TraitsValueType::get(value));
-//        if (!ptr)
-//        {
-//            PathResolver::FindLinkDest(m_owner, ptr, path, this);
-//            if (ptr)
-//            {
-//                set(ptr, path);
-//            }
-//            else
-//            {
-//                ok = false;
-//            }
-//        }
-//    }
-//    return ok;
-//}
 
 std::string BaseLink::getLinkedPath(std::size_t index) const
 {
@@ -332,7 +293,7 @@ bool BaseLink::setOwner(Base* newowner)
     /// Pull the owner
     Base* oldowner = getOwner();
     if(oldowner)
-        //owner->removeLink();
+        oldowner->removeLink();
 
     if(_doSetOwner_(newowner))
     {

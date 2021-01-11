@@ -382,8 +382,6 @@ public:
     /// returns false if neither base & path are provided or if the provided base object has the wrong type.
     bool _doAdd_(Base* baseptr, const std::string& path) override
     {
-        std::cout << "do add ... " << path << std::endl;
-
         /// If the pointer is null and the path empty we do nothing
         if(!baseptr && path.empty())
             return false;
@@ -393,10 +391,8 @@ public:
         auto destptr = dynamic_cast<DestType*>(baseptr);
         if(baseptr && !destptr)
         {
-            std::cout << "DEST TYPE/ " << typeid(DestType).name() << std::endl;
             return false;
         }
-        std::cout << "really do add ... " << path << std::endl;
 
         /// TLink:adding accepts nullptr (for a not yet resolved link).
         return TLink::add(destptr, path);
@@ -470,6 +466,22 @@ public:
             }
         }
         return false;
+    }
+
+    /// Check that a given path is valid, that the pointed object exists and is of the right type
+    template <class TContext>
+    static bool CheckPath( const std::string& path, TContext* context)
+    {
+        if (path.empty())
+            return false;
+        if (!context)
+        {
+            std::string p,d;
+            return BaseLink::ParseString(path, &p, nullptr, context);
+        }
+
+        DestType* ptr = nullptr;
+        return context->findLinkDest(ptr, path, nullptr);
     }
 
     const BaseClass* getDestClass() const override
@@ -636,7 +648,6 @@ public:
 
 
     [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-
     DestType* get(std::size_t index, const core::ExecParams*) const { return get(index); }
     DestType* get(std::size_t index) const
     {
@@ -720,7 +731,7 @@ public:
         return Inherit::getPath(0);
     }
 
-    //[[deprecated("TODO")]]
+    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
     DestType* get(const core::ExecParams*) const { return get(); }
     DestType* get() const
     {

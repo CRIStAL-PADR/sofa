@@ -57,7 +57,6 @@ Base* PathResolver::FindBaseFromClassAndPath(const Base* context, const BaseClas
         return nullptr;
 
     Base* b = const_cast<Base*>(context)->findLinkDestClass(tclass, path, nullptr);
-    std::cout << "FOUND A TYPE... " << b << std::endl;
     return b;
 }
 
