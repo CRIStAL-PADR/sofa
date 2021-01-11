@@ -89,11 +89,15 @@ public:
     /// Set help message
     void setHelp(const std::string& val) { m_help = val; }
 
-    Base* getOwner(){ return m_owner; }
+    bool setOwner(Base* newowner);
+    Base* getOwner() const { return _doGetOwner_(); }
     bool add(Base* baseptr, const std::string& path) { return _doAdd_(baseptr, path); }
+    bool set(Base* baseptr, size_t index=0) { return _doSet_(baseptr, index); }
+    std::string getPath(size_t index=0) const;
 
     virtual bool contains(Base*) = 0;
     virtual void clear() = 0;
+    Base* get(size_t i=0) const { return _doGet_(i); }
     virtual Base* getOwnerBase() const = 0;
 
     [[deprecated("2020-10-03: Deprecated since PR #1503. BaseLink cannot hold Data anymore. Use DataLink instead. Please update your code. ")]]
@@ -141,12 +145,13 @@ public:
     void setLinkedBase(Base* link);
 
     virtual size_t getSize() const = 0;
-    virtual Base* getLinkedBase(std::size_t index=0) const = 0;
+    [[deprecated("TODO")]]
+    Base* getLinkedBase(std::size_t index=0) const { return get(index); }
 
     [[deprecated("2020-10-03: Deprecated since PR #1503. BaseLink cannot hold Data anymore. Use DataLink instead. Please update your code. ")]]
     virtual BaseData* getLinkedData(std::size_t index=0) const = 0;
 
-    virtual std::string getLinkedPath(std::size_t index=0) const = 0;
+    std::string getLinkedPath(std::size_t index=0) const;
 
     /// @name Serialization API
     /// @{
@@ -156,7 +161,7 @@ public:
 
     /// Update pointers in case the pointed-to objects have appeared
     /// @return false if there are broken links
-    virtual bool updateLinks() = 0;
+    bool updateLinks() ;
 
     /// Print the value of the associated variable
     virtual void printValue( std::ostream& ) const;
@@ -191,10 +196,15 @@ public:
     SOFA_END_DEPRECATION_AS_ERROR
 
 protected:
-    virtual bool _doAdd_(Base*, const std::string&) = 0;
+    virtual Base* _doGet_(const size_t index) const = 0;
+    virtual bool _doAdd_(Base* target, const std::string&) = 0;
+    virtual bool _doSet_(Base* target, const size_t index) = 0;
+    virtual bool _doSetOwner_(Base* owner) = 0;
+    virtual Base* _doGetOwner_() const = 0;
+    virtual std::string _doGetPath_(const size_t index) const = 0;
     void updateCounter() { ++m_counter; }
 
-    Base* m_owner {nullptr}; ///< The Base that holds the Link.
+    //Base* m_owner {nullptr}; ///< The Base that holds the Link.
 
     unsigned int m_flags;
     std::string m_name;

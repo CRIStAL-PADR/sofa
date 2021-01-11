@@ -40,7 +40,7 @@
 
 /// If you want to activate/deactivate that please set them to true/false
 #define DEBUG_VISITOR false
-#define DEBUG_LINK false
+#define DEBUG_LINK true
 
 namespace sofa
 {
@@ -361,6 +361,7 @@ core::objectmodel::BaseObject* Node::getObject(const std::string& name) const
 
 sofa::core::objectmodel::Base* Node::findLinkDestClass(const core::objectmodel::BaseClass* destType, const std::string& path, const core::objectmodel::BaseLink* link)
 {
+    std::cout << "SEARCH FOR LINK: " << path << std::endl;
     std::string pathStr;
     if (link)
     {

@@ -248,11 +248,12 @@ bool BaseLink::read( const std::string& str )
     /// Cut the path using space as a separator. THis has several
     /// questionnable consequence among which space are not allowed in part of a path (so no name containing space)
     /// tokenizing the path using '@' as a separator would solve  the issue.
+    auto owner = getOwner();
     while (istr >> path)
     {
-        Base* ptr = nullptr;
+        Base* ptr = PathResolver::FindBaseFromClassAndPath(owner, getDestClass(), path);
         /// Check if the path is pointing to any object of Base type.
-        if (m_owner && !PathResolver::FindLinkDest(m_owner, ptr, path, this))
+        if (owner && !ptr)
         {
             /// If not, this is not an error, as the destination can be added later in the graph
             /// instead, we will check for failed links after init is completed
@@ -277,7 +278,102 @@ bool BaseLink::read( const std::string& str )
     clear();
     for (auto& [base, path] : entries)
     {
+        std::cout << "NON NULL BASE => " << base << std::endl;
         ok = add(base, path)?ok:false;
+        if(!ok)
+        {
+            if(base)
+            {
+                std::cout << "NON NULL BASE" << std::endl;
+                std::cout << base->getName() << " -> " << base->getClassName() << std::endl;
+            }else{
+                std::cout << "NULL BASE" << std::endl;
+            }
+            std::cout << "PROBLEMATIC LINK: " << path << std::endl;
+        }
+    }
+    return ok;
+}
+
+/// Update pointers in case the pointed-to objects have appeared
+/// @return false if there are broken links
+//virtual bool updateLinks()
+//{
+//    if (!m_owner) return false;
+//    bool ok = true;
+//    ValueType& value = m_value.get();
+//    std::string path;
+//    if (TraitsValueType::path(value, path))
+//    {
+//        DestType* ptr = TraitsDestPtr::get(TraitsValueType::get(value));
+//        if (!ptr)
+//        {
+//            PathResolver::FindLinkDest(m_owner, ptr, path, this);
+//            if (ptr)
+//            {
+//                set(ptr, path);
+//            }
+//            else
+//            {
+//                ok = false;
+//            }
+//        }
+//    }
+//    return ok;
+//}
+
+std::string BaseLink::getLinkedPath(std::size_t index) const
+{
+    return getPath(index);
+}
+
+bool BaseLink::setOwner(Base* newowner)
+{
+    /// Pull the owner
+    Base* oldowner = getOwner();
+    if(oldowner)
+        //owner->removeLink();
+
+    if(_doSetOwner_(newowner))
+    {
+        newowner->addLink(this);
+        return true;
+    }
+    return false;
+}
+
+std::string BaseLink::getPath(size_t index) const
+{
+    if(index >= getSize())
+        return "";
+
+    std::string path = _doGetPath_(index);
+    if(path.empty())
+        return CreateString(get(index), getOwner());
+    return "";
+}
+
+
+/// Update pointers in case the pointed-to objects have appeared
+/// @return false if there are broken links
+bool BaseLink::updateLinks()
+{
+    if (!getOwner())
+        return false;
+
+    bool ok = true;
+    std::size_t n = getSize();
+    for (std::size_t i = 0; i<n; ++i)
+    {
+        Base* ptr;
+        std::string path = getPath(i);
+        /// Search for path and if any returns the pointer to the proper object.
+        if(!path.empty())
+        {
+            if(!PathResolver::FindLinkDest(getOwner(), ptr, path, this))
+                ok = false;
+            set(ptr,i);
+        }
     }
     return ok;
 }
