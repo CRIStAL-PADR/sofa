@@ -291,9 +291,9 @@ std::string BaseLink::getLinkedPath(std::size_t index) const
 bool BaseLink::setOwner(Base* newowner)
 {
     /// Pull the owner
-    Base* oldowner = getOwner();
-    if(oldowner)
-        oldowner->removeLink();
+    //Base* oldowner = getOwner();
+    //if(oldowner)
+    //    oldowner->removeLink();
 
     if(_doSetOwner_(newowner))
     {

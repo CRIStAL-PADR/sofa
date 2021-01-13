@@ -29,7 +29,7 @@
 #include <utility>
 #include <vector>
 
-#include <iostream> /// TO-REMOVE
+#include <functional>
 namespace sofa
 {
 
@@ -264,6 +264,10 @@ public:
     {
         c.erase( c.begin()+index );
     }
+    static void set(T& c, std::size_t index, TDestPtr v)
+    {
+        c[index] = v;
+    }
 };
 
 /**
@@ -398,28 +402,36 @@ public:
         return TLink::add(destptr, path);
     }
 
+    void setNotificationFunction(std::function<DestPtr(OwnerType* owner, DestPtr before, DestPtr after, size_t index)> t)
+    {
+        notifyChangeCb = t;
+    }
+
     bool add(DestPtr v)
     {
-        if (!v) return false;
+        if (!v)
+            return false;
         std::size_t index = TraitsContainer::add(m_value,v);
         updateCounter();
-        added(v, index);
+        notifyChange( nullptr, v, index);
         return true;
     }
 
     bool add(DestPtr v, const std::string& path)
     {
-        if (!v && path.empty()) return false;
+        if (!v && path.empty())
+            return false;
         std::size_t index = TraitsContainer::add(m_value,v);
         TraitsValueType::setPath(m_value[index],path);
         updateCounter();
-        added(v, index);
+        notifyChange( nullptr, v, index);
         return true;
     }
 
     bool addPath(const std::string& path)
     {
-        if (path.empty()) return false;
+        if (path.empty())
+            return false;
         DestType* ptr = nullptr;
         if (m_owner)
             PathResolver::FindLinkDest(m_owner, ptr, path, this);
@@ -428,13 +440,9 @@ public:
 
     bool remove(DestPtr v)
     {
-        if (!v) return false;
-        std::size_t index = TraitsContainer::find(m_value,v);
-        if (index >= m_value.size()) return false;
-        TraitsContainer::remove(m_value,index);
-        updateCounter();
-        removed(v, index);
-        return true;
+        if (!v)
+            return false;
+        return removeAt(TraitsContainer::find(m_value,v));
     }
 
     bool removeAt(std::size_t index)
@@ -442,10 +450,10 @@ public:
         if (index >= m_value.size())
             return false;
 
+        DestPtr v = TraitsDestPtr::get(TraitsValueType::get(m_value[index]));
         TraitsContainer::remove(m_value,index);
         updateCounter();
-        DestPtr v=m_value[index];
-        removed(v, index);
+        notifyChange( v, nullptr, index);
         return true;
     }
 
@@ -457,13 +465,7 @@ public:
         {
             std::string p = getPath(index);
             if (p == path)
-            {
-                DestPtr v = m_value[index];
-                TraitsContainer::remove(m_value,index);
-                updateCounter();
-                removed(v, index);
-                return true;
-            }
+                return removeAt(index);
         }
         return false;
     }
@@ -573,6 +575,17 @@ public:
     }
 
 protected:
+    std::function<DestPtr(OwnerType* owner, DestPtr before, DestPtr after, size_t index)> notifyChangeCb;
+    void notifyChange(DestPtr oldValue, DestPtr newValue, size_t index=0)
+    {
+        if(notifyChangeCb)
+        {
+            DestPtr overridenValue = notifyChangeCb(m_owner, oldValue, newValue, index);
+            if(overridenValue!=newValue)
+                TraitsValueType::set(m_value[index], overridenValue);
+        }
+    }
+
     OwnerType* m_owner {nullptr};
     Container m_value;
 
@@ -583,9 +596,6 @@ protected:
         else
             return nullptr;
     }
-
-    virtual void added(DestPtr ptr, std::size_t index) = 0;
-    virtual void removed(DestPtr ptr, std::size_t index) = 0;
 };
 
 /**
@@ -606,17 +616,16 @@ public:
     typedef typename Inherit::TraitsContainer TraitsContainer;
     typedef typename Inherit::Container Container;
 
-    typedef void (OwnerType::*ValidatorFn)(DestPtr v, std::size_t index, bool add);
 
-    MultiLink() : m_validator{nullptr} {}
+    MultiLink() {}
 
     MultiLink(const BaseLink::InitLink<OwnerType>& init)
-        : Inherit(init), m_validator(nullptr)
+        : Inherit(init)
     {
     }
 
     MultiLink(const BaseLink::InitLink<OwnerType>& init, DestPtr val)
-        : Inherit(init), m_validator(nullptr)
+        : Inherit(init)
     {
         if (val) this->add(val);
     }
@@ -625,10 +634,7 @@ public:
     {
     }
 
-    void setValidator(ValidatorFn fn)
-    {
-        m_validator = fn;
-    }
+
 
     /// Check that a given list of path is valid, that the pointed object exists and is of the right type
     template<class TContext>
@@ -646,7 +652,6 @@ public:
         return ok;
     }
 
-
     [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
     DestType* get(std::size_t index, const core::ExecParams*) const { return get(index); }
     DestType* get(std::size_t index) const
@@ -662,20 +667,6 @@ public:
         return get(index);
     }
 
-protected:
-    ValidatorFn m_validator;
-
-    void added(DestPtr val, std::size_t index)
-    {
-        if (m_validator)
-            (this->m_owner->*m_validator)(val, index, true);
-    }
-
-    void removed(DestPtr val, std::size_t index)
-    {
-        if (m_validator)
-            (this->m_owner->*m_validator)(val, index, false);
-    }
 };
 
 /**
@@ -698,32 +689,25 @@ public:
     using Inherit::updateCounter;
     using Inherit::m_value;
     using Inherit::m_owner;
-
-    typedef void (OwnerType::*ValidatorFn)(DestPtr before, DestPtr& after);
+    using Inherit::notifyChange;
 
     SingleLink()
-        : m_validator(nullptr)
     {
     }
 
     SingleLink(const BaseLink::InitLink<OwnerType>& init)
-        : Inherit(init), m_validator(nullptr)
+        : Inherit(init)
     {
     }
 
     SingleLink(const BaseLink::InitLink<OwnerType>& init, DestPtr val)
-        : Inherit(init), m_validator(nullptr)
+        : Inherit(init)
     {
         if (val) this->add(val);
     }
 
     virtual ~SingleLink()
     {
-    }
-
-    void setValidator(ValidatorFn fn)
-    {
-        m_validator = fn;
     }
 
     std::string getPath() const
@@ -740,22 +724,17 @@ public:
 
     void reset()
     {
-        ValueType& value = m_value.get();
-        const DestPtr before = TraitsValueType::get(value);
-        if (!before) return;
-        TraitsValueType::set(value, nullptr);
-        updateCounter();
-        changed(before, nullptr);
+        set(nullptr);
     }
 
-    void set(DestPtr v)
+    void set(DestPtr newvalue)
     {
         ValueType& value = m_value.get();
         const DestPtr before = TraitsValueType::get(value);
-        if (v == before) return;
-        TraitsValueType::set(value, v);
+        if (newvalue == before) return;
+        TraitsValueType::set(value, newvalue);
         updateCounter();
-        changed(before, v);
+        notifyChange( before, newvalue);
     }
 
     void set(DestPtr v, const std::string& path)
@@ -767,20 +746,23 @@ public:
         TraitsValueType::setPath(value, path);
         updateCounter();
         if (v != before)
-            changed(before, v);
+            notifyChange( before, v);
     }
 
     void setPath(const std::string& path)
     {
-        if (path.empty()) { reset(); return; }
+        if (path.empty())
+        {
+            set(nullptr);
+            return;
+        }
+
         DestType* ptr = nullptr;
         if (m_owner)
             PathResolver::FindLinkDest(m_owner, ptr, path, this);
         set(ptr, path);
     }
 
-#ifndef SOFA_MAYBE_DEPRECATED
-    // Convenient operators to make a SingleLink appear as a regular pointer
     operator DestType*() const
     {
         return get();
@@ -798,44 +780,6 @@ public:
     {
         set(v);
         return v;
-    }
-#endif
-
-protected:
-    ValidatorFn m_validator;
-
-
-    void added(DestPtr val, std::size_t /*index*/)
-    {
-        if (m_validator)
-        {
-            DestPtr after = val;
-            (m_owner->*m_validator)(nullptr, after);
-            if (after != val)
-                TraitsValueType::set(m_value.get(), after);
-        }
-    }
-
-    void removed(DestPtr val, std::size_t /*index*/)
-    {
-        if (m_validator)
-        {
-            DestPtr after = nullptr;
-            (m_owner->*m_validator)(val, after);
-            if (after)
-                TraitsValueType::set(m_value.get(), after);
-        }
-    }
-
-    void changed(DestPtr before, DestPtr val)
-    {
-        if (m_validator)
-        {
-            DestPtr after = val;
-            (m_owner->*m_validator)(before, after);
-            if (after != val)
-                TraitsValueType::set(this->m_value.get(), after);
-        }
     }
 };
 
