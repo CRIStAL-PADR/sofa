@@ -298,9 +298,9 @@ public:
     }
 
     TLink(const InitLink<OwnerType>& init)
-        : BaseLink(init, ActiveFlags), m_owner(init.owner)
+        : BaseLink(init, ActiveFlags)
     {
-        if (m_owner) m_owner->addLink(this);
+        setOwner(init.owner);
     }
 
     ~TLink() override
@@ -436,15 +436,13 @@ public:
 
     void setOwner(OwnerType* owner)
     {
-        /// TODO CHECK PROPER OWNER SHIP
-        m_owner = owner;
-        if (!owner) return;
-            m_owner->addLink(this);
+        /// Forward the owner to the parent implementation.
+        BaseLink::setOwnerImpl(owner);
     }
 
     OwnerType* getOwner()
     {
-        return m_owner;
+        return dynamic_cast<OwnerType*>(m_owner);
     }
 
     DestType* get(std::size_t index=0) const
@@ -481,7 +479,7 @@ protected:
     {
         if(notifyChangeCb)
         {
-            DestPtr overridenValue = notifyChangeCb(m_owner, oldValue, newValue, index);
+            DestPtr overridenValue = notifyChangeCb(TLink::getOwner(), oldValue, newValue, index);
             if(overridenValue!=newValue)
                 TraitsValueType::set(m_value[index], overridenValue);
         }
@@ -567,22 +565,11 @@ protected:
         return TLink::get(index);
     }
 
-    bool _doSetOwner_(Base* baseowner) override
+    bool _isCompatibleOwnerType_(const Base* obj) const final
     {
-        auto owner = dynamic_cast<OwnerType*>(baseowner);
-        if(!owner)
-            return false;
-        TLink::setOwner(owner);
-        return true;
+        return dynamic_cast<const OwnerType*>(obj) != nullptr;
     }
 
-    Base* _doGetOwner_() const override
-    {
-        return m_owner;
-    }
-
-
-    OwnerType* m_owner {nullptr};
     Container m_value;
 
     DestType* getIndex(std::size_t index) const

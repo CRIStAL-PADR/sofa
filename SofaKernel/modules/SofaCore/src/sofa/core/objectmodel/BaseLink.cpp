@@ -294,19 +294,32 @@ std::string BaseLink::getLinkedPath(std::size_t index) const
     return getPath(index);
 }
 
-bool BaseLink::setOwner(Base* newowner)
+void BaseLink::setOwnerImpl(Base* newOwner)
 {
-    /// Pull the owner
-    //Base* oldowner = getOwner();
-    //if(oldowner)
-    //    oldowner->removeLink();
+    /// Remove the link from the previously set owner.
+    // This was not in the theinitial code but I think it should.
+    // TODO(dmarchal): implement the detach of link from previous node. But removeLink is missing.
+    // if(m_owner)
+    // {
+    //    m_owner->removeLink(this);
+    // }
 
-    if(_doSetOwner_(newowner))
+    /// Set the new ownership.
+    if(newOwner)
     {
-        newowner->addLink(this);
-        return true;
+        m_owner = newOwner;
+        m_owner->addLink(this);
     }
-    return false;
+}
+
+bool BaseLink::setOwner(Base* newOwner)
+{
+    /// We check to inherited object wether the provided owner is valid
+    if(!_isCompatibleOwnerType_(newOwner))
+        return false;
+
+    setOwnerImpl(newOwner);
+    return true;
 }
 
 std::string BaseLink::getPath(size_t index) const

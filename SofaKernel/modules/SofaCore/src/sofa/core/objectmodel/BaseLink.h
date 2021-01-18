@@ -90,7 +90,7 @@ public:
     void setHelp(const std::string& val) { m_help = val; }
 
     bool setOwner(Base* newOwner);
-    Base* getOwner() const { return _doGetOwner_(); }
+    Base* getOwner() const { return m_owner; }
 
     virtual size_t size() const = 0;
     bool addPath(const std::string& path);
@@ -221,17 +221,19 @@ protected:
     virtual bool _doRemoveAt_(size_t) = 0;
     virtual bool _doSet_(Base* target, const size_t index) = 0;
     virtual bool _doSet_(Base* v, const std::string& path, size_t=0) = 0;
-    virtual bool _doSetOwner_(Base* owner) = 0;
-    virtual Base* _doGetOwner_() const = 0;
+    virtual bool _isCompatibleOwnerType_(const Base*) const = 0;
     virtual std::string _doGetPath_(const size_t index) const = 0;
+
+    void setOwnerImpl(Base* owner);
+
     void updateCounter() { ++m_counter; }
 
     unsigned int m_flags;
     std::string m_name;
     std::string m_help;
 
-    /// Number of changes since creation
-    int m_counter;
+    Base* m_owner {nullptr};  ///< The owner of this link.
+    int m_counter;            ///< Number of changes since creation
 };
 
 } // namespace objectmodel
