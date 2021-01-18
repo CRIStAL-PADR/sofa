@@ -307,56 +307,40 @@ public:
     {
     }
 
-    SOFA_BEGIN_DEPRECATION_AS_ERROR
-    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-    size_t size(const core::ExecParams*) const { return size(); }
-    size_t size() const
+    size_t size() const override
     {
         return static_cast<size_t>(m_value.size());
     }
 
-    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-    bool empty(const core::ExecParams* param) const ;
     bool empty() const
     {
         return m_value.empty();
     }
 
-    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-    const Container& getValue(const core::ExecParams*) const { return getValue(); }
     const Container& getValue() const
     {
         return m_value;
     }
 
-    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-    const_iterator begin(const core::ExecParams*) const { return begin(); }
     const_iterator begin() const
     {
         return m_value.cbegin();
     }
 
-    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-    const_iterator end(const core::ExecParams*) const { return end(); }
     const_iterator end() const
     {
         return m_value.cend();
     }
 
-    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-    const_reverse_iterator rbegin(const core::ExecParams*) const { return rbegin(); }
     const_reverse_iterator rbegin() const
     {
         return m_value.crbegin();
     }
 
-    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-    const_reverse_iterator rend(const core::ExecParams*) const { return rend(); }
     const_reverse_iterator rend() const
     {
         return m_value.crend();
     }
-    SOFA_END_DEPRECATION_AS_ERROR
 
     void clear() override
     {
@@ -367,39 +351,6 @@ public:
     {
         auto destptr = dynamic_cast<DestType*>(baseptr);
         return TraitsContainer::find(m_value, destptr) < m_value.size();
-    }
-
-    /// Returns false on type mismatch
-    bool _doSet_(Base* baseptr, const size_t index) override
-    {
-        assert(index < m_value.size());
-        auto destptr = dynamic_cast<DestType*>(baseptr);
-
-        if(!destptr)
-            return false;
-
-        TraitsValueType::set(m_value[index], destptr);
-        return true;
-    }
-
-    /// Set a new link entry from a Base*
-    /// returns false if neither base & path are provided or if the provided base object has the wrong type.
-    bool _doAdd_(Base* baseptr, const std::string& path) override
-    {
-        /// If the pointer is null and the path empty we do nothing
-        if(!baseptr && path.empty())
-            return false;
-
-        /// Downcast the pointer to a compatible type and
-        /// If the types are not compatible with the Link we returns false
-        auto destptr = dynamic_cast<DestType*>(baseptr);
-        if(baseptr && !destptr)
-        {
-            return false;
-        }
-
-        /// TLink:adding accepts nullptr (for a not yet resolved link).
-        return TLink::add(destptr, path);
     }
 
     void setNotificationFunction(std::function<DestPtr(OwnerType* owner, DestPtr before, DestPtr after, size_t index)> t)
@@ -428,21 +379,11 @@ public:
         return true;
     }
 
-    bool addPath(const std::string& path)
-    {
-        if (path.empty())
-            return false;
-        DestType* ptr = nullptr;
-        if (m_owner)
-            PathResolver::FindLinkDest(m_owner, ptr, path, this);
-        return add(ptr, path);
-    }
-
     bool remove(DestPtr v)
     {
         if (!v)
             return false;
-        return removeAt(TraitsContainer::find(m_value,v));
+        return removeAt(TraitsContainer::find(m_value, v));
     }
 
     bool removeAt(std::size_t index)
@@ -455,19 +396,6 @@ public:
         updateCounter();
         notifyChange( v, nullptr, index);
         return true;
-    }
-
-    bool removePath(const std::string& path)
-    {
-        if (path.empty()) return false;
-        std::size_t n = m_value.size();
-        for (std::size_t index=0; index<n; ++index)
-        {
-            std::string p = getPath(index);
-            if (p == path)
-                return removeAt(index);
-        }
-        return false;
     }
 
     /// Check that a given path is valid, that the pointed object exists and is of the right type
@@ -506,10 +434,102 @@ public:
         return OwnerType::GetClass();
     }
 
-
-    size_t getSize() const override
+    void setOwner(OwnerType* owner)
     {
-        return size();
+        /// TODO CHECK PROPER OWNER SHIP
+        m_owner = owner;
+        if (!owner) return;
+            m_owner->addLink(this);
+    }
+
+    OwnerType* getOwner()
+    {
+        return m_owner;
+    }
+
+    DestType* get(std::size_t index=0) const
+    {
+        return TraitsDestPtr::get(TraitsValueType::get(m_value[index]));
+    }
+
+    DestType* operator[](std::size_t index) const
+    {
+        return get(index);
+    }
+
+
+    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
+    const Container& getValue(const core::ExecParams*) const { return getValue(); }
+    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
+    const_iterator begin(const core::ExecParams*) const { return begin(); }
+    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
+    const_iterator end(const core::ExecParams*) const { return end(); }
+    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
+    const_reverse_iterator rbegin(const core::ExecParams*) const { return rbegin(); }
+    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
+    const_reverse_iterator rend(const core::ExecParams*) const { return rend(); }
+    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
+    bool empty(const core::ExecParams* param) const ;
+    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
+    size_t size(const core::ExecParams*) const { return size(); }
+    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
+    DestType* get(std::size_t index, const core::ExecParams*) const { return _doGet_(index); }
+
+protected:
+    std::function<DestPtr(OwnerType* owner, DestPtr before, DestPtr after, size_t index)> notifyChangeCb;
+    void notifyChange(DestPtr oldValue, DestPtr newValue, size_t index=0)
+    {
+        if(notifyChangeCb)
+        {
+            DestPtr overridenValue = notifyChangeCb(m_owner, oldValue, newValue, index);
+            if(overridenValue!=newValue)
+                TraitsValueType::set(m_value[index], overridenValue);
+        }
+    }
+
+    /// Returns false on type mismatch
+    bool _doSet_(Base* baseptr, const size_t index) override
+    {
+        assert(index < m_value.size());
+        auto destptr = dynamic_cast<DestType*>(baseptr);
+
+        if(!destptr)
+            return false;
+
+        TraitsValueType::set(m_value[index], destptr);
+        return true;
+    }
+
+    /// Set a new link entry from a Base*
+    /// returns false if neither base & path are provided or if the provided base object has the wrong type.
+    bool _doAdd_(Base* baseptr, const std::string& path) override
+    {
+        /// If the pointer is null and the path empty we do nothing
+        if(!baseptr && path.empty())
+            return false;
+
+        /// Downcast the pointer to a compatible type and
+        /// If the types are not compatible with the Link we returns false
+        auto destptr = dynamic_cast<DestType*>(baseptr);
+        if(baseptr && !destptr)
+        {
+            return false;
+        }
+
+        /// TLink:adding accepts nullptr (for a not yet resolved link).
+        return TLink::add(destptr, path);
+    }
+
+    bool _doRemoveAt_(std::size_t index) override
+    {
+        if (index >= m_value.size())
+            return false;
+
+        DestPtr v = TraitsDestPtr::get(TraitsValueType::get(m_value[index]));
+        TraitsContainer::remove(m_value,index);
+        updateCounter();
+        notifyChange( v, nullptr, index);
+        return true;
     }
 
     /// Returns the not resolved path at the provided index.
@@ -522,34 +542,29 @@ public:
         return path;
     }
 
+    bool _doSet_(Base* baseptr, const std::string& path, size_t index=0) override
+    {
+        if(index >= size())
+            return false;
+
+        /// Downcast the pointer to a compatible type and
+        /// If the types are not compatible with the Link we returns false
+        auto v = dynamic_cast<DestType*>(baseptr);
+
+        ValueType& value = m_value[index];
+        const DestPtr before = TraitsValueType::get(value);
+        if (v != before)
+            TraitsValueType::set(value, v);
+        TraitsValueType::setPath(value, path);
+        updateCounter();
+        if (v != before)
+            notifyChange( before, v);
+        return true;
+    }
+
     Base* _doGet_(const std::size_t index=0) const override
     {
-        assert(index < m_value.getSize() );
-        const ValueType& value = m_value[index];
-        return TraitsDestPtr::get(TraitsValueType::get(value));
-    }
-
-    [[deprecated("This function has been deprecated in PR#1503 and will be removed soon. Link<> cannot hold BaseData anymore. To make link between Data use DataLink instead.")]]
-    BaseData* getLinkedData(std::size_t =0) const override
-    {
-        return nullptr;
-    }
-
-    /// @name Serialization API
-    /// @{
-
-
-    /// @}
-
-    sofa::core::objectmodel::Base* getOwnerBase() const override
-    {
-        return m_owner;
-    }
-
-    [[deprecated("This function has been deprecated in PR#1503 and will be removed soon. Link<> cannot hold BaseData anymore. To make link between Data use DataLink instead.")]]
-    sofa::core::objectmodel::BaseData* getOwnerData() const override
-    {
-        return nullptr;
+        return TLink::get(index);
     }
 
     bool _doSetOwner_(Base* baseowner) override
@@ -566,25 +581,6 @@ public:
         return m_owner;
     }
 
-    void setOwner(OwnerType* owner)
-    {
-        /// TODO CHECK PROPER OWNER SHIP
-        m_owner = owner;
-        if (!owner) return;
-        m_owner->addLink(this);
-    }
-
-protected:
-    std::function<DestPtr(OwnerType* owner, DestPtr before, DestPtr after, size_t index)> notifyChangeCb;
-    void notifyChange(DestPtr oldValue, DestPtr newValue, size_t index=0)
-    {
-        if(notifyChangeCb)
-        {
-            DestPtr overridenValue = notifyChangeCb(m_owner, oldValue, newValue, index);
-            if(overridenValue!=newValue)
-                TraitsValueType::set(m_value[index], overridenValue);
-        }
-    }
 
     OwnerType* m_owner {nullptr};
     Container m_value;
@@ -650,21 +646,6 @@ public:
             ok &= TLink<TOwnerType,TDestType,TFlags|BaseLink::FLAG_MULTILINK>::CheckPath(path, context);
         }
         return ok;
-    }
-
-    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-    DestType* get(std::size_t index, const core::ExecParams*) const { return get(index); }
-    DestType* get(std::size_t index) const
-    {
-        if (index < this->m_value.size())
-            return TraitsDestPtr::get(TraitsValueType::get(this->m_value[index]));
-        else
-            return nullptr;
-    }
-
-    DestType* operator[](std::size_t index) const
-    {
-        return get(index);
     }
 
 };
@@ -735,32 +716,6 @@ public:
         TraitsValueType::set(value, newvalue);
         updateCounter();
         notifyChange( before, newvalue);
-    }
-
-    void set(DestPtr v, const std::string& path)
-    {
-        ValueType& value = m_value.get();
-        const DestPtr before = TraitsValueType::get(value);
-        if (v != before)
-            TraitsValueType::set(value, v);
-        TraitsValueType::setPath(value, path);
-        updateCounter();
-        if (v != before)
-            notifyChange( before, v);
-    }
-
-    void setPath(const std::string& path)
-    {
-        if (path.empty())
-        {
-            set(nullptr);
-            return;
-        }
-
-        DestType* ptr = nullptr;
-        if (m_owner)
-            PathResolver::FindLinkDest(m_owner, ptr, path, this);
-        set(ptr, path);
     }
 
     operator DestType*() const

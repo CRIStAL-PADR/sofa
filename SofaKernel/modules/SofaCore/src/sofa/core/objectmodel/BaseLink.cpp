@@ -93,6 +93,12 @@ std::string BaseLink::getValueTypeString() const
     return t;
 }
 
+
+bool BaseLink::parseString(const std::string& text, std::string* path, std::string* data) const
+{
+    return ParseString(text, path, data, this->getOwner());
+}
+
 bool BaseLink::ParseString(const std::string& text, std::string* path, std::string* data, Base* owner)
 {
     if (text.empty())
@@ -339,16 +345,19 @@ bool BaseLink::updateLinks()
     return ok;
 }
 
-void BaseLink::setLinkedBase(Base* link)
+void BaseLink::setLinkedBase(Base* linkTarget)
 {
     auto owner = getOwnerBase();
-    BaseNode* n = dynamic_cast<BaseNode*>(link);
-    BaseObject* o = dynamic_cast<BaseObject*>(link);
+    BaseNode* n = dynamic_cast<BaseNode*>(linkTarget);
+    BaseObject* o = dynamic_cast<BaseObject*>(linkTarget);
     if (!n && !o)
     {
         read("@");
         return;
     }
+
+    //TODO(dmarchal, 2020/01/11): Do we really need string generation then parsing ?
+    //Cannot we set the link targets by simply setting its value.
     auto pathname = n != nullptr ? n->getPathName() : o->getPathName();
     if (!this->read("@" + pathname))
     {
@@ -356,6 +365,41 @@ void BaseLink::setLinkedBase(Base* link)
             msg_error("BaseLink (" + getName() + ")") << "Could not read link from" << pathname;
         else msg_error(owner) << "Could not read link from" << pathname;
     }
+}
+
+bool BaseLink::addPath(const std::string& path)
+{
+    if (path.empty())
+        return false;
+    Base* ptr = PathResolver::FindBaseFromClassAndPath(getOwner(), getDestClass(), path);
+    return add(ptr, path);
+}
+
+bool BaseLink::removePath(const std::string& path)
+{
+    if (path.empty())
+        return false;
+
+    std::size_t n = size();
+    for (std::size_t index=0; index<n; ++index)
+    {
+        std::string p = getPath(index);
+        if (p == path)
+            return removeAt(index);
+    }
+    return false;
+}
+
+void BaseLink::setPath(const std::string& path, size_t index)
+{
+    if (path.empty())
+    {
+        set(nullptr, index);
+        return;
+    }
+
+    Base* ptr = PathResolver::FindBaseFromClassAndPath(getOwner(), getDestClass(), path);
+    set(ptr, path, index);
 }
 
 } // namespace objectmodel

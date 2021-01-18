@@ -46,7 +46,6 @@ class BaseObjectDescription;
 class SOFA_CORE_API BaseLink
 {
 public:
-    SOFA_BEGIN_DEPRECATION_AS_ERROR
     enum LinkFlagsEnum
     {
         FLAG_NONE       = 0,
@@ -86,23 +85,43 @@ public:
     /// Get help message
     const std::string& getHelp() const { return m_help; }
 
+
     /// Set help message
     void setHelp(const std::string& val) { m_help = val; }
 
-    bool setOwner(Base* newowner);
+    bool setOwner(Base* newOwner);
     Base* getOwner() const { return _doGetOwner_(); }
+
+    virtual size_t size() const = 0;
+    bool addPath(const std::string& path);
+    bool removePath(const std::string& path);
+    bool removeAt(size_t index){ return _doRemoveAt_(index); }
+
+    /// Add a new target to the link.
     bool add(Base* baseptr, const std::string& path) { return _doAdd_(baseptr, path); }
+
+    /// Change the link's target at the provided index.
     bool set(Base* baseptr, size_t index=0) { return _doSet_(baseptr, index); }
-    std::string getPath(size_t index=0) const;
+    bool set(Base* baseptr, const std::string& path, size_t index=0) { return _doSet_(baseptr, path, index); }
 
-    virtual bool contains(Base*) = 0;
-    virtual void clear() = 0;
+    /// Get the link's target at the provided index.
+    /// Returns nullptr if > size() or the link is pointing to a null object
     Base* get(size_t i=0) const { return _doGet_(i); }
-    virtual Base* getOwnerBase() const = 0;
 
-    [[deprecated("2020-10-03: Deprecated since PR #1503. BaseLink cannot hold Data anymore. Use DataLink instead. Please update your code. ")]]
-    virtual sofa::core::objectmodel::BaseData* getOwnerData() const = 0;
+    /// Get the link's target path at the provided index.
+    /// Returns empty string if > size() or the link is pointing to a null object
+    std::string getPath(size_t index=0) const;
+    void setPath(const std::string& s, size_t index=0);
 
+    /// Get the link's target path at the provided index.
+    /// Returns empty string if > size() or the link is pointing to a null object
+    std::string getLinkedPath(std::size_t index=0) const;
+
+    /// Returns true if the Link is containing a pointer to the provided 'item'
+    virtual bool contains(Base* item) = 0;
+
+    /// Remove all links
+    virtual void clear() = 0;
 
     /// Set one of the flags.
     void setFlag(LinkFlagsEnum flag, bool b)
@@ -115,20 +134,10 @@ public:
     bool getFlag(LinkFlagsEnum flag) const { return (m_flags&LinkFlags(flag))!=0; }
 
     bool isMultiLink() const { return getFlag(FLAG_MULTILINK); }
-
-    [[deprecated("2020-10-03: Deprecated since PR #1503. BaseLink cannot hold Data anymore. Use DataLink instead. Please update your code. ")]]
-    bool isDataLink() const { return false; }
     bool isStrongLink() const { return getFlag(FLAG_STRONGLINK); }
     bool isDoubleLink() const { return getFlag(FLAG_DOUBLELINK); }
     bool isDuplicate() const { return getFlag(FLAG_DUPLICATE); }
     bool storePath() const { return getFlag(FLAG_STOREPATH); }
-
-    /// Alias to match BaseData API
-    void setPersistent(bool b) { setFlag(FLAG_STOREPATH, b); }
-    bool isPersistent() const { return storePath(); }
-
-    /// Alias to match BaseData API
-    bool isReadOnly() const   { return !storePath(); }
 
     virtual const BaseClass* getDestClass() const = 0;
     virtual const BaseClass* getOwnerClass() const = 0;
@@ -136,22 +145,6 @@ public:
     /// Return the number of changes since creation
     /// This can be used to efficiently detect changes
     int getCounter() const { return m_counter; }
-
-    /// Return the number of changes since creation
-    /// This can be used to efficiently detect changes
-    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
-    int getCounter(const core::ExecParams*) const { return getCounter(); }
-
-    void setLinkedBase(Base* link);
-
-    virtual size_t getSize() const = 0;
-    [[deprecated("TODO")]]
-    Base* getLinkedBase(std::size_t index=0) const { return get(index); }
-
-    [[deprecated("2020-10-03: Deprecated since PR #1503. BaseLink cannot hold Data anymore. Use DataLink instead. Please update your code. ")]]
-    virtual BaseData* getLinkedData(std::size_t index=0) const = 0;
-
-    std::string getLinkedPath(std::size_t index=0) const;
 
     /// @name Serialization API
     /// @{
@@ -172,18 +165,14 @@ public:
     /// Print the value type of the associated variable
     virtual std::string getValueTypeString() const;
 
+    bool parseString(const std::string& text, std::string* path, std::string* data = nullptr) const;
+
     /// @}
 
     /// @name Serialization Helper API
     /// @{
 
     static bool ParseString(const std::string& text, std::string* path, std::string* data = nullptr, Base* start = nullptr);
-
-    bool parseString(const std::string& text, std::string* path, std::string* data = nullptr) const
-    {
-        return ParseString(text, path, data, this->getOwnerBase());
-    }
-
     static std::string CreateString(const std::string& path, const std::string& data="");
     static std::string CreateStringPath(Base* object, Base* from);
     static std::string CreateStringData(BaseData* data);
@@ -193,23 +182,53 @@ public:
 
     /// @}
     ///
-    SOFA_END_DEPRECATION_AS_ERROR
+    [[deprecated("2020-10-03: Deprecated since PR #1503. BaseLink cannot hold Data anymore. Use DataLink instead. Please update your code. ")]]
+    sofa::core::objectmodel::BaseData* getOwnerData() const {return nullptr;}
+
+    [[deprecated("2020-03-25: Aspect have been deprecated for complete removal in PR #1269. You can probably update your code by removing aspect related calls. If the feature was important to you contact sofa-dev. ")]]
+    int getCounter(const core::ExecParams*) const { return getCounter(); }
+
+    [[deprecated("2020-10-03: Deprecated since PR #1503. BaseLink cannot hold Data anymore. Use DataLink instead. Please update your code. ")]]
+    bool isDataLink() const { return false; }
+
+    [[deprecated("This function has been deprecated in PR#1503 and will be removed soon. Link<> cannot hold BaseData anymore. To make link between Data use DataLink instead.")]]
+    BaseData* getLinkedData(std::size_t =0) const { return nullptr; }
+
+    [[deprecated("TODO")]]
+    Base* getLinkedBase(std::size_t index=0) const { return get(index); }
+
+    [[deprecated("TODO")]]
+    void setLinkedBase(Base* link);
+
+    [[deprecated("TODO.")]]
+    sofa::core::objectmodel::Base* getOwnerBase() const {return getOwner();}
+
+    [[deprecated("TODO.")]]
+    void setPersistent(bool b) { setFlag(FLAG_STOREPATH, b); } ///< Alias to match BaseData API
+
+    [[deprecated("TODO.")]]
+    bool isPersistent() const { return storePath(); } ///< Alias to match BaseData API
+
+    [[deprecated("TODO.")]]
+    bool isReadOnly() const   { return !storePath(); } ///< Alias to match BaseData API
+
+    [[deprecated("TODO.")]]
+    size_t getSize() const { return size(); }
 
 protected:
     virtual Base* _doGet_(const size_t index) const = 0;
     virtual bool _doAdd_(Base* target, const std::string&) = 0;
+    virtual bool _doRemoveAt_(size_t) = 0;
     virtual bool _doSet_(Base* target, const size_t index) = 0;
+    virtual bool _doSet_(Base* v, const std::string& path, size_t=0) = 0;
     virtual bool _doSetOwner_(Base* owner) = 0;
     virtual Base* _doGetOwner_() const = 0;
     virtual std::string _doGetPath_(const size_t index) const = 0;
     void updateCounter() { ++m_counter; }
 
-    //Base* m_owner {nullptr}; ///< The Base that holds the Link.
-
     unsigned int m_flags;
     std::string m_name;
     std::string m_help;
-
 
     /// Number of changes since creation
     int m_counter;
