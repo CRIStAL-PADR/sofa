@@ -24,7 +24,7 @@
 
 #include <sofa/defaulttype/BoundingBox.h>
 #include <sofa/core/objectmodel/Data.h>
-#include <sofa/core/objectmodel/Link.h>
+#include <sofa/core/objectmodel/BaseLink.h>
 #include <sofa/core/DataTracker.h>
 #include <sofa/core/objectmodel/BaseClass.h>
 #include <sofa/core/objectmodel/BaseObjectDescription.h>

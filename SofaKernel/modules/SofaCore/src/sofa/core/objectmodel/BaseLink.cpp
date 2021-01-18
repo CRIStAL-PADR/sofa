@@ -99,7 +99,7 @@ bool BaseLink::parseString(const std::string& text, std::string* path, std::stri
     return ParseString(text, path, data, this->getOwner());
 }
 
-bool BaseLink::ParseString(const std::string& text, std::string* path, std::string* data, Base* owner)
+bool BaseLink::ParseString(const std::string& text, std::string* path, std::string* data, const Base* owner)
 {
     if (text.empty())
     {

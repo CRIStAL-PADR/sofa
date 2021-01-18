@@ -31,6 +31,8 @@ using sofa::core::objectmodel::BaseLink ;
 #include <sofa/helper/testing/BaseTest.h>
 using sofa::helper::testing::BaseTest ;
 
+#include "BaseLink_test.h"
+
 class EmptyObject : public BaseObject
 {
 public:

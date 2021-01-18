@@ -22,13 +22,8 @@
 #ifndef SOFA_CORE_OBJECTMODEL_LINK_H
 #define SOFA_CORE_OBJECTMODEL_LINK_H
 #include <sofa/core/objectmodel/BaseLink.h>
-#include <sofa/helper/stable_vector.h>
-
 #include <sofa/core/PathResolver.h>
-#include <sstream>
-#include <utility>
-#include <vector>
-
+#include <sofa/helper/stable_vector.h>
 #include <functional>
 namespace sofa
 {
@@ -398,22 +393,6 @@ public:
         return true;
     }
 
-    /// Check that a given path is valid, that the pointed object exists and is of the right type
-    template <class TContext>
-    static bool CheckPath( const std::string& path, TContext* context)
-    {
-        if (path.empty())
-            return false;
-        if (!context)
-        {
-            std::string p,d;
-            return BaseLink::ParseString(path, &p, nullptr, context);
-        }
-
-        DestType* ptr = nullptr;
-        return context->findLinkDest(ptr, path, nullptr);
-    }
-
     const BaseClass* getDestClass() const override
     {
         return DestType::GetClass();
@@ -601,7 +580,6 @@ public:
 
 
     MultiLink() {}
-
     MultiLink(const BaseLink::InitLink<OwnerType>& init)
         : Inherit(init)
     {
@@ -617,24 +595,11 @@ public:
     {
     }
 
-
-
-    /// Check that a given list of path is valid, that the pointed object exists and is of the right type
-    template<class TContext>
-    static bool CheckPaths( const std::string& str, TContext* context)
+    [[deprecated("2021-01-01: CheckPaths as been deprecated for complete removal in PR. You can update your code by using PathResolver::CheckPaths(Base*, BaseClass*, string).")]]
+    static bool CheckPaths(const std::string& path, Base* context)
     {
-        if (str.empty())
-            return false;
-        std::istringstream istr( str.c_str() );
-        std::string path;
-        bool ok = true;
-        while (istr >> path)
-        {
-            ok &= TLink<TOwnerType,TDestType,TFlags|BaseLink::FLAG_MULTILINK>::CheckPath(path, context);
-        }
-        return ok;
+        return PathResolver::CheckPaths(context, Inherit::GetDestClass(), path);
     }
-
 };
 
 /**
@@ -722,6 +687,12 @@ public:
     {
         set(v);
         return v;
+    }
+
+    [[deprecated("2021-01-01: CheckPath as been deprecated for complete removal in PR. You can update your code by using PathResolver::CheckPath(Base*, BaseClass*, string).")]]
+    static bool CheckPath(const std::string& path, Base* context)
+    {
+        return PathResolver::CheckPath(context, Inherit::GetDestClass(), path);
     }
 };
 

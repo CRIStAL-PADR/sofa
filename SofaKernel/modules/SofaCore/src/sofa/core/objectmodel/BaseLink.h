@@ -172,7 +172,8 @@ public:
     /// @name Serialization Helper API
     /// @{
 
-    static bool ParseString(const std::string& text, std::string* path, std::string* data = nullptr, Base* start = nullptr);
+    static bool ParseString(const std::string& text, std::string* path, std::string* data = nullptr, const Base *start = nullptr);
+
     static std::string CreateString(const std::string& path, const std::string& data="");
     static std::string CreateStringPath(Base* object, Base* from);
     static std::string CreateStringData(BaseData* data);
