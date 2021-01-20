@@ -29,37 +29,46 @@ using namespace sofa::simpleapi ;
 
 namespace sofa {
 
-struct Node_test : public BaseSimulationTest
+class Node_test : public BaseSimulationTest
 {
-    void test1()
+public:
+    SceneInstance si;
+    Node::SPtr B;
+    Node::SPtr D;
+    BaseObject::SPtr C;
+    Node_test()
     {
-        /* create trivial DAG :
-         *
-         * A
-         * |\
-         * B C
-         * |
-         * D
-         *
-         */
-        EXPECT_MSG_NOEMIT(Error, Warning);
-
-        SceneInstance si("A") ;
-        Node::SPtr B = createChild(si.root, "B");
-        Node::SPtr D = createChild(B, "D");
-        BaseObject::SPtr C = core::objectmodel::New<Dummy>("C");
-        si.root->addObject(C);
-
-        EXPECT_STREQ(si.root->getPathName().c_str(), "/");
-        EXPECT_STREQ(B->getPathName().c_str(), "/B");
-        EXPECT_STREQ(C->getPathName().c_str(), "/C");
-        EXPECT_STREQ(D->getPathName().c_str(), "/B/D");
+        si = SceneInstance("A") ;
+        B = createChild(si.root, "B");
+        D = createChild(B, "D");
+        C = core::objectmodel::New<Dummy>("C");
     }
 };
 
 TEST_F( Node_test, getPathName)
 {
-    this->test1() ;
+    /* create trivial DAG :
+     *
+     * A
+     * |\
+     * B C
+     * |
+     * D
+     *
+     */
+    EXPECT_MSG_NOEMIT(Error, Warning);
+    si.root->addObject(C);
+
+    EXPECT_STREQ(si.root->getPathName().c_str(), "/");
+    EXPECT_STREQ(B->getPathName().c_str(), "/B");
+    EXPECT_STREQ(C->getPathName().c_str(), "/C");
+    EXPECT_STREQ(D->getPathName().c_str(), "/B/D");
+}
+
+TEST_F( Node_test, testTypedBaseAccessor)
+{
+    EXPECT_NE(si.root->findLink("animationLoop"), nullptr);
+    EXPECT_EQ(si.root->findLink("other"), nullptr);
 }
 
 }// namespace sofa

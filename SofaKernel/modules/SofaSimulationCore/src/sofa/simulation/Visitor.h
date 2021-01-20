@@ -106,7 +106,7 @@ public:
 
     /// Helper method to enumerate objects in the given list. The callback gets the pointer to node
     template < class Visit, class VContext, class Container, typename PointedType = typename Container::pointed_type >
-    void for_each(Visit* visitor, VContext* ctx, const Container& list, void (Visit::*fn)(VContext*, PointedType*))
+    void for_each(Visit* visitor, VContext* ctx, Container& list, void (Visit::*fn)(VContext*, PointedType*))
     {
         for (typename Container::iterator it=list.begin(); it != list.end(); ++it)
         {

@@ -213,36 +213,35 @@ public:
 
     /// Class to hold 0-or-1 object. Public access is only readonly using an interface similar to std::vector (size/[]/begin/end), plus an automatic convertion to one pointer.
     /// UPDATE: it is now an alias for the Link pointer container
-    template < class T, bool duplicate = true >
-    class Single : public SingleLink<Node, T, BaseLink::FLAG_DOUBLELINK|(duplicate ? BaseLink::FLAG_DUPLICATE : BaseLink::FLAG_NONE)>
+    template < class T >
+    class Single : public sofa::helper::fixed_array<T*, 1>
     {
     public:
-        typedef SingleLink<Node, T, BaseLink::FLAG_DOUBLELINK|(duplicate ? BaseLink::FLAG_DUPLICATE : BaseLink::FLAG_NONE)> Inherit;
         typedef T pointed_type;
-        typedef typename Inherit::DestPtr value_type;
-        //typedef TPtr value_type;
-        typedef typename Inherit::const_iterator const_iterator;
-        typedef typename Inherit::const_reverse_iterator const_reverse_iterator;
-        typedef const_iterator iterator;
-        typedef const_reverse_iterator reverse_iterator;
-
-        Single(const BaseLink::InitLink<Node>& init)
-            : Inherit(init)
+        size_t size(){ return this->at(0)!=nullptr; }
+        operator T*() const { return this->at(0); }
+        operator bool() const { return this->at(0)!=nullptr; }
+        void set(T* data){this->elems[0] = data;}
+        T* get(){ return this->elems[0];}
+        void remove(T* data)
         {
+            if(this->elems[0]==data)
+            {
+                this->elems[0] = nullptr;
+            }
         }
-
         T* operator->() const
         {
-            return this->get();
+            return this->elems[0];
         }
-        T& operator*() const
-        {
-            return *this->get();
-        }
-        operator T*() const
-        {
-            return this->get();
-        }
+//        T& operator*() const
+//        {
+//            return *this->get();
+//        }
+//        operator T*() const
+//        {
+//            return this->get();
+//        }
     };
 
     Sequence<Node,true> child;
@@ -609,6 +608,10 @@ public:
     virtual void add##FUNCTIONNAME( CLASSNAME* obj ) override { SEQUENCENAME.add(obj); } \
     virtual void remove##FUNCTIONNAME( CLASSNAME* obj ) override { SEQUENCENAME.remove(obj); }
 
+#define NODE_ADD_IN_SINGLE( CLASSNAME, FUNCTIONNAME, SEQUENCENAME ) \
+    virtual void add##FUNCTIONNAME( CLASSNAME* obj ) override { SEQUENCENAME.set(obj); } \
+    virtual void remove##FUNCTIONNAME( CLASSNAME* obj ) override { SEQUENCENAME.remove(obj); }
+
     // WARNINGS subtilities:
     // an InteractioFF is NOT in the FF Sequence
     // a MechanicalMapping is NOT in the Mapping Sequence
@@ -617,20 +620,20 @@ public:
 
 public:
 
-    NODE_ADD_IN_SEQUENCE( sofa::core::behavior::BaseAnimationLoop, AnimationLoop, animationManager )
-    NODE_ADD_IN_SEQUENCE( sofa::core::visual::VisualLoop, VisualLoop, visualLoop )
+    NODE_ADD_IN_SINGLE( sofa::core::behavior::BaseAnimationLoop, AnimationLoop, animationManager )
+    NODE_ADD_IN_SINGLE( sofa::core::visual::VisualLoop, VisualLoop, visualLoop )
     NODE_ADD_IN_SEQUENCE( sofa::core::BehaviorModel, BehaviorModel, behaviorModel )
     NODE_ADD_IN_SEQUENCE( sofa::core::BaseMapping, Mapping, mapping )
     NODE_ADD_IN_SEQUENCE( sofa::core::behavior::OdeSolver, OdeSolver, solver )
     NODE_ADD_IN_SEQUENCE( sofa::core::behavior::ConstraintSolver, ConstraintSolver, constraintSolver )
     NODE_ADD_IN_SEQUENCE( sofa::core::behavior::BaseLinearSolver, LinearSolver, linearSolver )
-    NODE_ADD_IN_SEQUENCE( sofa::core::topology::Topology, Topology, topology )
-    NODE_ADD_IN_SEQUENCE( sofa::core::topology::BaseMeshTopology, MeshTopology, meshTopology )
+    NODE_ADD_IN_SINGLE( sofa::core::topology::Topology, Topology, topology )
+    NODE_ADD_IN_SINGLE( sofa::core::topology::BaseMeshTopology, MeshTopology, meshTopology )
     NODE_ADD_IN_SEQUENCE( sofa::core::topology::BaseTopologyObject, TopologyObject, topologyObject )
-    NODE_ADD_IN_SEQUENCE( sofa::core::BaseState, State, state )
-    NODE_ADD_IN_SEQUENCE( sofa::core::behavior::BaseMechanicalState,MechanicalState, mechanicalState )
-    NODE_ADD_IN_SEQUENCE( sofa::core::BaseMapping, MechanicalMapping, mechanicalMapping )
-    NODE_ADD_IN_SEQUENCE( sofa::core::behavior::BaseMass, Mass, mass )
+    NODE_ADD_IN_SINGLE( sofa::core::BaseState, State, state )
+    NODE_ADD_IN_SINGLE( sofa::core::behavior::BaseMechanicalState,MechanicalState, mechanicalState )
+    NODE_ADD_IN_SINGLE( sofa::core::BaseMapping, MechanicalMapping, mechanicalMapping )
+    NODE_ADD_IN_SINGLE( sofa::core::behavior::BaseMass, Mass, mass )
     NODE_ADD_IN_SEQUENCE( sofa::core::behavior::BaseForceField, ForceField, forceField )
     NODE_ADD_IN_SEQUENCE( sofa::core::behavior::BaseInteractionForceField, InteractionForceField, interactionForceField )
     NODE_ADD_IN_SEQUENCE( sofa::core::behavior::BaseProjectiveConstraintSet, ProjectiveConstraintSet, projectiveConstraintSet )
@@ -641,7 +644,7 @@ public:
     NODE_ADD_IN_SEQUENCE( sofa::core::visual::VisualModel, VisualModel, visualModel )
     NODE_ADD_IN_SEQUENCE( sofa::core::visual::VisualManager, VisualManager, visualManager )
     NODE_ADD_IN_SEQUENCE( sofa::core::CollisionModel, CollisionModel, collisionModel )
-    NODE_ADD_IN_SEQUENCE( sofa::core::collision::Pipeline, CollisionPipeline, collisionPipeline )
+    NODE_ADD_IN_SINGLE( sofa::core::collision::Pipeline, CollisionPipeline, collisionPipeline )
 
 #undef NODE_ADD_IN_SEQUENCE
 

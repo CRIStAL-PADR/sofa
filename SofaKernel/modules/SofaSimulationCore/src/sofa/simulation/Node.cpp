@@ -49,29 +49,48 @@ namespace simulation
 {
 using core::objectmodel::BaseNode;
 using core::objectmodel::BaseObject;
+using sofa::core::objectmodel::Base;
+using sofa::core::objectmodel::BaseClass;
+
+template<class T>
+class LinkContainer : public BaseLink
+{
+    T& container;
+public:
+    LinkContainer(T& c, std::string name, std::string help) : BaseLink{ BaseLink::FLAG_NONE }, container{c}
+    {
+        setName(name);
+        setHelp(help);
+    }
+    virtual void getOwner()const{}
+    virtual void getDest(){}
+    const BaseClass* getDestClass() const { return nullptr; }
+    const BaseClass* getOwnerClass() const { return nullptr; }
+    virtual void clear(){}
+    virtual bool contains(Base*){ return false; }
+    virtual size_t size() const { return container[0]!=nullptr; }
+    virtual Base* _doGet_(const size_t index) const { return container[index]; }
+    virtual bool _doAdd_(Base* target, const std::string&) { container[0] = dynamic_cast<typename T::pointed_type*>(target); return true; }
+    virtual bool _doRemoveAt_(size_t) {  container[0]=nullptr; return true; }
+    virtual bool _doSet_(Base* target, const size_t index) { container[index] = dynamic_cast<typename T::pointed_type*>(const_cast<Base*>(target)); return true; }
+    virtual bool _doSet_(Base* target, const std::string&, size_t index=0) { container[index] =dynamic_cast<typename T::pointed_type*>(target); return true; }
+    virtual bool _isCompatibleOwnerType_(const Base* b) const { return dynamic_cast<typename T::pointed_type*>(const_cast<Base*>(b))==nullptr; }
+    virtual std::string _doGetPath_(const size_t) const { return ""; }
+};
 
 Node::Node(const std::string& name)
     : core::objectmodel::BaseNode()
     , sofa::core::objectmodel::Context()
     , child(initLink("child", "Child nodes"))
     , object(initLink("object","All objects attached to this node"))
-
-    , animationManager(initLink("animationLoop","The AnimationLoop attached to this node (only valid for root node)"))
-    , visualLoop(initLink("visualLoop", "The VisualLoop attached to this node (only valid for root node)"))
-
     , behaviorModel(initLink("behaviorModel", "The BehaviorModel attached to this node (only valid for root node)"))
     , mapping(initLink("mapping", "The (non-mechanical) Mapping(s) attached to this node (only valid for root node)"))
 
     , solver(initLink("odeSolver", "The OdeSolver(s) attached to this node (controlling the mechanical time integration of this branch)"))
     , constraintSolver(initLink("constraintSolver", "The ConstraintSolver(s) attached to this node"))
     , linearSolver(initLink("linearSolver", "The LinearSolver(s) attached to this node"))
-    , topology(initLink("topology", "The Topology attached to this node"))
-    , meshTopology(initLink("meshTopology", "The MeshTopology / TopologyContainer attached to this node"))
+
     , topologyObject(initLink("topologyObject", "The topology-related objects attached to this node"))
-    , state(initLink("state", "The State attached to this node (storing vectors such as position, velocity)"))
-    , mechanicalState(initLink("mechanicalState", "The MechanicalState attached to this node (storing all state vectors)"))
-    , mechanicalMapping(initLink("mechanicalMapping", "The MechanicalMapping attached to this node"))
-    , mass(initLink("mass", "The Mass attached to this node"))
     , forceField(initLink("forceField", "The (non-interaction) ForceField(s) attached to this node"))
     , interactionForceField(initLink("interactionForceField", "The InteractionForceField(s) attached to this node"))
     , projectiveConstraintSet(initLink("projectiveConstraintSet", "The ProjectiveConstraintSet(s) attached to this node"))
@@ -84,8 +103,6 @@ Node::Node(const std::string& name)
     , visualManager(initLink("visualManager", "The VisualManager(s) attached to this node"))
 
     , collisionModel(initLink("collisionModel", "The CollisionModel(s) attached to this node"))
-    , collisionPipeline(initLink("collisionPipeline", "The collision Pipeline attached to this node"))
-
     , unsorted(initLink("unsorted", "The remaining objects attached to this node"))
 
     , debug_(false)
@@ -95,6 +112,17 @@ Node::Node(const std::string& name)
     _context = this;
     setName(name);
     f_printLog.setValue(DEBUG_LINK);
+
+
+    addLink(new LinkContainer(animationManager, "animationLoop","The AnimationLoop attached to this node (only valid for root node)"));
+    addLink(new LinkContainer(visualLoop, "visualLoop", "The VisualLoop attached to this node (only valid for root node)"));
+    addLink(new LinkContainer(topology, "topology", "The Topology attached to this node"));
+    addLink(new LinkContainer(meshTopology, "meshTopology", "The MeshTopology / TopologyContainer attached to this node"));
+    addLink(new LinkContainer(state, "state", "The State attached to this node (storing vectors such as position, velocity)"));
+    addLink(new LinkContainer(mechanicalState, "mechanicalState", "The MechanicalState attached to this node (storing all state vectors)"));
+    addLink(new LinkContainer(mechanicalMapping, "mechanicalMapping", "The MechanicalMapping attached to this node"));
+    addLink(new LinkContainer(mass, "mass", "The Mass attached to this node"));
+    addLink(new LinkContainer(collisionPipeline, "collisionPipeline", "The collision Pipeline attached to this node"));
 }
 
 
@@ -399,7 +427,7 @@ sofa::core::objectmodel::Base* Node::findLinkDestClass(const core::objectmodel::
         int index = atoi(pathStr.c_str()+ppos+1);
 
         if(DEBUG_LINK)
-           dmsg_info() << "  index-based path to " << index ;
+            dmsg_info() << "  index-based path to " << index ;
 
         ObjectReverseIterator it = object.rbegin();
         ObjectReverseIterator itend = object.rend();
@@ -436,7 +464,7 @@ sofa::core::objectmodel::Base* Node::findLinkDestClass(const core::objectmodel::
     while(ppos < psize)
     {
         if ((ppos+1 < psize && pathStr.substr(ppos,2) == "./")
-            || pathStr.substr(ppos) == ".")
+                || pathStr.substr(ppos) == ".")
         {
             // this must be this node
             if(DEBUG_LINK)
@@ -446,7 +474,7 @@ sofa::core::objectmodel::Base* Node::findLinkDestClass(const core::objectmodel::
             based = true;
         }
         else if ((ppos+2 < psize && pathStr.substr(ppos,3) == "../") // relative
-                || pathStr.substr(ppos) == "..")
+                 || pathStr.substr(ppos) == "..")
         {
             ppos += 3;
             if (master)
