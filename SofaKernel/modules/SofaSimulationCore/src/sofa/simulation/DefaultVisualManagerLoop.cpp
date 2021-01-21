@@ -30,6 +30,7 @@
 #include <sofa/simulation/UpdateMappingEndEvent.h>
 #include <sofa/simulation/PropagateEventVisitor.h>
 
+#include <sofa/core/BehaviorModel.h>
 
 #include <sofa/helper/AdvancedTimer.h>
 

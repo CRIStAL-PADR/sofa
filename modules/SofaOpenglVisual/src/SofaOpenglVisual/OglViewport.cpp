@@ -29,7 +29,7 @@
 #include <sofa/helper/fixed_array.h>
 #include <sofa/helper/system/glu.h>
 #include <SofaBaseVisual/VisualStyle.h>
-
+#include <sofa/core/BehaviorModel.h>
 namespace sofa
 {
 

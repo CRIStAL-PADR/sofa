@@ -23,6 +23,7 @@
 #define SOFA_COMPONENT_MISC_WRITESTATE_INL
 
 #include <SofaExporter/WriteState.h>
+#include <sofa/core/behavior/BaseMass.h>
 #include <sofa/core/visual/VisualParams.h>
 #include <sofa/simulation/Node.h>
 #include <sofa/core/objectmodel/DataFileName.h>

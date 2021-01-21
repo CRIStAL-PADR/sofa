@@ -23,6 +23,7 @@
 #include <sofa/core/visual/Shader.h>
 #include <sofa/core/visual/VisualParams.h>
 #include <sofa/helper/AdvancedTimer.h>
+#include <sofa/core/BehaviorModel.h>
 
 #ifdef DEBUG_DRAW
 #define DO_DEBUG_DRAW true

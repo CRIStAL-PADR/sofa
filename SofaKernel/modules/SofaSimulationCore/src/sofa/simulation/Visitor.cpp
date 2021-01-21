@@ -23,7 +23,7 @@
 #include <sofa/simulation/VisualVisitor.h>
 #include <sofa/simulation/MechanicalVisitor.h>
 #include <sofa/simulation/Simulation.h>
-
+#include <sofa/core/BehaviorModel.h>
 
 namespace sofa
 {

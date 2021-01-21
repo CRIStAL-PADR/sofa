@@ -26,6 +26,9 @@
 #include <sofa/core/objectmodel/ContextObject.h>
 #include <sofa/core/visual/VisualModel.h>
 
+#include <sofa/core/behavior/BaseMass.h>
+#include <sofa/core/BehaviorModel.h>
+
 namespace sofa
 {
 

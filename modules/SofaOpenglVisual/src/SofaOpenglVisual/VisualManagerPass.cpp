@@ -29,6 +29,7 @@
 #include <sofa/core/objectmodel/KeyreleasedEvent.h>
 #include <sofa/core/objectmodel/Data.h>
 
+#include <sofa/core/BehaviorModel.h>
 #include <sofa/helper/logging/Messaging.h>
 
 namespace sofa

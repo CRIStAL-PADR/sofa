@@ -29,12 +29,8 @@
 // moved from GNode (27/04/08)
 #include <sofa/core/objectmodel/BaseNode.h>
 #include <sofa/core/objectmodel/BaseObjectDescription.h>
-#include <sofa/core/BehaviorModel.h>
-#include <sofa/core/behavior/MechanicalState.h>
 #include <sofa/core/Mapping.h>
-#include <sofa/core/behavior/ForceField.h>
 #include <sofa/core/behavior/BaseInteractionForceField.h>
-#include <sofa/core/behavior/Mass.h>
 #include <sofa/core/behavior/BaseProjectiveConstraintSet.h>
 #include <sofa/core/behavior/BaseConstraintSet.h>
 #include <sofa/core/topology/Topology.h>
@@ -43,7 +39,6 @@
 #include <sofa/core/behavior/LinearSolver.h>
 #include <sofa/core/behavior/OdeSolver.h>
 #include <sofa/core/behavior/ConstraintSolver.h>
-#include <sofa/core/behavior/BaseAnimationLoop.h>
 #include <sofa/core/collision/Pipeline.h>
 #include <sofa/core/loader/BaseLoader.h>
 #include <sofa/simulation/MutationListener.h>
@@ -72,6 +67,19 @@ namespace sofa::core::visual
     class VisualLoop;
 }
 
+namespace sofa::core::loader
+{
+    class BaseLoader;
+}
+
+namespace sofa::core::behavior
+{
+    class BehaviorModel;
+    class BaseMechanicalState;
+    class BaseForceField;
+    class BaseMass;
+    class BaseAnimationLoop;
+}
 namespace sofa
 {
 namespace simulation

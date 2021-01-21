@@ -31,8 +31,10 @@ using sofa::core::visual::VisualParams ;
 
 #include <sofa/core/objectmodel/KeypressedEvent.h>
 #include <sofa/core/objectmodel/KeyreleasedEvent.h>
+#include <sofa/core/BehaviorModel.h>
 
 #include <SofaOpenglVisual/OglTexture.h>
+
 using sofa::component::visualmodel::OglTexture ;
 
 using sofa::core::objectmodel::BaseContext ;

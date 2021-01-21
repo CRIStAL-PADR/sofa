@@ -28,6 +28,8 @@
 #include <sofa/core/collision/CollisionGroupManager.h>
 #include <sofa/core/collision/ContactManager.h>
 
+#include <sofa/core/behavior/BaseAnimationLoop.h>
+
 namespace sofa::simulation::graph
 {
 

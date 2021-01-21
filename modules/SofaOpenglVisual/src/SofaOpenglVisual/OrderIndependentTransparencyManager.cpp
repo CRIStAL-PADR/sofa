@@ -25,7 +25,7 @@
 #include <sofa/simulation/VisualVisitor.h>
 #include <sofa/core/ObjectFactory.h>
 #include <sofa/helper/system/FileRepository.h>
-
+#include <sofa/core/BehaviorModel.h>
 
 namespace sofa
 {

@@ -40,6 +40,14 @@
 #include <sofa/core/visual/Shader.h>
 #include <sofa/core/visual/VisualLoop.h>
 
+#include <sofa/core/loader/BaseLoader.h>
+
+#include <sofa/core/BehaviorModel.h>
+#include <sofa/core/behavior/BaseMechanicalState.h>
+#include <sofa/core/behavior/BaseForceField.h>
+#include <sofa/core/behavior/BaseMass.h>
+#include <sofa/core/behavior/BaseAnimationLoop.h>
+
 #include <sofa/core/ObjectFactory.h>
 #include <sofa/helper/Factory.inl>
 #include <sofa/helper/cast.h>
