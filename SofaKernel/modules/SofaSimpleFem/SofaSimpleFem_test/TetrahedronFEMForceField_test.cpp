@@ -123,7 +123,7 @@ struct TetrahedronFEMForceField_test : public ForceField_test<_TetrahedronFEMFor
                  "  </Node>                                             \n"
                  "</Node>                                               \n" ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                           scene.str().c_str(),
                                                           scene.str().size()) ;
         root->init(ExecParams::defaultInstance()) ;

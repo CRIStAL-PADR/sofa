@@ -37,14 +37,14 @@ public:
         double dt = 0.01;
         sofa::simpleapi::importPlugin("SofaComponentAll") ;
         auto simulation = sofa::simpleapi::createSimulation();
-        Node::SPtr root = sofa::simpleapi::createRootNode(simulation, "root");
+        sofa::core::sptr<sofa::simulation::Node> root = sofa::simpleapi::createRootNode(simulation, "root");
         sofa::simpleapi::createObject(root, "RequiredPlugin", { { "name","SofaGeneralLoader" } });
 
         /// no need of gravity, the file .data is just read
         root->setGravity(Vec3(0.0,0.0,0.0));
         root->setDt(dt);
 
-        Node::SPtr childNode = sofa::simpleapi::createChild(root, "Particle");
+        sofa::core::sptr<sofa::simulation::Node> childNode = sofa::simpleapi::createChild(root, "Particle");
 
         auto meca = sofa::simpleapi::createObject(childNode, "MechanicalObject",
                                                   {{"size", "1"}});
@@ -68,7 +68,7 @@ public:
     {
         sofa::simpleapi::importPlugin("SofaComponentAll") ;
         auto simulation = sofa::simpleapi::createSimulation();
-        Node::SPtr root = sofa::simpleapi::createRootNode(simulation, "root");
+        sofa::core::sptr<sofa::simulation::Node> root = sofa::simpleapi::createRootNode(simulation, "root");
 
         auto meca = sofa::simpleapi::createObject(root, "MechanicalObject",
                                                   {{"size", "1"}});

@@ -1134,7 +1134,7 @@ void SimpleGUI::keyPressEvent ( int k )
                 Quat  ori;
                 getView(pos, ori);
 
-                simulation::Node::SPtr newroot = getSimulation()->load(filename.c_str());
+                sofa::core::sptr<sofa::simulation::Node>  newroot = getSimulation()->load(filename.c_str());
                 getSimulation()->init(newroot.get());
                 if (newroot == NULL)
                 {

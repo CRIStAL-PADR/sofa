@@ -108,7 +108,7 @@ bool SofaCarving_test::createScene(const std::string& carvingDistance)
     );
 
     // create cylinder object
-    Node::SPtr nodeVolume = createChild(m_root, "cylinder");
+    sofa::core::sptr<sofa::simulation::Node> nodeVolume = createChild(m_root, "cylinder");
     createObject(nodeVolume, "MeshGmshLoader", {
         { "name","loader" },
         { "filename", sofa::helper::system::DataRepository.getFile("mesh/cylinder.msh") }
@@ -157,7 +157,7 @@ bool SofaCarving_test::createScene(const std::string& carvingDistance)
 
 
     // create cylinder surface
-    Node::SPtr nodeSurface = createChild(nodeVolume, "Surface");
+    sofa::core::sptr<sofa::simulation::Node> nodeSurface = createChild(nodeVolume, "Surface");
 
     createObject(nodeSurface, "TriangleSetTopologyContainer", {
         { "name","Container" }
@@ -191,7 +191,7 @@ bool SofaCarving_test::createScene(const std::string& carvingDistance)
 
 
     // create carving Node
-    Node::SPtr nodeCarv = createChild(m_root, "carvingElement");
+    sofa::core::sptr<sofa::simulation::Node> nodeCarv = createChild(m_root, "carvingElement");
 
     createObject(nodeCarv, "MechanicalObject", {
         { "name","Particles" },

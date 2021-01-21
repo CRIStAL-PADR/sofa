@@ -126,7 +126,7 @@ protected:
     MOUSE_BUTTON mouseButton;
 
 
-    Node::SPtr                mouseNode;
+    sofa::core::sptr<sofa::simulation::Node>                mouseNode;
     MouseContainer::SPtr      mouseContainer;
     MouseCollisionModel::SPtr mouseCollision;
 

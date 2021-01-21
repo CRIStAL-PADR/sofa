@@ -54,7 +54,7 @@ public:
     using Index = sofa::Index;
 
     MCollisionModel* model;
-    simulation::Node::SPtr child;
+    sofa::core::sptr<sofa::simulation::Node>  child;
     typename MMapping::SPtr mapping;
     typename MMechanicalState::SPtr outmodel;
     Size nbp;

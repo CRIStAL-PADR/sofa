@@ -58,7 +58,7 @@ struct EulerImplicit_test_2_particles_to_equilibrium : public Sofa_test<>
     {
         EXPECT_MSG_NOEMIT(Error) ;
         //*******
-        simulation::Node::SPtr root = modeling::initSofa();
+        sofa::core::sptr<sofa::simulation::Node>  root = modeling::initSofa();
         //*******
         // begin create scene under the root node
 
@@ -68,7 +68,7 @@ struct EulerImplicit_test_2_particles_to_equilibrium : public Sofa_test<>
         linearSolver->f_tolerance.setValue(1e-5);
         linearSolver->f_smallDenominatorThreshold.setValue(1e-5);
 
-        simulation::Node::SPtr string = massSpringString(
+        sofa::core::sptr<sofa::simulation::Node>  string = massSpringString(
                     root, // attached to root node
                     0,1,0,     // first particle position
                     0,0,0,     // last  particle position
@@ -140,7 +140,7 @@ struct EulerImplicit_test_2_particles_in_different_nodes_to_equilibrium  : publi
     EulerImplicit_test_2_particles_in_different_nodes_to_equilibrium()
     {
         //*******
-        simulation::Node::SPtr root = modeling::initSofa();
+        sofa::core::sptr<sofa::simulation::Node>  root = modeling::initSofa();
         //*******
         // create scene
         root->setGravity(Vec3(0,0,0));
@@ -159,7 +159,7 @@ struct EulerImplicit_test_2_particles_in_different_nodes_to_equilibrium  : publi
 
 
         // create a child node with its own DOF
-        simulation::Node::SPtr child = root->createChild("childNode");
+        sofa::core::sptr<sofa::simulation::Node>  child = root->createChild("childNode");
         MechanicalObject<Vec3Types>::SPtr childDof = addNew<MechanicalObject<Vec3Types> >(child);
         UniformMass<Vec3Types, SReal>::SPtr childMass = addNew<UniformMass<Vec3Types, SReal> >(child,"childMass");
         childMass->d_vertexMass.setValue( 1. );

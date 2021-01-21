@@ -57,7 +57,7 @@ struct MeshROI_test : public Sofa_test<typename _DataTypes::Real>,
     typedef _DataTypes DataTypes;
     typedef typename DataTypes::Coord Coord;
 
-    Node::SPtr m_root;
+    sofa::core::sptr<sofa::simulation::Node> m_root;
     ThisClass* m_thisObject;
 
     void SetUp()
@@ -139,7 +139,7 @@ struct MeshROI_test : public Sofa_test<typename _DataTypes::Real>,
         "   </Node>                                                        "
         "</Node>                                                           " ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                   scene1.c_str(),
                                                   scene1.size()) ;
         ASSERT_NE(root, nullptr) ;

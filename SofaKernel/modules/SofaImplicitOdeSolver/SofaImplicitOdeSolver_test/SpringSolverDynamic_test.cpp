@@ -57,7 +57,7 @@ struct SpringSolverDynamic_test : public Sofa_test<typename _DataTypes::Real>
     typedef container::MechanicalObject<DataTypes> MechanicalObject;
 
     /// Root of the scene graph
-    simulation::Node::SPtr root;
+    sofa::core::sptr<sofa::simulation::Node>  root;
     /// Tested simulation
     simulation::Simulation* simulation;
 
@@ -88,7 +88,7 @@ struct SpringSolverDynamic_test : public Sofa_test<typename _DataTypes::Real>
         double w = sqrt(stiffnessSpring/mass);
 
         // Get mechanical object
-        simulation::Node::SPtr massNode = root->getChild("MassNode");
+        sofa::core::sptr<sofa::simulation::Node>  massNode = root->getChild("MassNode");
         typename MechanicalObject::SPtr dofs = massNode->get<MechanicalObject>(root->SearchDown);
 
         // Animate

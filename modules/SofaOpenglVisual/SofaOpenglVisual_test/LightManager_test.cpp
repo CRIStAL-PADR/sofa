@@ -73,7 +73,7 @@ void checkAttributes()
              "  </Node>                                                                      \n"
              "</Node>                                                                        \n" ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                       scene.str().c_str(),
                                                       scene.str().size()) ;
     EXPECT_NE(root.get(), nullptr) ;

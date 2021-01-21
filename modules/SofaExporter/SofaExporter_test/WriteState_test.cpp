@@ -59,7 +59,7 @@ namespace sofa {
         typedef component::linearsolver::CGLinearSolver<component::linearsolver::GraphScatteredMatrix, component::linearsolver::GraphScatteredVector> CGLinearSolver;
 
         /// Root of the scene graph
-        simulation::Node::SPtr root=nullptr;
+        sofa::core::sptr<sofa::simulation::Node>  root=nullptr;
         /// Simulation
         simulation::Simulation* simulation=nullptr;
         /// MechanicalObject
@@ -100,7 +100,7 @@ namespace sofa {
             CGLinearSolver::SPtr cgLinearSolver = New<CGLinearSolver> ();
             root->addObject(cgLinearSolver);
 
-            simulation::Node::SPtr childNode = root->createChild("Particle");
+            sofa::core::sptr<sofa::simulation::Node>  childNode = root->createChild("Particle");
 
             mecaObj = New<MechanicalObject>();
             mecaObj->resize(1);

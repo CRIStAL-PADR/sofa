@@ -28,7 +28,7 @@ public:
 							const sofa::core::objectmodel::TagSet& tags, 
 							SearchDirection dir = SearchUp) const override;
 
-    virtual Node::SPtr createChild(const std::string& nodeName) override;
+    virtual sofa::core::sptr<sofa::simulation::Node> createChild(const std::string& nodeName) override;
 
 	Parents getParents() const override;
 	Children getChildren() const override;

@@ -80,7 +80,7 @@ struct VariationalSymplecticImplicitSolverNonLinearForceDynamic_test : public El
 
 
     /// Root of the scene graph
-    simulation::Node::SPtr root;      
+    sofa::core::sptr<sofa::simulation::Node>  root;      
     /// Tested simulation
     simulation::Simulation* simulation;  
     /// Position and velocity array

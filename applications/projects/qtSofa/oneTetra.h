@@ -47,10 +47,10 @@ using sofa::core::objectmodel::New;
 // ---------------------------------------------------------------------
 // ---
 // ---------------------------------------------------------------------
-Node::SPtr oneTetra()
+sofa::core::sptr<sofa::simulation::Node> oneTetra()
 {
 	sofa::simulation::getSimulation()->unload(sofa::simulation::getSimulation()->GetRoot());
-    Node::SPtr groot = sofa::simulation::getSimulation()->createNewGraph("root");
+    sofa::core::sptr<sofa::simulation::Node> groot = sofa::simulation::getSimulation()->createNewGraph("root");
 
     // solver
     EulerImplicitSolver::SPtr solver = sofa::core::objectmodel::New<EulerImplicitSolver>();
@@ -105,7 +105,7 @@ Node::SPtr oneTetra()
     fem->setYoungModulus(6);
 
     // Tetrahedron skin
-    Node::SPtr skin = groot.get()->createChild("skin");
+    sofa::core::sptr<sofa::simulation::Node> skin = groot.get()->createChild("skin");
     // The visual model
     OglModel::SPtr visual = sofa::core::objectmodel::New<OglModel>();
     visual->setName( "visual" );

@@ -45,8 +45,8 @@ struct Node_test : public BaseSimulationTest
         EXPECT_MSG_NOEMIT(Error, Warning);
 
         SceneInstance si("A") ;
-        Node::SPtr B = createChild(si.root, "B");
-        Node::SPtr D = createChild(B, "D");
+        sofa::core::sptr<sofa::simulation::Node> B = createChild(si.root, "B");
+        sofa::core::sptr<sofa::simulation::Node> D = createChild(B, "D");
         BaseObject::SPtr C = core::objectmodel::New<Dummy>("C");
         si.root->addObject(C);
 

@@ -60,7 +60,7 @@ protected:
 
     void changeInstance(Instance inst) override;
 
-    void clearCollisionGroup(simulation::Node::SPtr group);
+    void clearCollisionGroup(sofa::core::sptr<sofa::simulation::Node> group);
 
     std::map<Instance,GroupMap> storedGroupSet;
 

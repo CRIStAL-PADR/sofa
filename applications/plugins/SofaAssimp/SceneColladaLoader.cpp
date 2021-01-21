@@ -211,7 +211,7 @@ bool SceneColladaLoader::readDAE (std::ifstream &/*file*/, const char* /*filenam
             NodeInfo& currentNodeInfo = nodes.top();
             NodeInfo* parentNodeInfo = currentNodeInfo.mParentNode;
             aiNode* currentAiNode = currentNodeInfo.mAiNode;
-            Node::SPtr currentNode = currentNodeInfo.mNode;
+            sofa::core::sptr<sofa::simulation::Node> currentNode = currentNodeInfo.mNode;
             std::size_t& childIndex = currentNodeInfo.mChildIndex;
             aiMatrix4x4& currentTransformation = currentNodeInfo.mTransformation;
 
@@ -252,7 +252,7 @@ bool SceneColladaLoader::readDAE (std::ifstream &/*file*/, const char* /*filenam
                     std::stringstream meshNameStream;
                     meshNameStream << "mesh_" << (int)meshId;
                     
-                    Node::SPtr meshNode = getSimulation()->createNewNode(meshNameStream.str());
+                    sofa::core::sptr<sofa::simulation::Node> meshNode = getSimulation()->createNewNode(meshNameStream.str());
                     currentNode->addChild(meshNode);
 
                     aiMesh* currentAiMesh = currentAiScene->mMeshes[currentAiNode->mMeshes[j]];
@@ -261,7 +261,7 @@ bool SceneColladaLoader::readDAE (std::ifstream &/*file*/, const char* /*filenam
                     std::string meshName(currentAiMesh->mName.data, currentAiMesh->mName.length);
 
                     // the node representing a part of the current mesh construction (skinning, collision, visualization ...)
-                    Node::SPtr currentSubNode = meshNode;
+                    sofa::core::sptr<sofa::simulation::Node> currentSubNode = meshNode;
 
                     // generating a MechanicalObject and a SkinningMapping if the mesh contains bones and filling up theirs properties
                     MechanicalObject<Rigid3Types>::SPtr currentBoneMechanicalObject;
@@ -408,7 +408,7 @@ bool SceneColladaLoader::readDAE (std::ifstream &/*file*/, const char* /*filenam
                     else
                         rigidNameStream << "rigid_" << (int)meshId;
 
-                    Node::SPtr rigidNode = getSimulation()->createNewNode(rigidNameStream.str());
+                    sofa::core::sptr<sofa::simulation::Node> rigidNode = getSimulation()->createNewNode(rigidNameStream.str());
                     currentSubNode->addChild(rigidNode);
 
                     currentSubNode = rigidNode;
@@ -613,7 +613,7 @@ bool SceneColladaLoader::readDAE (std::ifstream &/*file*/, const char* /*filenam
                             SReal vsize = this->voxelSize.getValue();
 
                             // rasterized mesh
-                            Node::SPtr labelNode = currentSubNode->createChild("label");
+                            sofa::core::sptr<sofa::simulation::Node> labelNode = currentSubNode->createChild("label");
                             engine::MeshToImageEngine<defaulttype::ImageB>::SPtr M2I = sofa::core::objectmodel::New<engine::MeshToImageEngine<defaulttype::ImageB> >();
                             M2I->setName( "rasterizer" );
                             M2I->voxelSize.setValue( helper::vector<SReal>(1,vsize) );
@@ -640,7 +640,7 @@ bool SceneColladaLoader::readDAE (std::ifstream &/*file*/, const char* /*filenam
 
                                 std::stringstream nodeName;
                                 nodeName << "dof " << b;
-                                Node::SPtr dofNode = currentSubNode->createChild(nodeName.str());
+                                sofa::core::sptr<sofa::simulation::Node> dofNode = currentSubNode->createChild(nodeName.str());
 
                                 engine::MeshToImageEngine<defaulttype::ImageD>::SPtr M2I = sofa::core::objectmodel::New<engine::MeshToImageEngine<defaulttype::ImageD> >();
                                 M2I->setName( "rasterizer" );
@@ -862,7 +862,7 @@ bool SceneColladaLoader::readDAE (std::ifstream &/*file*/, const char* /*filenam
                     std::stringstream visuNameStream;
                     visuNameStream << "visualization " << (int)meshId;
 
-                    Node::SPtr visuNode = getSimulation()->createNewNode(visuNameStream.str());
+                    sofa::core::sptr<sofa::simulation::Node> visuNode = getSimulation()->createNewNode(visuNameStream.str());
                     currentSubNode->addChild(visuNode);
 
                     currentSubNode = visuNode;
@@ -1152,7 +1152,7 @@ void SceneColladaLoader::removeEmptyNodes()
                         // links its child nodes directly to its parent node before remove the current intermediary node
                         while(!node->getChildren().empty())
                         {
-                            Node::SPtr childNode = static_cast<Node*>(node->getChildren()[0]);
+                            sofa::core::sptr<sofa::simulation::Node> childNode = static_cast<Node*>(node->getChildren()[0]);
                             parentNode->moveChild(childNode);
                         }
                     }
@@ -1166,7 +1166,7 @@ void SceneColladaLoader::removeEmptyNodes()
             }
             else
             {
-                Node::SPtr child = static_cast<Node*>(node->getChildren()[index]);
+                sofa::core::sptr<sofa::simulation::Node> child = static_cast<Node*>(node->getChildren()[index]);
                 nodes.push(std::pair<Node::SPtr, std::size_t>(child, 0));
             }
         }

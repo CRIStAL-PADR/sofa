@@ -62,7 +62,7 @@ struct BilateralInteractionConstraint_test : public NumericTest<>
     typedef component::topology::PointSetTopologyContainer PointSetTopologyContainer;
     typedef container::MechanicalObject<DataTypes> MechanicalObject;
 
-    simulation::Node::SPtr root;                 ///< Root of the scene graph, created by the constructor an re-used in the tests
+    sofa::core::sptr<sofa::simulation::Node>  root;                 ///< Root of the scene graph, created by the constructor an re-used in the tests
     simulation::Simulation* simulation {nullptr}; ///< created by the constructor an re-used in the tests
 
     /// Create the context for the tests.
@@ -104,7 +104,7 @@ struct BilateralInteractionConstraint_test : public NumericTest<>
                  "   <BilateralInteractionConstraint template='"<< DataTypes::Name() << "' object1='@./o1' object2='@./o2'/>     \n"
                  "</Node>                                                     \n" ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                           scene.str().c_str(),
                                                           scene.str().size()) ;
         root->init(ExecParams::defaultInstance()) ;
@@ -136,7 +136,7 @@ struct BilateralInteractionConstraint_test : public NumericTest<>
                  "   <BilateralInteractionConstraint template='"<< DataTypes::Name() << "' />     \n"
                  "</Node>                                                     \n" ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                           scene.str().c_str(),
                                                           scene.str().size()) ;
         root->init(ExecParams::defaultInstance()) ;
@@ -161,7 +161,7 @@ void BilateralInteractionConstraint_test<Rigid3fTypes>::checkRigid3fFixForBackwa
              "   <BilateralInteractionConstraint template='"<< DataTypes::Name() << "' object1='@./o1' object2='@./o2'/>     \n"
              "</Node>                                                     \n" ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                       scene.str().c_str(),
                                                       scene.str().size()) ;
     root->init(ExecParams::defaultInstance()) ;

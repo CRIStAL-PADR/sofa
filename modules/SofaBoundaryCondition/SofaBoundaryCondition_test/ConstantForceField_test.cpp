@@ -86,7 +86,7 @@ struct ConstantForceField_test : public Sofa_test<>
                  "   <ConstantForceField name='myForceField' indices='0' force='100.0 0.0 0'/>         \n"
                  "</Node>                                                                                                                                                               \n" ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                           scene.str().c_str(),
                                                           scene.str().size()) ;
 
@@ -137,7 +137,7 @@ struct ConstantForceField_test : public Sofa_test<>
                          "   <ConstantForceField name='myForceField' "<< kv.first << "='"<< v.first << "'/>  \n"
                          "</Node>                                                                        \n" ;
 
-                Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+                sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                                   scene.str().c_str(),
                                                                   scene.str().size()) ;
                 ASSERT_NE(root.get(), nullptr) << "Problem to load scene: " << scene.str() ;
@@ -171,7 +171,7 @@ struct ConstantForceField_test : public Sofa_test<>
                  "   <ConstantForceField name='myPlaneForceField'/>                              \n"
                  "</Node>                                                                        \n" ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                           scene.str().c_str(),
                                                           scene.str().size()) ;
 
@@ -210,7 +210,7 @@ struct ConstantForceField_test : public Sofa_test<>
                  "   <ConstantForceField name='myPlaneForceField'/>                              \n"
                  "</Node>                                                                        \n" ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                           scene.str().c_str(),
                                                           scene.str().size()) ;
 

@@ -60,7 +60,7 @@ public:
         NodeInfo*			mParentNode;		// parent node (useful to retrieve mesh skeleton and to compute world transformation matrix)
         aiMatrix4x4			mTransformation;	// matrix that transforms from node space to world space
 
-        NodeInfo(aiNode* pAiNode, simulation::Node::SPtr pNode, NodeInfo* mParentNode = NULL) :
+        NodeInfo(aiNode* pAiNode, sofa::core::sptr<sofa::simulation::Node>  pNode, NodeInfo* mParentNode = NULL) :
             mChildIndex(0),
             mAiNode(pAiNode),
             mNode(pNode),
@@ -141,7 +141,7 @@ public:
     virtual std::string type() { return "The format of this scene is Collada (.dae)."; }
 
 private:
-    simulation::Node::SPtr subSceneRoot;		// the Node containing the whole Collada loaded scene
+    sofa::core::sptr<sofa::simulation::Node>  subSceneRoot;		// the Node containing the whole Collada loaded scene
 
     Assimp::Importer importer;		// the Assimp importer used to easily load the Collada scene
 

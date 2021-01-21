@@ -60,7 +60,7 @@ void TestLocalMinDistance::checkBasicIntersectionTests()
              "  </Node>                                                                      \n"
              "</Node>                                                                        \n" ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                       scene.str().c_str(),
                                                       scene.str().size()) ;
     ASSERT_NE(root.get(), nullptr) ;
@@ -95,7 +95,7 @@ void TestLocalMinDistance::checkMissingRequiredAttributes()
              "  </Node>                                                                      \n"
              "</Node>                                                                        \n" ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                       scene.str().c_str(),
                                                       scene.str().size()) ;
     ASSERT_NE(root.get(), nullptr) ;
@@ -120,7 +120,7 @@ void TestLocalMinDistance::checkAttributes()
              "  </Node>                                                                      \n"
              "</Node>                                                                        \n" ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                       scene.str().c_str(),
                                                       scene.str().size()) ;
     ASSERT_NE(root.get(), nullptr) ;
@@ -155,7 +155,7 @@ void TestLocalMinDistance::checkDoubleInit()
              "  </Node>                                                                      \n"
              "</Node>                                                                        \n" ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                       scene.str().c_str(),
                                                       scene.str().size()) ;
     ASSERT_NE(root.get(), nullptr) ;
@@ -186,7 +186,7 @@ void TestLocalMinDistance::checkInitReinit()
              "  </Node>                                                                      \n"
              "</Node>                                                                        \n" ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                       scene.str().c_str(),
                                                       scene.str().size()) ;
     ASSERT_NE(root.get(), nullptr) ;

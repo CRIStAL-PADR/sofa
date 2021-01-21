@@ -136,7 +136,7 @@ void SceneLoaderPY::doLoadSceneWithArguments(const std::string& filename,
     PyObject *pFunc = PyDict_GetItemString(pDict, "createScene");
     if (PyCallable_Check(pFunc))
     {
-        Node::SPtr rootNode = Node::create("root");
+        sofa::core::sptr<sofa::simulation::Node> rootNode = Node::create("root");
         if(root_out) *root_out = rootNode;
 
         SP_CALL_MODULEFUNC(pFunc, "(O)", sofa::PythonFactory::toPython(rootNode.get()));
@@ -147,7 +147,7 @@ void SceneLoaderPY::doLoadSceneWithArguments(const std::string& filename,
         PyObject *pFunc = PyDict_GetItemString(pDict, "createSceneAndController");
         if (PyCallable_Check(pFunc))
         {
-            Node::SPtr rootNode = Node::create("root");
+            sofa::core::sptr<sofa::simulation::Node> rootNode = Node::create("root");
             if(root_out) *root_out = rootNode;
 
             SP_CALL_MODULEFUNC(pFunc, "(O)", sofa::PythonFactory::toPython(rootNode.get()));

@@ -96,7 +96,7 @@ struct DAG_test : public BaseTest
 
 
     /// utility function testing a scene graph traversals with given expected results
-    static void traverse_test( Node::SPtr node, std::string treeTraverse, std::string treeTraverseRepeatAll, std::string treeTraverseRepeatOnce, std::string dagTopDown )
+    static void traverse_test( sofa::core::sptr<sofa::simulation::Node> node, std::string treeTraverse, std::string treeTraverseRepeatAll, std::string treeTraverseRepeatOnce, std::string dagTopDown )
     {
         // dagBottumUp must be the exact inverse of dagTopDown
         std::string dagBottomUp(dagTopDown);
@@ -154,7 +154,7 @@ Expected output: RAABBR
      */
     void traverse_simple_tree()
     {
-        Node::SPtr root = clearScene();
+        sofa::core::sptr<sofa::simulation::Node> root = clearScene();
         root->setName("R");
         root->createChild("A");
         root->createChild("B");
@@ -178,11 +178,11 @@ Expected output: RABCCBAR
      */
     void traverse_simple_diamond()
     {
-        Node::SPtr root = clearScene();
+        sofa::core::sptr<sofa::simulation::Node> root = clearScene();
         root->setName("R");
-        Node::SPtr A = root->createChild("A");
-        Node::SPtr B = root->createChild("B");
-        Node::SPtr C = A->createChild("C");
+        sofa::core::sptr<sofa::simulation::Node> A = root->createChild("A");
+        sofa::core::sptr<sofa::simulation::Node> B = root->createChild("B");
+        sofa::core::sptr<sofa::simulation::Node> C = A->createChild("C");
         B->addChild(C);
 
         traverse_test( root, "RACCABBR", "RACCABCCBR", "RACCABCCBR", "RABC" );
@@ -206,15 +206,15 @@ Expected output: RABCDEEDCBAR
      */
     void traverse_complex()
     {
-        Node::SPtr root = clearScene();
+        sofa::core::sptr<sofa::simulation::Node> root = clearScene();
         root->setName("R");
-        Node::SPtr A = root->createChild("A");
-        Node::SPtr B = root->createChild("B");
-        Node::SPtr C = A->createChild("C");
+        sofa::core::sptr<sofa::simulation::Node> A = root->createChild("A");
+        sofa::core::sptr<sofa::simulation::Node> B = root->createChild("B");
+        sofa::core::sptr<sofa::simulation::Node> C = A->createChild("C");
         B->addChild(C);
-        Node::SPtr D = C->createChild("D");
+        sofa::core::sptr<sofa::simulation::Node> D = C->createChild("D");
         root->addChild(D);
-        Node::SPtr E = D->createChild("E");
+        sofa::core::sptr<sofa::simulation::Node> E = D->createChild("E");
 
         traverse_test( root, "RACDEEDCABBR", "RACDEEDCABCDEEDCBDEEDR", "RACDEEDCABCCBDDR", "RABCDE" );
     }
@@ -234,17 +234,17 @@ Expected output: RABCDEEDCBAR
      */
     void traverse_morecomplex()
     {
-        Node::SPtr root = clearScene();
+        sofa::core::sptr<sofa::simulation::Node> root = clearScene();
         root->setName("R");
-        Node::SPtr A = root->createChild("A");
-        Node::SPtr B = root->createChild("B");
-        Node::SPtr C = root->createChild("C");
-        Node::SPtr D = A->createChild("D");
+        sofa::core::sptr<sofa::simulation::Node> A = root->createChild("A");
+        sofa::core::sptr<sofa::simulation::Node> B = root->createChild("B");
+        sofa::core::sptr<sofa::simulation::Node> C = root->createChild("C");
+        sofa::core::sptr<sofa::simulation::Node> D = A->createChild("D");
         B->addChild(D);
-        Node::SPtr E = B->createChild("E");
+        sofa::core::sptr<sofa::simulation::Node> E = B->createChild("E");
         C->addChild(E);
-        Node::SPtr F = D->createChild("F");
-        Node::SPtr G = E->createChild("G");
+        sofa::core::sptr<sofa::simulation::Node> F = D->createChild("F");
+        sofa::core::sptr<sofa::simulation::Node> G = E->createChild("G");
 
         traverse_test( root, "RADFFDABEGGEBCCR", "RADFFDABDFFDEGGEBCEGGECR", "RADFFDABDDEGGEBCEECR", "RABDFCEG" );
     }
@@ -266,20 +266,20 @@ Expected output: RABCDEEDCBAR
      */
     void traverse_morecomplex2()
     {
-        Node::SPtr root = clearScene();
+        sofa::core::sptr<sofa::simulation::Node> root = clearScene();
         root->setName("R");
-        Node::SPtr A = root->createChild("A");
-        Node::SPtr B = root->createChild("B");
-        Node::SPtr C = root->createChild("C");
-        Node::SPtr D = root->createChild("D");
-        Node::SPtr E = root->createChild("E");
-        Node::SPtr F = A->createChild("F");
+        sofa::core::sptr<sofa::simulation::Node> A = root->createChild("A");
+        sofa::core::sptr<sofa::simulation::Node> B = root->createChild("B");
+        sofa::core::sptr<sofa::simulation::Node> C = root->createChild("C");
+        sofa::core::sptr<sofa::simulation::Node> D = root->createChild("D");
+        sofa::core::sptr<sofa::simulation::Node> E = root->createChild("E");
+        sofa::core::sptr<sofa::simulation::Node> F = A->createChild("F");
         B->addChild(F);
         C->addChild(F);
         D->addChild(F);
         E->addChild(F);
-        Node::SPtr G = F->createChild("G");
-        Node::SPtr H = G->createChild("H");
+        sofa::core::sptr<sofa::simulation::Node> G = F->createChild("G");
+        sofa::core::sptr<sofa::simulation::Node> H = G->createChild("H");
         F->addChild(H);
 
         traverse_test( root, "RAFGHHGFABBCCDDEER",
@@ -290,7 +290,7 @@ Expected output: RABCDEEDCBAR
 
 
 
-    static void getObjectByPath( Node::SPtr node, const std::string& searchpath, const std::string& objpath )
+    static void getObjectByPath( sofa::core::sptr<sofa::simulation::Node> node, const std::string& searchpath, const std::string& objpath )
     {
         void *foundObj = node->getObject(classid(Dummy), searchpath);
         ASSERT_TRUE( foundObj!=nullptr );
@@ -303,14 +303,14 @@ Expected output: RABCDEEDCBAR
 
     void getObject()
     {
-        Node::SPtr A = clearScene();
+        sofa::core::sptr<sofa::simulation::Node> A = clearScene();
         A->setName("A");
 
-        Node::SPtr B = A->createChild("B");
-        Node::SPtr C = A->createChild("C");
-        Node::SPtr D = B->createChild("D");
+        sofa::core::sptr<sofa::simulation::Node> B = A->createChild("B");
+        sofa::core::sptr<sofa::simulation::Node> C = A->createChild("C");
+        sofa::core::sptr<sofa::simulation::Node> D = B->createChild("D");
         C->addChild(D);
-        Node::SPtr E = D->createChild("E");
+        sofa::core::sptr<sofa::simulation::Node> E = D->createChild("E");
 
 /**
         A

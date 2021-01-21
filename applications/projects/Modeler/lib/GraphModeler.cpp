@@ -117,9 +117,9 @@ void GraphModeler::mouseReleaseEvent(QMouseEvent* event)
 
 */
 
-Node::SPtr GraphModeler::addNode(Node::SPtr parent, Node::SPtr child, bool saveHistory)
+sofa::core::sptr<sofa::simulation::Node> GraphModeler::addNode(sofa::core::sptr<sofa::simulation::Node> parent, sofa::core::sptr<sofa::simulation::Node> child, bool saveHistory)
 {
-    Node::SPtr lastRoot = getRoot();
+    sofa::core::sptr<sofa::simulation::Node> lastRoot = getRoot();
     if (!child)
     {
         std::ostringstream oss;
@@ -157,7 +157,7 @@ Node::SPtr GraphModeler::addNode(Node::SPtr parent, Node::SPtr child, bool saveH
     return child;
 }
 
-BaseObject::SPtr GraphModeler::addComponent(Node::SPtr parent, const ClassEntry::SPtr entry, const std::string &templateName, bool saveHistory, bool displayWarning)
+BaseObject::SPtr GraphModeler::addComponent(sofa::core::sptr<sofa::simulation::Node> parent, const ClassEntry::SPtr entry, const std::string &templateName, bool saveHistory, bool displayWarning)
 {
     BaseObject::SPtr object=nullptr;
     if (!parent || !entry) return object;
@@ -299,7 +299,7 @@ void GraphModeler::dropEvent(QDropEvent* event)
 
             if (node)
             {
-                Node::SPtr newNode=addNode(node);
+                sofa::core::sptr<sofa::simulation::Node> newNode=addNode(node);
                 if (newNode)
                 {
                     QTreeWidgetItem *after = graphListener->items[newNode.get()];
@@ -584,14 +584,14 @@ void GraphModeler::expandNode(QTreeWidgetItem* item)
     }
 }
 
-Node::SPtr GraphModeler::loadNode()
+sofa::core::sptr<sofa::simulation::Node> GraphModeler::loadNode()
 {
     return loadNode(currentItem());
 }
 
-Node::SPtr GraphModeler::loadNode(QTreeWidgetItem* item, std::string filename, bool saveHistory)
+sofa::core::sptr<sofa::simulation::Node> GraphModeler::loadNode(QTreeWidgetItem* item, std::string filename, bool saveHistory)
 {
-    Node::SPtr node;
+    sofa::core::sptr<sofa::simulation::Node> node;
     if (!item) node=nullptr;
     else node=getNode(item);
 
@@ -672,10 +672,10 @@ void GraphModeler::linkComponent()
 }
 
 
-Node::SPtr GraphModeler::buildNodeFromBaseElement(Node::SPtr node,xml::BaseElement *elem, bool saveHistory)
+sofa::core::sptr<sofa::simulation::Node> GraphModeler::buildNodeFromBaseElement(sofa::core::sptr<sofa::simulation::Node> node,xml::BaseElement *elem, bool saveHistory)
 {
     const bool displayWarning=true;
-    Node::SPtr newNode = Node::create("");
+    sofa::core::sptr<sofa::simulation::Node> newNode = Node::create("");
     //Configure the new Node
     configureElement(newNode.get(), elem);
 
@@ -761,7 +761,7 @@ void GraphModeler::configureElement(Base* b, xml::BaseElement *elem)
     }
 }
 
-Node::SPtr GraphModeler::loadNode(Node::SPtr node, std::string path, bool saveHistory)
+sofa::core::sptr<sofa::simulation::Node> GraphModeler::loadNode(sofa::core::sptr<sofa::simulation::Node> node, std::string path, bool saveHistory)
 {
     xml::BaseElement* newXML=nullptr;
 
@@ -770,7 +770,7 @@ Node::SPtr GraphModeler::loadNode(Node::SPtr node, std::string path, bool saveHi
 
     //-----------------------------------------------------------------
     //Add the content of a xml file
-    Node::SPtr newNode = buildNodeFromBaseElement(node, newXML, saveHistory);
+    sofa::core::sptr<sofa::simulation::Node> newNode = buildNodeFromBaseElement(node, newXML, saveHistory);
     //-----------------------------------------------------------------
 
     return newNode;

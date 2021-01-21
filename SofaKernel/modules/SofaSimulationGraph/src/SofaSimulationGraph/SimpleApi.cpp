@@ -42,7 +42,7 @@ bool importPlugin(const std::string& name)
     return PluginManager::getInstance().loadPlugin(name) ;
 }
 
-void dumpScene(Node::SPtr root)
+void dumpScene(sofa::core::sptr<sofa::simulation::Node> root)
 {
     XMLPrintVisitor p(sofa::core::ExecParams::defaultInstance(), std::cout) ;
     p.execute(root.get()) ;
@@ -60,10 +60,10 @@ Simulation::SPtr createSimulation(const std::string& type)
 }
 
 
-Node::SPtr createRootNode(Simulation::SPtr s, const std::string& name,
+sofa::core::sptr<sofa::simulation::Node> createRootNode(Simulation::SPtr s, const std::string& name,
                                               const std::map<std::string, std::string>& params)
 {
-    Node::SPtr root = s->createNewNode(name) ;
+    sofa::core::sptr<sofa::simulation::Node> root = s->createNewNode(name) ;
 
     BaseObjectDescription desc(name.c_str(), "Node");
     for(auto& kv : params)
@@ -75,7 +75,7 @@ Node::SPtr createRootNode(Simulation::SPtr s, const std::string& name,
     return root ;
 }
 
-BaseObject::SPtr createObject(Node::SPtr parent, BaseObjectDescription& desc)
+BaseObject::SPtr createObject(sofa::core::sptr<sofa::simulation::Node> parent, BaseObjectDescription& desc)
 {
     /// Create the object.
     BaseObject::SPtr obj = ObjectFactory::getInstance()->createObject(parent.get(), &desc);
@@ -92,7 +92,7 @@ BaseObject::SPtr createObject(Node::SPtr parent, BaseObjectDescription& desc)
     return obj ;
 }
 
-BaseObject::SPtr createObject(Node::SPtr parent, const std::string& type, const std::map<std::string, std::string>& params)
+BaseObject::SPtr createObject(sofa::core::sptr<sofa::simulation::Node> parent, const std::string& type, const std::map<std::string, std::string>& params)
 {
     /// temporarily, the name is set to the type name.
     /// if a "name" parameter is provided, it will overwrite it.
@@ -105,7 +105,7 @@ BaseObject::SPtr createObject(Node::SPtr parent, const std::string& type, const 
     return createObject(parent, desc);
 }
 
-Node::SPtr createChild(Node::SPtr& node, const std::string& name, const std::map<std::string, std::string>& params)
+sofa::core::sptr<sofa::simulation::Node> createChild(Node::SPtr& node, const std::string& name, const std::map<std::string, std::string>& params)
 {
     BaseObjectDescription desc(name.c_str(), "Node");
     for(auto& kv : params)
@@ -115,9 +115,9 @@ Node::SPtr createChild(Node::SPtr& node, const std::string& name, const std::map
     return createChild(node, desc);
 }
 
-Node::SPtr createChild(Node::SPtr node, BaseObjectDescription& desc)
+sofa::core::sptr<sofa::simulation::Node> createChild(sofa::core::sptr<sofa::simulation::Node> node, BaseObjectDescription& desc)
 {
-    Node::SPtr tmp = node->createChild(desc.getName());
+    sofa::core::sptr<sofa::simulation::Node> tmp = node->createChild(desc.getName());
     tmp->parse(&desc);
     return tmp;
 }

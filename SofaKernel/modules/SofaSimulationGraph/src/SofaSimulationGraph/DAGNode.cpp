@@ -136,7 +136,7 @@ DAGNode::~DAGNode()
 }
 
 /// Create, add, then return the new child of this Node
-Node::SPtr DAGNode::createChild(const std::string& nodeName)
+sofa::core::sptr<sofa::simulation::Node> DAGNode::createChild(const std::string& nodeName)
 {
     DAGNode::SPtr newchild;
     if (nodeName.empty())

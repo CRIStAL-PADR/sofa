@@ -413,7 +413,7 @@ void GraphListenerQListView::onBeginAddChild(Node* parent, Node* child)
     }
     for (BaseObject::SPtr obj : child->object)
         onBeginAddObject(child, obj.get());
-    for (Node::SPtr node : child->child)
+    for (sofa::core::sptr<sofa::simulation::Node> node : child->child)
         onBeginAddChild(child, node.get());
 }
 

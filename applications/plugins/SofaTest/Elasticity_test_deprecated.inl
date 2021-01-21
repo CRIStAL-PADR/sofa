@@ -64,7 +64,7 @@ typedef component::mass::UniformMass<defaulttype::Vec3Types, SReal> UniformMass3
 
 template<class DataTypes>
 simulation::Node::SPtr Elasticity_test_deprecated<DataTypes>::createSunPlanetSystem(
-        simulation::Node::SPtr root,
+        sofa::core::sptr<sofa::simulation::Node>  root,
         double mSun,
         double mPlanet,
         double g,

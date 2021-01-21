@@ -74,7 +74,7 @@ struct Material_test : public Sofa_test<typename Vec3Types::Real>
 	/// index of the vertex used to compute the compute the deformation
 	size_t vIndex;
     // Strain node for the force field
-    simulation::Node::SPtr strainNode;
+    sofa::core::sptr<sofa::simulation::Node>  strainNode;
 
     // Create the context for the scene
     void SetUp()
@@ -102,11 +102,11 @@ struct Material_test : public Sofa_test<typename Vec3Types::Real>
         tractionStruct.dofs = tractionStruct.root->get<MechanicalObject>( tractionStruct.root->SearchDown);
 
         // Get child nodes
-        simulation::Node::SPtr behaviorNode = tractionStruct.root->getChild("behavior");
+        sofa::core::sptr<sofa::simulation::Node>  behaviorNode = tractionStruct.root->getChild("behavior");
         strainNode = behaviorNode->getChild("Strain");
     }
 
-	HookeForceFieldSPtr addHookeForceField(simulation::Node::SPtr node,
+	HookeForceFieldSPtr addHookeForceField(sofa::core::sptr<sofa::simulation::Node> node,
         double youngModulus,double poissonRatio, double viscosity)
 	{
         // Hooke Force Field

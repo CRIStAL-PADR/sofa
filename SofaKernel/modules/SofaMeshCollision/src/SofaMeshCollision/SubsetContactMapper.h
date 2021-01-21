@@ -48,7 +48,7 @@ public:
     typedef component::container::MechanicalObject<typename SubsetContactMapper::DataTypes> MMechanicalObject;
     typedef mapping::SubsetMapping< InDataTypes, typename SubsetContactMapper::DataTypes > MMapping;
     MCollisionModel* model;
-    simulation::Node::SPtr child;
+    sofa::core::sptr<sofa::simulation::Node>  child;
     typename MMapping::SPtr mapping;
     typename MMechanicalState::SPtr outmodel;
     using Index = sofa::Index;

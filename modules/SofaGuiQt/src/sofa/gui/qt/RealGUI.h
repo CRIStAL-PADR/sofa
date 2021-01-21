@@ -254,8 +254,8 @@ public:
 
     // virtual void fileOpen();
     virtual void fileOpenSimu(std::string filename);
-    virtual void setScene(Node::SPtr groot, const char* filename=nullptr, bool temporaryFile=false) override;
-    virtual void setSceneWithoutMonitor(Node::SPtr groot, const char* filename=nullptr, bool temporaryFile=false);
+    virtual void setScene(sofa::core::sptr<sofa::simulation::Node> groot, const char* filename=nullptr, bool temporaryFile=false) override;
+    virtual void setSceneWithoutMonitor(sofa::core::sptr<sofa::simulation::Node> groot, const char* filename=nullptr, bool temporaryFile=false);
 
     virtual void unloadScene(bool _withViewer = true);
 
@@ -305,7 +305,7 @@ public:
 protected:
     /// init data member from RealGUI for the viewer initialisation in the GUI
     void init();
-    void createDisplayFlags(Node::SPtr root);
+    void createDisplayFlags(sofa::core::sptr<sofa::simulation::Node> root);
     void loadSimulation(bool one_step=false); //? where is the implementation ?
     void eventNewStep();
     void eventNewTime();

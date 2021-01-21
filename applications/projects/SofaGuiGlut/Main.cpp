@@ -295,7 +295,7 @@ int main(int argc, char** argv)
     //To set a specific resolution for the viewer, use the component ViewerSetting in you scene graph
     GUIManager::SetDimension(800,600);
 
-    Node::SPtr groot = sofa::simulation::getSimulation()->load(fileName.c_str());
+    sofa::core::sptr<sofa::simulation::Node> groot = sofa::simulation::getSimulation()->load(fileName.c_str());
     if( !groot )
         groot = sofa::simulation::getSimulation()->createNewGraph("");
 

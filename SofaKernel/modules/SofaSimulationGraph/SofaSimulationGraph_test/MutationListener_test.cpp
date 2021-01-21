@@ -63,11 +63,11 @@ public:
 struct MutationListener_test : public sofa::BaseTest
 {
     TestMutationListener listener;
-    Node::SPtr root;
-    Node::SPtr node1;
-    Node::SPtr node1_1;
-    Node::SPtr node1_2;
-    Node::SPtr node2;
+    sofa::core::sptr<sofa::simulation::Node> root;
+    sofa::core::sptr<sofa::simulation::Node> node1;
+    sofa::core::sptr<sofa::simulation::Node> node1_1;
+    sofa::core::sptr<sofa::simulation::Node> node1_2;
+    sofa::core::sptr<sofa::simulation::Node> node2;
     BaseObject::SPtr obj1;
     BaseObject::SPtr obj2;
 
@@ -329,7 +329,7 @@ struct MutationListener_test : public sofa::BaseTest
         obj2->parse(&bod2);
         node2->addObject(obj2);
         root->addChild(node1);
-        Node::SPtr node3 = root->createChild("node3");
+        sofa::core::sptr<sofa::simulation::Node> node3 = root->createChild("node3");
         listener.clearLog();
 
         node3->moveChild(node1, root);

@@ -105,7 +105,7 @@ protected:
     virtual ~Node() override;
 public:
     /// Create, add, then return the new child of this Node
-    virtual Node::SPtr createChild(const std::string& nodeName)=0;
+    virtual sofa::core::sptr<sofa::simulation::Node> createChild(const std::string& nodeName)=0;
 
     /// @name High-level interface
     /// @{
@@ -540,10 +540,10 @@ public:
     virtual void setDefaultVisualContextValue();
 
     template <class RealObject>
-    static Node::SPtr create(RealObject*, core::objectmodel::BaseObjectDescription* arg);
+    static sofa::core::sptr<sofa::simulation::Node> create(RealObject*, core::objectmodel::BaseObjectDescription* arg);
 
 
-    static Node::SPtr create( const std::string& name );
+    static sofa::core::sptr<sofa::simulation::Node> create( const std::string& name );
 
     /// return the smallest common parent between this and node2 (returns nullptr if separated sub-graphes)
     virtual Node* findCommonParent( simulation::Node* node2 ) = 0;
@@ -562,17 +562,17 @@ protected:
 
     std::stack<Visitor*> actionStack;
 private:    
-    virtual void notifyBeginAddChild(Node::SPtr parent, Node::SPtr child) const;
-    virtual void notifyBeginRemoveChild(Node::SPtr parent, Node::SPtr child) const;
+    virtual void notifyBeginAddChild(sofa::core::sptr<sofa::simulation::Node> parent, sofa::core::sptr<sofa::simulation::Node> child) const;
+    virtual void notifyBeginRemoveChild(sofa::core::sptr<sofa::simulation::Node> parent, sofa::core::sptr<sofa::simulation::Node> child) const;
 
-    virtual void notifyBeginAddObject(Node::SPtr parent, sofa::core::objectmodel::BaseObject::SPtr obj) const;
-    virtual void notifyBeginRemoveObject(Node::SPtr parent, sofa::core::objectmodel::BaseObject::SPtr obj) const;
+    virtual void notifyBeginAddObject(sofa::core::sptr<sofa::simulation::Node> parent, sofa::core::objectmodel::BaseObject::SPtr obj) const;
+    virtual void notifyBeginRemoveObject(sofa::core::sptr<sofa::simulation::Node> parent, sofa::core::objectmodel::BaseObject::SPtr obj) const;
 
-    virtual void notifyEndAddChild(Node::SPtr parent, Node::SPtr child) const;
-    virtual void notifyEndRemoveChild(Node::SPtr parent, Node::SPtr child) const;
+    virtual void notifyEndAddChild(sofa::core::sptr<sofa::simulation::Node> parent, sofa::core::sptr<sofa::simulation::Node> child) const;
+    virtual void notifyEndRemoveChild(sofa::core::sptr<sofa::simulation::Node> parent, sofa::core::sptr<sofa::simulation::Node> child) const;
 
-    virtual void notifyEndAddObject(Node::SPtr parent, sofa::core::objectmodel::BaseObject::SPtr obj) const;
-    virtual void notifyEndRemoveObject(Node::SPtr parent, sofa::core::objectmodel::BaseObject::SPtr obj) const;
+    virtual void notifyEndAddObject(sofa::core::sptr<sofa::simulation::Node> parent, sofa::core::objectmodel::BaseObject::SPtr obj) const;
+    virtual void notifyEndRemoveObject(sofa::core::sptr<sofa::simulation::Node> parent, sofa::core::objectmodel::BaseObject::SPtr obj) const;
 
     virtual void notifySleepChanged(Node* node) const;
 

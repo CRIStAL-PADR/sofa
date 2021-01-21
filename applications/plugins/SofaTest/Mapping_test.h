@@ -112,7 +112,7 @@ struct Mapping_test: public Sofa_test<typename _Mapping::Real>
     core::Mapping<In,Out>* mapping; ///< the mapping to be tested
     typename InDOFs::SPtr  inDofs;  ///< mapping input
     typename OutDOFs::SPtr outDofs; ///< mapping output
-    simulation::Node::SPtr root;         ///< Root of the scene graph, created by the constructor an re-used in the tests
+    sofa::core::sptr<sofa::simulation::Node>  root;         ///< Root of the scene graph, created by the constructor an re-used in the tests
     simulation::Simulation* simulation;  ///< created by the constructor an re-used in the tests
     std::pair<Real,Real> deltaRange; ///< The minimum and maximum magnitudes of the change of each scalar value of the small displacement is perturbation * numeric_limits<Real>::epsilon. This epsilon is 1.19209e-07 for float and 2.22045e-16 for double.
     Real errorMax;     ///< The test is successfull if the (infinite norm of the) difference is less than  errorMax * numeric_limits<Real>::epsilon
@@ -140,7 +140,7 @@ struct Mapping_test: public Sofa_test<typename _Mapping::Real>
         inDofs = modeling::addNew<InDOFs>(root);
 
         /// Child node
-        simulation::Node::SPtr childNode = root->createChild("childNode");
+        sofa::core::sptr<sofa::simulation::Node>  childNode = root->createChild("childNode");
         outDofs = modeling::addNew<OutDOFs>(childNode);
         mapping = modeling::addNew<Mapping>(childNode).get();
         mapping->setModels(inDofs.get(),outDofs.get());
@@ -161,8 +161,8 @@ struct Mapping_test: public Sofa_test<typename _Mapping::Real>
         inDofs = root->get<InDOFs>(root->SearchDown);
 
         // Get child nodes
-        simulation::Node::SPtr patchNode = root->getChild("Patch");
-        simulation::Node::SPtr elasticityNode = patchNode->getChild("Elasticity");
+        sofa::core::sptr<sofa::simulation::Node>  patchNode = root->getChild("Patch");
+        sofa::core::sptr<sofa::simulation::Node>  elasticityNode = patchNode->getChild("Elasticity");
 
         // Add OutDofs
         outDofs = modeling::addNew<OutDOFs>(elasticityNode);

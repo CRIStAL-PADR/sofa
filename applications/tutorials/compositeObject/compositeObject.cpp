@@ -82,7 +82,7 @@ SReal dt = 0.01;
 
 /// helper for more compact component creation
 template<class Component>
-typename Component::SPtr addNew( Node::SPtr parentNode, std::string name="" )
+typename Component::SPtr addNew( sofa::core::sptr<sofa::simulation::Node> parentNode, std::string name="" )
 {
     typename Component::SPtr component = New<Component>();
     parentNode->addObject(component);
@@ -97,13 +97,13 @@ simulation::Node::SPtr createGridScene(Vec3 startPoint, Vec3 endPoint, unsigned 
     using helper::vector;
 
     // The graph root node
-    Node::SPtr  root = simulation::getSimulation()->createNewGraph("root");
+    sofa::core::sptr<sofa::simulation::Node>  root = simulation::getSimulation()->createNewGraph("root");
     root->setGravity( Coord3(0,-10,0) );
     root->setAnimate(false);
     root->setDt(0.01);
     addVisualStyle(root)->setShowVisual(false).setShowCollision(false).setShowMapping(true).setShowBehavior(true);
 
-    Node::SPtr simulatedScene = root->createChild("simulatedScene");
+    sofa::core::sptr<sofa::simulation::Node> simulatedScene = root->createChild("simulatedScene");
 
     EulerImplicitSolver::SPtr eulerImplicitSolver = New<EulerImplicitSolver>();
     simulatedScene->addObject( eulerImplicitSolver );
@@ -111,23 +111,23 @@ simulation::Node::SPtr createGridScene(Vec3 startPoint, Vec3 endPoint, unsigned 
     simulatedScene->addObject(cgLinearSolver);
 
     // The rigid object
-    Node::SPtr rigidNode = simulatedScene->createChild("rigidNode");
+    sofa::core::sptr<sofa::simulation::Node> rigidNode = simulatedScene->createChild("rigidNode");
     MechanicalObjectRigid3::SPtr rigid_dof = addNew<MechanicalObjectRigid3>(rigidNode, "dof");
     UniformMassRigid3::SPtr rigid_mass = addNew<UniformMassRigid3>(rigidNode,"mass");
     FixedConstraintRigid3::SPtr rigid_fixedConstraint = addNew<FixedConstraintRigid3>(rigidNode,"fixedConstraint");
 
     // Particles mapped to the rigid object
-    Node::SPtr mappedParticles = rigidNode->createChild("mappedParticles");
+    sofa::core::sptr<sofa::simulation::Node> mappedParticles = rigidNode->createChild("mappedParticles");
     MechanicalObject3::SPtr mappedParticles_dof = addNew< MechanicalObject3>(mappedParticles,"dof");
     RigidMappingRigid3_to_3::SPtr mappedParticles_mapping = addNew<RigidMappingRigid3_to_3>(mappedParticles,"mapping");
     mappedParticles_mapping->setModels( rigid_dof.get(), mappedParticles_dof.get() );
 
     // The independent particles
-    Node::SPtr independentParticles = simulatedScene->createChild("independentParticles");
+    sofa::core::sptr<sofa::simulation::Node> independentParticles = simulatedScene->createChild("independentParticles");
     MechanicalObject3::SPtr independentParticles_dof = addNew< MechanicalObject3>(independentParticles,"dof");
 
     // The deformable grid, connected to its 2 parents using a MultiMapping
-    Node::SPtr deformableGrid = independentParticles->createChild("deformableGrid"); // first parent
+    sofa::core::sptr<sofa::simulation::Node> deformableGrid = independentParticles->createChild("deformableGrid"); // first parent
     mappedParticles->addChild(deformableGrid);                                       // second parent
 
     RegularGridTopology::SPtr deformableGrid_grid = addNew<RegularGridTopology>( deformableGrid, "grid" );

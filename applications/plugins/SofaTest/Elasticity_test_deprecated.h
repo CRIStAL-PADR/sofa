@@ -36,7 +36,7 @@ struct SOFA_SOFATEST_API Elasticity_test_deprecated: public Elasticity_test<Data
 
 /// Create sun-planet system
 simulation::Node::SPtr createSunPlanetSystem(
-        simulation::Node::SPtr root,
+        sofa::core::sptr<sofa::simulation::Node>  root,
         double mSun,
         double mPlanet,
         double g,

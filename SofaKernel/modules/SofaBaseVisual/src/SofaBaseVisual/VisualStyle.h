@@ -73,7 +73,7 @@ protected:
     DisplayFlags backupFlags;
 };
 
-SOFA_SOFABASEVISUAL_API helper::WriteAccessor<sofa::core::visual::DisplayFlags> addVisualStyle( simulation::Node::SPtr node );
+SOFA_SOFABASEVISUAL_API helper::WriteAccessor<sofa::core::visual::DisplayFlags> addVisualStyle( sofa::core::sptr<sofa::simulation::Node>  node );
 
 
 } // namespace sofa::component::visualmodel

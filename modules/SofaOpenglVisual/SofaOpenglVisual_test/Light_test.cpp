@@ -77,7 +77,7 @@ void TestLight::checkLightMissingLightManager(const std::string& lighttype)
              "  </Node>                                                                      \n"
              "</Node>                                                                        \n" ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                       scene.str().c_str(),
                                                       scene.str().size()) ;
     ASSERT_NE(root.get(), nullptr) ;
@@ -104,7 +104,7 @@ void TestLight::checkPositionalLightValidAttributes()
              "  </Node>                                                                      \n"
              "</Node>                                                                        \n" ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                       scene.str().c_str(),
                                                       scene.str().size()) ;
     ASSERT_NE(root.get(), nullptr) ;
@@ -147,7 +147,7 @@ void TestLight::checkDirectionalLightValidAttributes()
              "  </Node>                                                                      \n"
              "</Node>                                                                        \n" ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                       scene.str().c_str(),
                                                       scene.str().size()) ;
     ASSERT_NE(root.get(), nullptr) ;
@@ -193,7 +193,7 @@ void TestLight::checkSpotLightValidAttributes()
              "  </Node>                                                                      \n"
              "</Node>                                                                        \n" ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                       scene.str().c_str(),
                                                       scene.str().size()) ;
     ASSERT_NE(root.get(), nullptr) ;

@@ -80,7 +80,7 @@ struct StabilizedNeoHookeHexahedraMaterial_test : public Sofa_test<typename Vec3
 	/// index of the vertex used to compute the deformation
 	size_t vIndex;
     // Strain node for the force field
-    simulation::Node::SPtr strainNode;
+    sofa::core::sptr<sofa::simulation::Node>  strainNode;
 
     // Create the context for the scene
     void SetUp()
@@ -97,8 +97,8 @@ struct StabilizedNeoHookeHexahedraMaterial_test : public Sofa_test<typename Vec3
        tractionStruct.root = down_cast<sofa::simulation::Node>( sofa::simulation::getSimulation()->load(fileName.c_str()).get() );
 
        // Get child nodes
-       simulation::Node::SPtr quadNode = tractionStruct.root->getChild("Quads");
-       simulation::Node::SPtr behaviorNode = tractionStruct.root->getChild("behavior");
+       sofa::core::sptr<sofa::simulation::Node>  quadNode = tractionStruct.root->getChild("Quads");
+       sofa::core::sptr<sofa::simulation::Node>  behaviorNode = tractionStruct.root->getChild("behavior");
        strainNode = behaviorNode->getChild("Strain");
 
        // Get force field
@@ -121,7 +121,7 @@ struct StabilizedNeoHookeHexahedraMaterial_test : public Sofa_test<typename Vec3
 
     }
 
-    ForceFieldSPtr addStabilizedNeoHookeanForceField(simulation::Node::SPtr node,
+    ForceFieldSPtr addStabilizedNeoHookeanForceField(sofa::core::sptr<sofa::simulation::Node> node,
         double youngModulus,double poissonRatio)
     {
         // Hooke Force Field

@@ -247,7 +247,7 @@ void Python_scene_test::run( const Python_test_data& data ) {
         ASSERT_TRUE(false) << "error setting up python excepthook, aborting test" << " ("<<data.filepath<<")";
     }
 
-    simulation::Node::SPtr root;
+    sofa::core::sptr<sofa::simulation::Node>  root;
 
     try {
 

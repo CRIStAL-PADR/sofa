@@ -76,7 +76,7 @@ protected:
     void loadTestScene(const std::string& filename);
 
     /// pointer to the simulation root node loaded by @sa loadTestScene
-    Node::SPtr m_root;
+    sofa::core::sptr<sofa::simulation::Node> m_root;
 
     /// Epsilon value for the numerical check
     SReal epsilonTest = 1e-6;
@@ -154,7 +154,7 @@ bool LCPForceFeedback_test::test_InitScene()
 {
     loadTestScene("ToolvsFloorCollision_test.scn");
 
-    simulation::Node::SPtr instruNode = m_root->getChild("Instrument");
+    sofa::core::sptr<sofa::simulation::Node>  instruNode = m_root->getChild("Instrument");
     EXPECT_NE(instruNode, nullptr);
     MecaRig::SPtr meca = instruNode->get<MecaRig>(instruNode->SearchDown);
     m_LCPFFBack = instruNode->get<LCPRig>(instruNode->SearchDown);
@@ -183,7 +183,7 @@ bool LCPForceFeedback_test::test_InitScene()
 bool LCPForceFeedback_test::test_SimpleCollision()
 {
     loadTestScene("ToolvsFloorCollision_test.scn");
-    simulation::Node::SPtr instruNode = m_root->getChild("Instrument");
+    sofa::core::sptr<sofa::simulation::Node>  instruNode = m_root->getChild("Instrument");
     EXPECT_NE(instruNode, nullptr);
     MecaRig::SPtr meca = instruNode->get<MecaRig>(instruNode->SearchDown);
     LCPRig::SPtr lcp = instruNode->get<LCPRig>(instruNode->SearchDown);
@@ -249,7 +249,7 @@ bool LCPForceFeedback_test::test_Collision()
 {
     loadTestScene("ToolvsFloorCollision_test.scn");
 
-    simulation::Node::SPtr instruNode = m_root->getChild("Instrument");
+    sofa::core::sptr<sofa::simulation::Node>  instruNode = m_root->getChild("Instrument");
     EXPECT_NE(instruNode, nullptr);
     MecaRig::SPtr meca = instruNode->get<MecaRig>(instruNode->SearchDown);
     m_LCPFFBack = instruNode->get<LCPRig>(instruNode->SearchDown);
@@ -353,7 +353,7 @@ bool LCPForceFeedback_test::test_multiThread()
 {
     loadTestScene("ToolvsFloorCollision_test.scn");
 
-    simulation::Node::SPtr instruNode = m_root->getChild("Instrument");
+    sofa::core::sptr<sofa::simulation::Node>  instruNode = m_root->getChild("Instrument");
     EXPECT_NE(instruNode, nullptr);
     MecaRig::SPtr meca = instruNode->get<MecaRig>(instruNode->SearchDown);
     m_LCPFFBack = instruNode->get<LCPRig>(instruNode->SearchDown);

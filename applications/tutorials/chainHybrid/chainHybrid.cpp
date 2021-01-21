@@ -70,17 +70,17 @@ Node *createChainHybrid(Node *root)
 
     // Elements of the scene
     //------------------------------------
-    Node::SPtr  chain = root->createChild("Chain");
+    sofa::core::sptr<sofa::simulation::Node>  chain = root->createChild("Chain");
 
     //************************************
     // Torus Fixed
     {
-        Node::SPtr  torusFixed = sofa::modeling::createObstacle(chain,"mesh/torus_for_collision.obj", "mesh/torus.obj", "gray");
+        sofa::core::sptr<sofa::simulation::Node>  torusFixed = sofa::modeling::createObstacle(chain,"mesh/torus_for_collision.obj", "mesh/torus.obj", "gray");
     }
     //************************************
     // Torus FEM
     {
-        Node::SPtr  torusFEM = sofa::modeling::createEulerSolverNode(chain,"FEM");
+        sofa::core::sptr<sofa::simulation::Node>  torusFEM = sofa::modeling::createEulerSolverNode(chain,"FEM");
 
         MeshGmshLoader::SPtr  loaderFEM = New<MeshGmshLoader>();
         loaderFEM->setFilename(sofa::helper::system::DataRepository.getFile("mesh/torus_low_res.msh"));
@@ -120,7 +120,7 @@ Node *createChainHybrid(Node *root)
     //************************************
     // Torus Spring
     {
-        Node::SPtr  torusSpring = sofa::modeling::createEulerSolverNode(chain,"Spring");
+        sofa::core::sptr<sofa::simulation::Node>  torusSpring = sofa::modeling::createEulerSolverNode(chain,"Spring");
 
         MeshGmshLoader::SPtr  loaderSpring = New<MeshGmshLoader>();
         loaderSpring->setFilename(sofa::helper::system::DataRepository.getFile("mesh/torus_low_res.msh"));
@@ -155,15 +155,15 @@ Node *createChainHybrid(Node *root)
 
 
         // Visual node
-        Node::SPtr  SpringVisualNode = sofa::modeling::createVisualNodeVec3(torusSpring, dofSpring.get(), visualModel, "green", translation, rotation);
+        sofa::core::sptr<sofa::simulation::Node>  SpringVisualNode = sofa::modeling::createVisualNodeVec3(torusSpring, dofSpring.get(), visualModel, "green", translation, rotation);
 
         // Collision node
-        Node::SPtr  SpringCollisionNode = sofa::modeling::createCollisionNodeVec3(torusSpring, dofSpring.get(), collisionModel, collisionModelTypes, translation, rotation);
+        sofa::core::sptr<sofa::simulation::Node>  SpringCollisionNode = sofa::modeling::createCollisionNodeVec3(torusSpring, dofSpring.get(), collisionModel, collisionModelTypes, translation, rotation);
     }
     //************************************
     // Torus FFD
     {
-        Node::SPtr  torusFFD = sofa::modeling::createEulerSolverNode(chain,"FFD");
+        sofa::core::sptr<sofa::simulation::Node>  torusFFD = sofa::modeling::createEulerSolverNode(chain,"FFD");
 
         const Deriv3 translation(7.5,0,0);
         const Deriv3 rotation(90,0,0);
@@ -201,7 +201,7 @@ Node *createChainHybrid(Node *root)
     //************************************
     // Torus Rigid
     {
-        Node::SPtr  torusRigid = sofa::modeling::createEulerSolverNode(chain,"Rigid");
+        sofa::core::sptr<sofa::simulation::Node>  torusRigid = sofa::modeling::createEulerSolverNode(chain,"Rigid");
 
         const Deriv3 translation(10,0,0);
         const Deriv3 rotation(0,0,0);
@@ -239,7 +239,7 @@ int main(int argc, char** argv)
 
     // The graph root node
     sofa::helper::system::PluginManager::getInstance().loadPlugin("SofaMiscCollision");
-    Node::SPtr root = sofa::modeling::createRootWithCollisionPipeline();
+    sofa::core::sptr<sofa::simulation::Node> root = sofa::modeling::createRootWithCollisionPipeline();
     root->setGravity( Coord3(0,0,-10) );
 
     // Add the objects

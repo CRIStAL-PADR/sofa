@@ -60,7 +60,7 @@ namespace sofa {
         typedef container::MechanicalObject<DataTypes> MechanicalObject;
 
         /// Root of the scene graph
-        simulation::Node::SPtr root;      
+        sofa::core::sptr<sofa::simulation::Node>  root;      
         /// Simulation
         simulation::Simulation* simulation;  
 

@@ -40,19 +40,19 @@ using namespace modeling;
 using namespace core::objectmodel;
 
 template<typename DataTypes>
-void createUniformMass(simulation::Node::SPtr node, component::container::MechanicalObject<DataTypes>& /*dofs*/)
+void createUniformMass(sofa::core::sptr<sofa::simulation::Node> node, component::container::MechanicalObject<DataTypes>& /*dofs*/)
 {
     node->addObject(New<component::mass::UniformMass<DataTypes, typename DataTypes::Real> >());
 }
 
 template<>
-void createUniformMass(simulation::Node::SPtr node, component::container::MechanicalObject<defaulttype::Rigid3Types>& /*dofs*/)
+void createUniformMass(sofa::core::sptr<sofa::simulation::Node> node, component::container::MechanicalObject<defaulttype::Rigid3Types>& /*dofs*/)
 {
     node->addObject(New<component::mass::UniformMass<defaulttype::Rigid3Types, defaulttype::Rigid3Mass> >());
 }
 
 template<>
-void createUniformMass(simulation::Node::SPtr node, component::container::MechanicalObject<defaulttype::Rigid2Types>& /*dofs*/)
+void createUniformMass(sofa::core::sptr<sofa::simulation::Node> node, component::container::MechanicalObject<defaulttype::Rigid2Types>& /*dofs*/)
 {
     node->addObject(New<component::mass::UniformMass<defaulttype::Rigid2Types, defaulttype::Rigid2Mass> >());
 }
@@ -80,9 +80,9 @@ struct PartialFixedConstraint_test : public Sofa_test<typename _DataTypes::Real>
         /// Scene initialization
         sofa::simulation::Simulation* simulation;
         sofa::simulation::setSimulation(simulation = new sofa::simulation::graph::DAGSimulation());
-        simulation::Node::SPtr root = simulation->createNewGraph("root");
+        sofa::core::sptr<sofa::simulation::Node>  root = simulation->createNewGraph("root");
         root->setGravity( defaulttype::Vector3(0,0,0) );
-        simulation::Node::SPtr node = createEulerSolverNode(root,"EulerSolver", integrationScheme);
+        sofa::core::sptr<sofa::simulation::Node>  node = createEulerSolverNode(root,"EulerSolver", integrationScheme);
 
         mstate = New<sofa::component::container::MechanicalObject<DataTypes> >();
         mstate->resize(1);

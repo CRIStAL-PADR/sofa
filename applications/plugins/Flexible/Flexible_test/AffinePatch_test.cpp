@@ -65,7 +65,7 @@ namespace sofa {
         typedef defaulttype::Vector3 Vec3;
 
         /// Root of the scene graph
-        simulation::Node::SPtr root;      
+        sofa::core::sptr<sofa::simulation::Node>  root;      
         /// Simulation
         simulation::Simulation* simulation; 
         /// Tested Rotation: random rotation matrix

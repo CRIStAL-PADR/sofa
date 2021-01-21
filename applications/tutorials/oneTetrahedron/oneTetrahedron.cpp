@@ -139,7 +139,7 @@ int main(int argc, char** argv)
     fem->setPoissonRatio(0.45);
 
     // Tetrahedron skin
-    Node::SPtr skin = groot.get()->createChild("skin");
+    sofa::core::sptr<sofa::simulation::Node> skin = groot.get()->createChild("skin");
     // The visual model
     OglModel::SPtr visual = sofa::core::objectmodel::New<OglModel>();
     visual->setName( "visual" );

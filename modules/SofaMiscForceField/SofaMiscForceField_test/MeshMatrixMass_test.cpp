@@ -80,8 +80,8 @@ public:
     typedef MeshMatrixMass<TDataTypes, TMassType> TheMeshMatrixMass ;
 
     simulation::Simulation* simulation;
-    simulation::Node::SPtr root;
-    simulation::Node::SPtr node;
+    sofa::core::sptr<sofa::simulation::Node>  root;
+    sofa::core::sptr<sofa::simulation::Node>  node;
     typename MechanicalObject<DataTypes>::SPtr mstate;
     typename MeshMatrixMass<DataTypes, MassType>::SPtr mass;
 
@@ -147,7 +147,7 @@ public:
                 "    <MeshMatrixMass name='m_mass' />                                                               "
                 "</Node>                                                                                            " ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -186,7 +186,7 @@ public:
                 "    <MeshMatrixMass name='m_mass' totalMass='2.0' />                                               "
                 "</Node>                                                                                            " ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -219,7 +219,7 @@ public:
                 "    <MeshMatrixMass name='m_mass' massDensity='1.0' />                                             "
                 "</Node>                                                                                            " ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -252,7 +252,7 @@ public:
                 "               vertexMass='1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1' />               "
                 "</Node>                                                                                            " ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -290,7 +290,7 @@ public:
                 "    <MeshMatrixMass name='m_mass' massDensity='1.0' totalMass='2.0' />                             "
                 "</Node>                                                                                            " ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -323,7 +323,7 @@ public:
                 "               vertexMass='1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1' />               "
                 "</Node>                                                                                            " ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -357,7 +357,7 @@ public:
                 "               vertexMass='1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1' />               "
                 "</Node>                                                                                            " ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -393,7 +393,7 @@ public:
                 "    <MeshMatrixMass name='m_mass' totalMass='-2.0' />                                              "
                 "</Node>                                                                                            " ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -425,7 +425,7 @@ public:
                 "    <MeshMatrixMass name='m_mass' massDensity='-1.0' />                                            "
                 "</Node>                                                                                            " ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -457,7 +457,7 @@ public:
                 "    <MeshMatrixMass name='m_mass' massDensity='1.0 4.0' />                                         "
                 "</Node>                                                                                            " ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -490,7 +490,7 @@ public:
                 "               vertexMass='1 -1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1' />              "
                 "</Node>                                                                                            " ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -522,7 +522,7 @@ public:
                 "    <MeshMatrixMass name='m_mass' lumping='1' vertexMass='1 2' />                                  "
                 "</Node>                                                                                            " ;
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -558,7 +558,7 @@ public:
 
         /// Here : default totalMass value will be used since negative value is given
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -592,7 +592,7 @@ public:
 
         /// Here : totalMass value will be used due to concurrent data
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -636,7 +636,7 @@ public:
                 "    </Node>                                                                                        "
                 "</Node>                                                                                            ";
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -681,7 +681,7 @@ public:
                 "    </Node>                                                                                        "
                 "</Node>                                                                                            ";
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -720,7 +720,7 @@ public:
                 "    </Node>                                                                                        "
                 "</Node>                                                                                            ";
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -758,7 +758,7 @@ public:
                 "    </Node>                                                                                        "
                 "</Node>                                                                                            ";
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -802,7 +802,7 @@ public:
                 "    </Node>                                                                                        "
                 "</Node>                                                                                            ";
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -840,7 +840,7 @@ public:
                 "    </Node>                                                                                        "
                 "</Node>                                                                                            ";
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -879,7 +879,7 @@ public:
                 "    </Node>                                                                                        "
                 "</Node>                                                                                            ";
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -921,7 +921,7 @@ public:
                 "    </Node>                                                                                        "
                 "</Node>                                                                                            ";
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -959,7 +959,7 @@ public:
                 "    </Node>                                                                                        "
                 "</Node>                                                                                            ";
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -997,7 +997,7 @@ public:
                 "    </Node>                                                                                        "
                 "</Node>                                                                                            ";
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -1035,7 +1035,7 @@ public:
                 "    </Node>                                                                                        "
                 "</Node>                                                                                            ";
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -1072,7 +1072,7 @@ public:
                 "        <MeshMatrixMass name='m_mass' vertexMass='1.0 2.0' lumping='1' />                          "
                 "    </Node>                                                                                        "
                 "</Node>                                                                                            ";
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -1114,7 +1114,7 @@ public:
 
         /// Here : default totalMass value will be used since negative value is given
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 
@@ -1154,7 +1154,7 @@ public:
 
         /// Here : totalMass value will be used due to concurrent data
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("loadWithNoParam",
                                                           scene.c_str(),
                                                           scene.size()) ;
 

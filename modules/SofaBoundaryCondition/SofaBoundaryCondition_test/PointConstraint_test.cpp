@@ -40,7 +40,7 @@ namespace {
 using namespace modeling;
 
 template<typename DataTypes>
-void createUniformMass(simulation::Node::SPtr node, component::container::MechanicalObject<DataTypes>& /*dofs*/)
+void createUniformMass(sofa::core::sptr<sofa::simulation::Node> node, component::container::MechanicalObject<DataTypes>& /*dofs*/)
 {
     node->addObject(sofa::core::objectmodel::New<component::mass::UniformMass<DataTypes, typename DataTypes::Real> >());
 }
@@ -71,10 +71,10 @@ struct PointConstraint_test : public Sofa_test<typename _DataTypes::Real>
             force[i]=50;
 
         /// Scene creation
-        simulation::Node::SPtr root = simulation->createNewGraph("root");
+        sofa::core::sptr<sofa::simulation::Node>  root = simulation->createNewGraph("root");
         root->setGravity( defaulttype::Vector3(0,0,0) );
 
-        simulation::Node::SPtr node = createEulerSolverNode(root,"test");
+        sofa::core::sptr<sofa::simulation::Node>  node = createEulerSolverNode(root,"test");
 
         typename MechanicalObject::SPtr dofs = addNew<MechanicalObject>(node);
         dofs->resize(2);

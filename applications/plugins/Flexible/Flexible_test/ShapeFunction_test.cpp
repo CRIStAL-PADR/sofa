@@ -86,7 +86,7 @@ namespace sofa {
              
         void SetShapeFunction (int shapeFunctionCase)
         {
-            simulation::Node::SPtr patchNode = this->root->getChild("Patch");
+            sofa::core::sptr<sofa::simulation::Node>  patchNode = this->root->getChild("Patch");
 
             // Complete the scene
             typedef core::behavior::ShapeFunctionTypes<3, SReal> ShapeFunctionType;

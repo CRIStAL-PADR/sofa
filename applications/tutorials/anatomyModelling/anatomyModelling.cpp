@@ -168,7 +168,7 @@ SReal dt = 0.01;
 
 /// helper for more compact component creation
 template<class Component>
-typename Component::SPtr addNew( Node::SPtr parentNode, std::string name="" )
+typename Component::SPtr addNew( sofa::core::sptr<sofa::simulation::Node> parentNode, std::string name="" )
 {
     typename Component::SPtr component = New<Component>();
     parentNode->addObject(component);
@@ -180,7 +180,7 @@ typename Component::SPtr addNew( Node::SPtr parentNode, std::string name="" )
 simulation::Node::SPtr createScene()
 {
 	using helper::vector;// The graph root node
-    Node::SPtr  root = simulation::getSimulation()->createNewGraph("root");
+    sofa::core::sptr<sofa::simulation::Node>  root = simulation::getSimulation()->createNewGraph("root");
     root->setGravity( Coord3(0,-9.81,0) );
     root->setAnimate(false);
     root->setDt(0.001);
@@ -202,13 +202,13 @@ simulation::Node::SPtr createScene()
 	// *********************************************************************************
 	// ************************************* main  *************************************
 	// *********************************************************************************
-    Node::SPtr mainScene = root->createChild("main");
+    sofa::core::sptr<sofa::simulation::Node> mainScene = root->createChild("main");
 	
 	/**********************************************************************************/
 	/********************************** Rigid Node  ***********************************/
 	/**********************************************************************************/
 	// Bones gravity center - rigid node which contains bones, articuated system and ...
-    Node::SPtr rigidNode = mainScene->createChild("rigidNode");
+    sofa::core::sptr<sofa::simulation::Node> rigidNode = mainScene->createChild("rigidNode");
     MechanicalObjectRigid3d::SPtr rigid_dof = addNew<MechanicalObjectRigid3d>(rigidNode, "dof");
 	// write position of dof
 	unsigned int numRigid = 5;
@@ -386,7 +386,7 @@ simulation::Node::SPtr createScene()
 	////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////// Muscles attach in bones (Node) //////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////
-    Node::SPtr attachNode = mainScene->createChild("attach");
+    sofa::core::sptr<sofa::simulation::Node> attachNode = mainScene->createChild("attach");
 
 	///////////////////////////////////////////
 	//r_bicep_med origin on scapula
@@ -493,7 +493,7 @@ simulation::Node::SPtr createScene()
 	////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////// Independents particles Node /////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////
-    Node::SPtr independentParticlesNode = mainScene->createChild("independentParticles");
+    sofa::core::sptr<sofa::simulation::Node> independentParticlesNode = mainScene->createChild("independentParticles");
     MechanicalObjectAffine3d::SPtr independentParticlesDof = addNew< MechanicalObjectAffine3d>(independentParticlesNode,"dof");
 	independentParticlesDof->showObject.setValue(true);
 	independentParticlesDof->showObjectScale.setValue(0.05);
@@ -508,7 +508,7 @@ simulation::Node::SPtr createScene()
 	////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////// Deformable Structure Node /////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////
-    Node::SPtr musclesNode = mainScene->createChild("muscles");
+    sofa::core::sptr<sofa::simulation::Node> musclesNode = mainScene->createChild("muscles");
 	
 	// ==================================r_bicep_med  ==================================
 	Node::SPtr rbicepmedNode = independentParticlesNode->createChild("r_bicep_med");

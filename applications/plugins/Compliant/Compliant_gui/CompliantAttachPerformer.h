@@ -81,9 +81,9 @@ class SOFA_Compliant_gui_API CompliantAttachPerformer: public TInteractionPerfor
     typedef defaulttype::StdVectorTypes< defaulttype::Vec<1,Real>, defaulttype::Vec<1,Real>  >  DataTypes1;
 
 
-    simulation::Node::SPtr pickedNode;       ///< Node containing the picked MechanicalState
+    sofa::core::sptr<sofa::simulation::Node>  pickedNode;       ///< Node containing the picked MechanicalState
     int pickedParticleIndex;                 ///< Index of the picked particle in the picked state
-    simulation::Node::SPtr interactionNode;  ///< Node used to create the interaction components to constrain the picked point
+    sofa::core::sptr<sofa::simulation::Node>  interactionNode;  ///< Node used to create the interaction components to constrain the picked point
     core::BaseMapping::SPtr mouseMapping;   ///< Mapping from the mouse position to the 3D point on the ray
     MouseContactMapper* mapper;
     Point3dState* mouseState;                  ///< Mouse state container  (position, velocity)

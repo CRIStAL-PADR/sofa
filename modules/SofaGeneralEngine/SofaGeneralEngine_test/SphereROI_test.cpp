@@ -59,7 +59,7 @@ struct SphereROI_test : public Sofa_test<typename _DataTypes::Real>,
 
 
     Simulation* m_simu;
-    Node::SPtr m_node;
+    sofa::core::sptr<sofa::simulation::Node> m_node;
     typename ThisClass::SPtr m_thisObject;
 
     void SetUp()

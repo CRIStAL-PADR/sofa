@@ -54,7 +54,7 @@ struct FlexibleDataEngine_test : public DataEngine_test<DataEngineType>
     typedef DDGNode::DDGLinkContainer DDGLinkContainer;
 
     // Root of the scene graph
-    simulation::Node::SPtr root;
+    sofa::core::sptr<sofa::simulation::Node>  root;
 
 
     virtual void init()
@@ -138,7 +138,7 @@ struct SpecificTest<FlexibleDataEngine_test< TestDataEngine< component::engine::
     {
         tested->openScene( std::string(FLEXIBLE_TEST_SCENES_DIR) + "/Engine1.scn" );
 
-        simulation::Node::SPtr childNode = tested->root->getChild("child");
+        sofa::core::sptr<sofa::simulation::Node>  childNode = tested->root->getChild("child");
 
         childNode->addObject( tested->m_engine );
         childNode->addObject( tested->m_engineInput );
@@ -160,7 +160,7 @@ struct SpecificTest<FlexibleDataEngine_test< TestDataEngine< component::engine::
     {
         tested->openScene( std::string(FLEXIBLE_TEST_SCENES_DIR) + "/Engine2.scn" );
 
-        simulation::Node::SPtr childNode = tested->root->getChild("child");
+        sofa::core::sptr<sofa::simulation::Node>  childNode = tested->root->getChild("child");
 
         childNode->addObject( tested->m_engine );
         childNode->addObject( tested->m_engineInput );
@@ -178,7 +178,7 @@ struct SpecificTest<FlexibleDataEngine_test< TestDataEngine< component::engine::
     {
         tested->openScene( std::string(FLEXIBLE_TEST_SCENES_DIR) + "/Engine1.scn" );
 
-        simulation::Node::SPtr childNode = tested->root->getChild("child");
+        sofa::core::sptr<sofa::simulation::Node>  childNode = tested->root->getChild("child");
 
         childNode->addObject( tested->m_engine );
         childNode->addObject( tested->m_engineInput );
@@ -198,7 +198,7 @@ struct SpecificTest<FlexibleDataEngine_test< TestDataEngine< component::engine::
     {
         tested->openScene( std::string(FLEXIBLE_TEST_SCENES_DIR) + "/Engine2.scn" );
 
-        simulation::Node::SPtr childNode = tested->root->getChild("child");
+        sofa::core::sptr<sofa::simulation::Node>  childNode = tested->root->getChild("child");
 
         childNode->addObject( tested->m_engine );
         childNode->addObject( tested->m_engineInput );
@@ -237,7 +237,7 @@ struct SpecificTest<FlexibleDataEngine_test< TestDataEngine< component::engine::
     {
         tested->openScene( std::string(FLEXIBLE_TEST_SCENES_DIR) + "/Engine1.scn" );
 
-        simulation::Node::SPtr childNode = tested->root->getChild("child");
+        sofa::core::sptr<sofa::simulation::Node>  childNode = tested->root->getChild("child");
 
         childNode->addObject( tested->m_engine );
         childNode->addObject( tested->m_engineInput );

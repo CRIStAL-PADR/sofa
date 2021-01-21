@@ -96,7 +96,7 @@ typedef struct
 
 typedef struct
 {
-    simulation::Node::SPtr node;
+    sofa::core::sptr<sofa::simulation::Node>  node;
     sofa::component::visualmodel::OglModel::SPtr visu;
     sofa::component::mapping::RigidMapping< Rigid3dTypes , Vec3fTypes  >::SPtr mapping;
 
@@ -188,12 +188,12 @@ private:
     bool changeScale;
     float oldScale;
     VisualComponent visualNode[7];
-    simulation::Node::SPtr nodePrincipal;
-    simulation::Node::SPtr nodeBati;
-    simulation::Node::SPtr nodeAxes;
-    simulation::Node::SPtr nodeTool;
-    simulation::Node::SPtr nodeAxesVisual;
-    simulation::Node::SPtr nodeXitactVisual;
+    sofa::core::sptr<sofa::simulation::Node>  nodePrincipal;
+    sofa::core::sptr<sofa::simulation::Node>  nodeBati;
+    sofa::core::sptr<sofa::simulation::Node>  nodeAxes;
+    sofa::core::sptr<sofa::simulation::Node>  nodeTool;
+    sofa::core::sptr<sofa::simulation::Node>  nodeAxesVisual;
+    sofa::core::sptr<sofa::simulation::Node>  nodeXitactVisual;
     sofa::component::container::MechanicalObject<sofa::defaulttype::Rigid3dTypes>::SPtr visualAxesDOF;
     sofa::component::container::MechanicalObject<sofa::defaulttype::Rigid3dTypes>::SPtr visualXitactDOF;
 

@@ -67,7 +67,7 @@ struct Scene_test: public NumericTest<SReal>
 {
     // root
     simulation::Simulation* simulation;
-    simulation::Node::SPtr root;
+    sofa::core::sptr<sofa::simulation::Node>  root;
 
     Scene_test()
     {
@@ -175,7 +175,7 @@ struct Scene_test: public NumericTest<SReal>
         simulation->init(root.get());
 
         {
-            simulation::Node::SPtr nodeToRemove = static_cast<simulation::Node*>(child);
+            sofa::core::sptr<sofa::simulation::Node>  nodeToRemove = static_cast<simulation::Node*>(child);
             nodeToRemove->detachFromGraph();
             nodeToRemove->execute<simulation::DeleteVisitor>(sofa::core::ExecParams::defaultInstance());
         }
@@ -226,7 +226,7 @@ protected:
         root = simulation::getSimulation()->createNewGraph("root");
         root->addObject(core::objectmodel::New<InstrumentedObject<MechanicalObject3> >());
         root->addObject(core::objectmodel::New<InstrumentedObject<UniformMass3> >());
-        simulation::Node::SPtr child  = simulation::getSimulation()->createNewNode("child");
+        sofa::core::sptr<sofa::simulation::Node>  child  = simulation::getSimulation()->createNewNode("child");
         root->addChild(child);
         child->addObject(core::objectmodel::New<InstrumentedObject<MechanicalObject3> >());
 

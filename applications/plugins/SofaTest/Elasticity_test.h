@@ -41,7 +41,7 @@ namespace sofa {
 template<class T>
 struct PatchTestStruct
 {
-    simulation::Node::SPtr SquareNode;
+    sofa::core::sptr<sofa::simulation::Node>  SquareNode;
     typename component::projectiveconstraintset::AffineMovementConstraint<T>::SPtr affineConstraint;
     typename component::container::MechanicalObject<T>::SPtr dofs;
 };
@@ -50,7 +50,7 @@ struct PatchTestStruct
 template<class T>
 struct CylinderTractionStruct
 {
-    simulation::Node::SPtr root;
+    sofa::core::sptr<sofa::simulation::Node>  root;
     typename component::container::MechanicalObject<T>::SPtr dofs;
     typename component::forcefield::TrianglePressureForceField<T>::SPtr forceField;
 };
@@ -76,7 +76,7 @@ struct SOFA_SOFATEST_API Elasticity_test: public Sofa_test<typename DataTypes::R
 /// Create a scene with a regular grid and an affine constraint for patch test
 
 PatchTestStruct<DataTypes> createRegularGridScene(
-        simulation::Node::SPtr root,
+        sofa::core::sptr<sofa::simulation::Node>  root,
         Coord startPoint,
         Coord endPoint,
         int numX,
@@ -106,7 +106,7 @@ simulation::Node::SPtr createGridScene(
 
 /// Create a mass srping system
 simulation::Node::SPtr createMassSpringSystem(
-        simulation::Node::SPtr root,
+        sofa::core::sptr<sofa::simulation::Node>  root,
         double stiffness,
         double mass,
         double restLength,

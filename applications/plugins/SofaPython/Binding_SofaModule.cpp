@@ -88,7 +88,7 @@ static PyObject * Sofa_createNode(PyObject * /*self*/, PyObject * args)
         return nullptr;
     }
 
-    Node::SPtr node = Node::create( name );
+    sofa::core::sptr<sofa::simulation::Node> node = Node::create( name );
 
     return PythonFactory::toPython(node.get());
 }
@@ -490,7 +490,7 @@ static PyObject * Sofa_loadScene(PyObject * /*self*/, PyObject * args)
     if (loader)
     {
         const std::vector<std::string> sceneArgs = sofa::helper::ArgumentParser::extra_args();
-        Node::SPtr node = loader->load(filename, false, sceneArgs);
+        sofa::core::sptr<sofa::simulation::Node> node = loader->load(filename, false, sceneArgs);
         return PythonFactory::toPython(node.get());
     }
 
@@ -540,7 +540,7 @@ static PyObject * Sofa_loadPythonSceneWithArguments(PyObject * /*self*/, PyObjec
     }
 
     SceneLoaderPY loader;
-    Node::SPtr root;
+    sofa::core::sptr<sofa::simulation::Node> root;
     loader.loadSceneWithArguments(filename, arguments, &root);
     return PythonFactory::toPython(root.get());
 }

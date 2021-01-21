@@ -92,7 +92,7 @@ struct NewDeviceData
 struct NewOmniData
 {
     ForceFeedback::SPtr forceFeedback;
-    simulation::Node::SPtr *context;
+    sofa::core::sptr<sofa::simulation::Node>  *context;
 
     sofa::defaulttype::SolidTypes<double>::Transform endOmni_H_virtualTool;
     //Transform baseOmni_H_endOmni;
@@ -130,7 +130,7 @@ public:
 
     struct VisualComponent
     {
-        simulation::Node::SPtr node;
+        sofa::core::sptr<sofa::simulation::Node>  node;
         sofa::component::visualmodel::OglModel::SPtr visu;
         sofa::component::mapping::RigidMapping< Rigid3Types , Vec3Types  >::SPtr mapping;
     };
@@ -211,7 +211,7 @@ public:
     VisualComponent visualNode[NVISUALNODE];
     static const char* visualNodeNames[NVISUALNODE];
     static const char* visualNodeFiles[NVISUALNODE];
-    simulation::Node::SPtr nodePrincipal;
+    sofa::core::sptr<sofa::simulation::Node>  nodePrincipal;
     MMechanicalObject::SPtr rigidDOF;
     bool changeScale;
     bool firstInit;

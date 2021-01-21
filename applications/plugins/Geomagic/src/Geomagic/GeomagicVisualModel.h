@@ -59,7 +59,7 @@ public:
 
     struct VisualComponent
     {
-        simulation::Node::SPtr node;
+        sofa::core::sptr<sofa::simulation::Node>  node;
         sofa::component::loader::MeshObjLoader::SPtr loader;
         sofa::component::visualmodel::OglModel::SPtr visu;        
         sofa::component::mapping::RigidMapping< Rigid3Types , Vec3Types  >::SPtr mapping;
@@ -102,7 +102,7 @@ protected:
     VisualComponent visualNode[NVISUALNODE];
     static const char* visualNodeNames[NVISUALNODE];
     static const char* visualNodeFiles[NVISUALNODE];
-    simulation::Node::SPtr m_omniVisualNode;
+    sofa::core::sptr<sofa::simulation::Node>  m_omniVisualNode;
     component::container::MechanicalObject<sofa::defaulttype::Rigid3dTypes>::SPtr rigidDOF;
 
     VecCoord m_posDeviceVisu; ///< position of the hpatic devices for rendering. first pos is equal to d_posDevice

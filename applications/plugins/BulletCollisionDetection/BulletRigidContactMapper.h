@@ -52,7 +52,7 @@ public:
     typedef mapping::RigidMapping< InDataTypes, typename BulletRigidContactMapper::DataTypes > MMapping;
 
     MCollisionModel* model;
-    simulation::Node::SPtr child;
+    sofa::core::sptr<sofa::simulation::Node>  child;
     typename MMapping::SPtr mapping;
     typename MMechanicalState::SPtr outmodel;
     int nbp;

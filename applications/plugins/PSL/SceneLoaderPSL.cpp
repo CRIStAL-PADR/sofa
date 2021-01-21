@@ -94,7 +94,7 @@ void SceneLoaderPSL::write(sofa::simulation::Node* n, const char *filename)
     PyObject *pFunc = PyDict_GetItemString(pDict, "pslsave");
     if (PyCallable_Check(pFunc))
     {
-        Node::SPtr rootNode = Node::create("root");
+        sofa::core::sptr<sofa::simulation::Node> rootNode = Node::create("root");
         SP_CALL_MODULEFUNC(pFunc, "(Os)", sofa::PythonFactory::toPython(n), filename)
         return;
     }
@@ -143,7 +143,7 @@ sofa::core::sptr<sofa::simulation::Node> SceneLoaderPSL::doLoad(const std::strin
         /// We check if the returned object is of type Node (which is the only valid case. If this
         /// happens then we get the Sofa pointer to this Node and return it.
         if(PyObject_IsInstance(res, reinterpret_cast<PyObject*>(&SP_SOFAPYTYPEOBJECT(Node)))){
-            Node::SPtr rootNode = sofa::py::unwrap<Node>(res) ;
+            sofa::core::sptr<sofa::simulation::Node> rootNode = sofa::py::unwrap<Node>(res) ;
             Py_DECREF(res);
             return rootNode ;
         }

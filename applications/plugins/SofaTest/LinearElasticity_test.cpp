@@ -91,7 +91,7 @@ struct LinearElasticity_test : public Elasticity_test<_DataTypes>
         /// take the vertex at mid height and on the surface of the cylinder
         vIndex=(resolutionCircumferential*(resolutionRadial-1)+1)*resolutionHeight/2;
     }
-    ForceFieldSPtr addTetrahedralLinearElastic(simulation::Node::SPtr root,
+    ForceFieldSPtr addTetrahedralLinearElastic(sofa::core::sptr<sofa::simulation::Node> root,
         double youngModulus,double poissonRatio)
     {
         typename TetrahedralTensorMassForceField::SPtr ff=addNew<TetrahedralTensorMassForceField>(root);
@@ -99,7 +99,7 @@ struct LinearElasticity_test : public Elasticity_test<_DataTypes>
         ff->setPoissonRatio(poissonRatio);
         return (ForceFieldSPtr )ff;
     }
-    ForceFieldSPtr addTetrahedralCorotationalFEMLinearElastic(simulation::Node::SPtr root,
+    ForceFieldSPtr addTetrahedralCorotationalFEMLinearElastic(sofa::core::sptr<sofa::simulation::Node> root,
         double youngModulus,double poissonRatio)
     {
         typename sofa::component::forcefield::TetrahedralCorotationalFEMForceField<DataTypes>::SPtr ff=addNew<sofa::component::forcefield::TetrahedralCorotationalFEMForceField<DataTypes> >(root);

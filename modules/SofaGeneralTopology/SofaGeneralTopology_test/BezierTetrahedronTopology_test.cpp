@@ -70,7 +70,7 @@ struct BezierTetrahedronTopology_test : public Sofa_test<typename _DataTypes::Re
 
     
     /// Root of the scene graph
-    simulation::Node::SPtr root;      
+    sofa::core::sptr<sofa::simulation::Node>  root;      
     /// Simulation
     simulation::Simulation* simulation;  
 
@@ -106,7 +106,7 @@ struct BezierTetrahedronTopology_test : public Sofa_test<typename _DataTypes::Re
         typename MechanicalObject::SPtr meca1= sofa::modeling::addNew<MechanicalObject>(root);
 		sofa::modeling::setDataLink(&eng->f_outputTetrahedraPositions,&meca1->x);
 		// subnode
-	    simulation::Node::SPtr bezierNode = root->createChild("BezierTetrahedronTopology");
+	    sofa::core::sptr<sofa::simulation::Node>  bezierNode = root->createChild("BezierTetrahedronTopology");
 		// BezierTetrahedronSetTopologyContainer
 		sofa::component::topology::BezierTetrahedronSetTopologyContainer::SPtr container2= sofa::modeling::addNew<sofa::component::topology::BezierTetrahedronSetTopologyContainer>(bezierNode,"Container2");
 		// Mesh2BezierTopologicalMapping

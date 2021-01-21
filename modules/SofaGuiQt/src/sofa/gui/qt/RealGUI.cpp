@@ -973,7 +973,7 @@ void RealGUI::fileOpenSimu ( std::string s )
 
 //------------------------------------
 
-void RealGUI::setSceneWithoutMonitor (Node::SPtr root, const char* filename, bool temporaryFile)
+void RealGUI::setSceneWithoutMonitor (sofa::core::sptr<sofa::simulation::Node> root, const char* filename, bool temporaryFile)
 {
     if (filename)
     {
@@ -1030,7 +1030,7 @@ void RealGUI::setSceneWithoutMonitor (Node::SPtr root, const char* filename, boo
     }
 }
 
-void RealGUI::setScene(Node::SPtr root, const char* filename, bool temporaryFile)
+void RealGUI::setScene(sofa::core::sptr<sofa::simulation::Node> root, const char* filename, bool temporaryFile)
 {
     if(m_enableInteraction &&  filename){
         FileMonitor::removeListener(m_filelistener);
@@ -1522,7 +1522,7 @@ void RealGUI::init()
 
 //------------------------------------
 
-void RealGUI::createDisplayFlags(Node::SPtr root)
+void RealGUI::createDisplayFlags(sofa::core::sptr<sofa::simulation::Node> root)
 {
     if( displayFlag != nullptr)
     {

@@ -58,7 +58,7 @@ struct TetrahedronHyperelasticityFEMForceField_scene_test : public Sofa_test<typ
     /// @name Scene elements
     /// {
     typename DOF::SPtr dof;
-    simulation::Node::SPtr root, mooneyNode;
+    sofa::core::sptr<sofa::simulation::Node>  root, mooneyNode;
     std::string sceneFilename;
     Coord refY;
     /// }

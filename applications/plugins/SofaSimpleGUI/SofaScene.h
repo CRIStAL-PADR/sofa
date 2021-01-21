@@ -108,7 +108,7 @@ public:
 
 
 protected:
-    simulation::Node::SPtr _groot; ///< root of the scene
+    sofa::core::sptr<sofa::simulation::Node>  _groot; ///< root of the scene
     simulation::Node* _iroot; ///< root of the interactors, child of _groot
     simulation::Simulation* sofaSimulation;
 

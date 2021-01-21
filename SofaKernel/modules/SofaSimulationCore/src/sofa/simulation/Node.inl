@@ -29,10 +29,10 @@ namespace simulation
 {
 
 template <class RealObject>
-Node::SPtr Node::create( RealObject*, sofa::core::objectmodel::BaseObjectDescription* arg)
+sofa::core::sptr<sofa::simulation::Node> Node::create( RealObject*, sofa::core::objectmodel::BaseObjectDescription* arg)
 {
-//    Node::SPtr obj=getSimulation()->createNewGraph(arg->getName());
-    Node::SPtr obj=getSimulation()->createNewNode(arg->getName());
+//    sofa::core::sptr<sofa::simulation::Node> obj=getSimulation()->createNewGraph(arg->getName());
+    sofa::core::sptr<sofa::simulation::Node> obj=getSimulation()->createNewNode(arg->getName());
     obj->parse(arg);
     return obj;
 }

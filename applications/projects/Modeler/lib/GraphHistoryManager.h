@@ -59,7 +59,7 @@ public:
         {}
 
         Base::SPtr sofaComponent;
-        Node::SPtr parent;
+        sofa::core::sptr<sofa::simulation::Node> parent;
         Base::SPtr above;
         op ID;
         std::string info;

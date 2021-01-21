@@ -56,7 +56,7 @@ struct TetrahedronNumericalIntegration_test : public Sofa_test<typename _DataTyp
     typedef typename sofa::component::topology::NumericalIntegrationDescriptor<Real,4> NumericalIntegrationDescriptor;
 //	typedef typename sofa::component::topology::lfactorial lfactorial;
     /// Root of the scene graph
-    simulation::Node::SPtr root;
+    sofa::core::sptr<sofa::simulation::Node>  root;
     /// Simulation
     simulation::Simulation* simulation;
     // the geometry algorithm algorithm

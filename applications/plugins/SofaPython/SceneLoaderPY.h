@@ -50,7 +50,7 @@ public:
     bool canWriteFileExtension(const char *extension) override;
 
     /// load the file
-    virtual Node::SPtr doLoad(const std::string& filename, const std::vector<std::string>& sceneArgs) override;
+    virtual sofa::core::sptr<sofa::simulation::Node> doLoad(const std::string& filename, const std::vector<std::string>& sceneArgs) override;
 
     // max: added out parameter to get the root *before* createScene is called
     void loadSceneWithArguments(const std::string& filename, const std::vector<std::string>& arguments=std::vector<std::string>(0), Node::SPtr* root_out = nullptr);

@@ -41,7 +41,7 @@ To test a new scene add the xml file in the Scenes directory and add the TEST_F 
 struct LoadScene_test: public Sofa_test<>
 {
     // root
-   simulation::Node::SPtr root;
+   sofa::core::sptr<sofa::simulation::Node>  root;
 
    bool LoadScene(std::string sceneName)
    {

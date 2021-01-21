@@ -433,7 +433,7 @@ void Simulation::dumpState ( Node* root, std::ofstream& out )
 
 
 /// Load a scene from a file
-Node::SPtr Simulation::load ( const std::string& filename, bool reload, const std::vector<std::string>& sceneArgs )
+sofa::core::sptr<sofa::simulation::Node> Simulation::load ( const std::string& filename, bool reload, const std::vector<std::string>& sceneArgs )
 {
     if( sofa::helper::system::SetDirectory::GetFileName(filename.c_str()).empty() || // no filename
             sofa::helper::system::SetDirectory::GetExtension(filename.c_str()).empty() ) // filename with no extension
@@ -449,7 +449,7 @@ Node::SPtr Simulation::load ( const std::string& filename, bool reload, const st
 }
 
 /// Delete a scene from memory. After this call the pointer is invalid
-void Simulation::unload(Node::SPtr root)
+void Simulation::unload(sofa::core::sptr<sofa::simulation::Node> root)
 {
     if ( !root ) return;
     sofa::core::ExecParams* params = sofa::core::ExecParams::defaultInstance();

@@ -63,7 +63,7 @@ struct CentralDifferenceExplicitSolverDynamic_test : public Elasticity_test<_Dat
     typedef component::odesolver::CentralDifferenceSolver CentralDifferenceSolver;
 
     /// Root of the scene graph
-    simulation::Node::SPtr root;      
+    sofa::core::sptr<sofa::simulation::Node>  root;      
     /// Tested simulation
     simulation::Simulation* simulation;  
     /// Position, velocity and acceleration array
@@ -181,7 +181,7 @@ struct CentralDifferenceExplicitSolverDynamic_test : public Elasticity_test<_Dat
         double time = root->getTime();
 
         // Get mechanical object
-        simulation::Node::SPtr massNode = root->getChild("MassNode");
+        sofa::core::sptr<sofa::simulation::Node>  massNode = root->getChild("MassNode");
         typename MechanicalObject::SPtr dofs = massNode->get<MechanicalObject>(root->SearchDown);
 
         // Animate

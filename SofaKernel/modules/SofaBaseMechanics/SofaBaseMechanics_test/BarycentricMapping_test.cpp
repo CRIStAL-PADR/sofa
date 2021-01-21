@@ -97,8 +97,8 @@ struct BarycentricMapperTriangleSetTopologyTest :  public Test, public Barycentr
         thisObject->setName("barycentricMapping");
         EXPECT_TRUE(thisObject->getName() == "barycentricMapping");
 
-        Node::SPtr node = simu->createNewGraph("root");
-        Node::SPtr nodeMapping = node->createChild("nodeToMap");
+        sofa::core::sptr<sofa::simulation::Node> node = simu->createNewGraph("root");
+        sofa::core::sptr<sofa::simulation::Node> nodeMapping = node->createChild("nodeToMap");
         TriangleSetTopologyContainer::SPtr triangleContainer = New<TriangleSetTopologyContainer>();
         TetrahedronSetTopologyContainer::SPtr tetraContainer = New<TetrahedronSetTopologyContainer>();
         MechanicalObject<Vec3dTypes>::SPtr mecanical = New<MechanicalObject<Vec3dTypes>>();

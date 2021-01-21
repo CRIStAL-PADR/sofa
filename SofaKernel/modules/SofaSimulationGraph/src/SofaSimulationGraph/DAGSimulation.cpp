@@ -62,12 +62,12 @@ DAGSimulation::~DAGSimulation()
 }
 
 
-Node::SPtr DAGSimulation::createNewGraph(const std::string& name)
+sofa::core::sptr<sofa::simulation::Node> DAGSimulation::createNewGraph(const std::string& name)
 {
     return createNewNode( name );
 }
 
-Node::SPtr DAGSimulation::createNewNode(const std::string& name)
+sofa::core::sptr<sofa::simulation::Node> DAGSimulation::createNewNode(const std::string& name)
 {
     return sofa::core::objectmodel::New<DAGNode>(name);
 }

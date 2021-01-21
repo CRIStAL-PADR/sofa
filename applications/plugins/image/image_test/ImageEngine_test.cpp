@@ -47,7 +47,7 @@ struct ImageEngine_test : public Sofa_test<>
 {
 
     // Root of the scene graph
-    simulation::Node::SPtr root;
+    sofa::core::sptr<sofa::simulation::Node>  root;
 
     // Unload scene
     void TearDown()

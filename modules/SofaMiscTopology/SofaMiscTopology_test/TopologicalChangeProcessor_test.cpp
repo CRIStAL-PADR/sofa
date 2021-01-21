@@ -38,7 +38,7 @@ namespace sofa {
 struct TopologicalChangeProcessor_test: public Sofa_test<>
 {
     // root
-   simulation::Node::SPtr root;
+   sofa::core::sptr<sofa::simulation::Node>  root;
    /// Simulation
    simulation::Simulation* simulation;
 

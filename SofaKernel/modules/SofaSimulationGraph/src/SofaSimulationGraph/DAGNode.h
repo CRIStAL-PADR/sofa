@@ -54,7 +54,7 @@ protected:
 
 public:
     /// Pure Virtual method from Node
-    virtual Node::SPtr createChild(const std::string& nodeName) override;
+    virtual sofa::core::sptr<sofa::simulation::Node> createChild(const std::string& nodeName) override;
 
     /// Remove the current node from the graph: consists in removing the link to its parent
     void detachFromGraph() override;

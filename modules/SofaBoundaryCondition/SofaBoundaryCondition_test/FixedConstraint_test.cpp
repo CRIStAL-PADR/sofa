@@ -42,19 +42,19 @@ using namespace modeling;
 using core::objectmodel::New;
 
 template<typename DataTypes>
-void createUniformMass(simulation::Node::SPtr node, component::container::MechanicalObject<DataTypes>& /*dofs*/)
+void createUniformMass(sofa::core::sptr<sofa::simulation::Node> node, component::container::MechanicalObject<DataTypes>& /*dofs*/)
 {
     node->addObject(New<component::mass::UniformMass<DataTypes, typename DataTypes::Real> >());
 }
 
 template<>
-void createUniformMass(simulation::Node::SPtr node, component::container::MechanicalObject<defaulttype::Rigid3Types>& /*dofs*/)
+void createUniformMass(sofa::core::sptr<sofa::simulation::Node> node, component::container::MechanicalObject<defaulttype::Rigid3Types>& /*dofs*/)
 {
     node->addObject(New<component::mass::UniformMass<defaulttype::Rigid3Types, defaulttype::Rigid3Mass> >());
 }
 
 template<>
-void createUniformMass(simulation::Node::SPtr node, component::container::MechanicalObject<defaulttype::Rigid2Types>& /*dofs*/)
+void createUniformMass(sofa::core::sptr<sofa::simulation::Node> node, component::container::MechanicalObject<defaulttype::Rigid2Types>& /*dofs*/)
 {
     node->addObject(New<component::mass::UniformMass<defaulttype::Rigid2Types, defaulttype::Rigid2Mass> >());
 }
@@ -86,14 +86,14 @@ struct FixedConstraint_test : public BaseTest
             force[i]=10;
 
         /// Scene creation
-        simulation::Node::SPtr root = simulation->createNewGraph("root");
+        sofa::core::sptr<sofa::simulation::Node>  root = simulation->createNewGraph("root");
         root->setGravity( defaulttype::Vector3(0,0,0) );
 
 #if SOFABOUNDARYCONDITION_TEST_HAVE_SOFASPARSESOLVER
         simpleapi::createObject(root , "RequiredPlugin", {{"name", "SofaSparseSolver"}}) ;
 #endif
 
-        simulation::Node::SPtr node = createEulerSolverNode(root,"test", integrationScheme);
+        sofa::core::sptr<sofa::simulation::Node>  node = createEulerSolverNode(root,"test", integrationScheme);
 
         typename MechanicalObject::SPtr dofs = addNew<MechanicalObject>(node);
         dofs->resize(2);

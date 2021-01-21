@@ -85,7 +85,7 @@ class PSL_test : public BaseTest,
                  public ::testing::WithParamInterface<std::vector<std::string>>
 {
 public:
-    Node::SPtr m_root ;
+    sofa::core::sptr<sofa::simulation::Node> m_root ;
 
     void SetUp(){
         anInit() ;

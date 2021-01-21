@@ -78,7 +78,7 @@ void TestDefaultPipeLine::checkDefaultPipelineWithNoAttributes()
              "  <DiscreteIntersection name='interaction'/>                                    \n"
              "</Node>                                                                        \n" ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                       scene.str().c_str(),
                                                       scene.str().size()) ;
     ASSERT_NE(root.get(), nullptr) ;
@@ -102,7 +102,7 @@ void TestDefaultPipeLine::checkDefaultPipelineWithMissingIntersection()
              "  <DefaultPipeline name='pipeline'/>                                           \n"
              "</Node>                                                                        \n" ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                       scene.str().c_str(),
                                                       scene.str().size()) ;
     ASSERT_NE(root.get(), nullptr) ;
@@ -123,7 +123,7 @@ int TestDefaultPipeLine::checkDefaultPipelineWithMonkeyValueForDepth(int dvalue)
              "  <DiscreteIntersection name='interaction'/>                                    \n"
              "</Node>                                                                        \n" ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                       scene.str().c_str(),
                                                       scene.str().size()) ;
     //EXPECT_NE( (root.get()), nullptr) ;

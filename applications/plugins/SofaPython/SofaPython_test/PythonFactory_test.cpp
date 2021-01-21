@@ -132,7 +132,7 @@ protected:
                  "    externalComponent.helloWorld()   \n" ;
         f.close();
 
-        Node::SPtr root = simulation::getSimulation()->load(scenePath.c_str());
+        sofa::core::sptr<sofa::simulation::Node> root = simulation::getSimulation()->load(scenePath.c_str());
         ASSERT_NE(root, nullptr);
 
         BaseObject* aComponent = root->getObject("second") ;

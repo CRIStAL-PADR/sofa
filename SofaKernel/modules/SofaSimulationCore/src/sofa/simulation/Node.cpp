@@ -235,56 +235,56 @@ void Node::moveObject(BaseObject::SPtr obj)
 }
 
 
-void Node::notifyBeginAddChild(Node::SPtr parent, Node::SPtr child) const
+void Node::notifyBeginAddChild(sofa::core::sptr<sofa::simulation::Node> parent, sofa::core::sptr<sofa::simulation::Node> child) const
 {
     Node* root = down_cast<Node>(this->getContext()->getRootContext()->toBaseNode());
     for (auto& listener : root->listener)
         listener->onBeginAddChild(parent.get(), child.get());
 }
 
-void Node::notifyEndAddChild(Node::SPtr parent, Node::SPtr child) const
+void Node::notifyEndAddChild(sofa::core::sptr<sofa::simulation::Node> parent, sofa::core::sptr<sofa::simulation::Node> child) const
 {
     Node* root = down_cast<Node>(this->getContext()->getRootContext()->toBaseNode());
     for (auto& listener : root->listener)
         listener->onEndAddChild(parent.get(), child.get());
 }
 
-void Node::notifyBeginRemoveChild(Node::SPtr parent, Node::SPtr child) const
+void Node::notifyBeginRemoveChild(sofa::core::sptr<sofa::simulation::Node> parent, sofa::core::sptr<sofa::simulation::Node> child) const
 {
     Node* root = down_cast<Node>(this->getContext()->getRootContext()->toBaseNode());
     for (auto& listener : root->listener)
         listener->onBeginRemoveChild(parent.get(), child.get());
 }
 
-void Node::notifyEndRemoveChild(Node::SPtr parent, Node::SPtr child) const
+void Node::notifyEndRemoveChild(sofa::core::sptr<sofa::simulation::Node> parent, sofa::core::sptr<sofa::simulation::Node> child) const
 {
     Node* root = down_cast<Node>(this->getContext()->getRootContext()->toBaseNode());
     for (auto& listener : root->listener)
         listener->onEndRemoveChild(parent.get(), child.get());
 }
 
-void Node::notifyBeginAddObject(Node::SPtr parent, core::objectmodel::BaseObject::SPtr obj) const
+void Node::notifyBeginAddObject(sofa::core::sptr<sofa::simulation::Node> parent, core::objectmodel::BaseObject::SPtr obj) const
 {
     Node* root = down_cast<Node>(this->getContext()->getRootContext()->toBaseNode());
     for (auto& listener : root->listener)
         listener->onBeginAddObject(parent.get(), obj.get());
 }
 
-void Node::notifyEndAddObject(Node::SPtr parent, core::objectmodel::BaseObject::SPtr obj) const
+void Node::notifyEndAddObject(sofa::core::sptr<sofa::simulation::Node> parent, core::objectmodel::BaseObject::SPtr obj) const
 {
     Node* root = down_cast<Node>(this->getContext()->getRootContext()->toBaseNode());
     for (auto& listener : root->listener)
         listener->onEndAddObject(parent.get(), obj.get());
 }
 
-void Node::notifyBeginRemoveObject(Node::SPtr parent, core::objectmodel::BaseObject::SPtr obj) const
+void Node::notifyBeginRemoveObject(sofa::core::sptr<sofa::simulation::Node> parent, core::objectmodel::BaseObject::SPtr obj) const
 {
     Node* root = down_cast<Node>(this->getContext()->getRootContext()->toBaseNode());
     for (auto& listener : root->listener)
         listener->onBeginRemoveObject(parent.get(), obj.get());
 }
 
-void Node::notifyEndRemoveObject(Node::SPtr parent, core::objectmodel::BaseObject::SPtr obj) const
+void Node::notifyEndRemoveObject(sofa::core::sptr<sofa::simulation::Node> parent, core::objectmodel::BaseObject::SPtr obj) const
 {
     Node* root = down_cast<Node>(this->getContext()->getRootContext()->toBaseNode());
     for (auto& listener : root->listener)
@@ -1045,7 +1045,7 @@ void Node::sortComponents()
 }
 
 
-Node::SPtr Node::create( const std::string& name )
+sofa::core::sptr<sofa::simulation::Node> Node::create( const std::string& name )
 {
     return getSimulation()->createNewNode(name);
 }

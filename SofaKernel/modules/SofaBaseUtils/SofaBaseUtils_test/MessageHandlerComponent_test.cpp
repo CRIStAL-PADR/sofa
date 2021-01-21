@@ -70,7 +70,7 @@ TEST(MessageHandlerComponent, simpleInit)
 
     sofa::simulation::setSimulation(new DAGSimulation());
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ( "test1",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ( "test1",
                                                        scene.c_str(),
                                                        scene.size() ) ;
     EXPECT_TRUE(root!=nullptr) ;
@@ -92,7 +92,7 @@ TEST(MessageHandlerComponent, missingHandler)
         "       <MessageHandlerComponent/>                   "
         "</Node>                                                             " ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ( "test1",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ( "test1",
                                                        scene.c_str(),
                                                        scene.size() ) ;
 
@@ -112,7 +112,7 @@ TEST(MessageHandlerComponent, invalidHandler)
         "       <MessageHandlerComponent handler='thisisinvalid'/>           "
         "</Node>                                                             " ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ( "test1",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ( "test1",
                                                        scene.c_str(),
                                                        scene.size() ) ;
 
@@ -132,7 +132,7 @@ TEST(MessageHandlerComponent, clangHandler)
         "       <MessageHandlerComponent handler='clang'/>                   "
         "</Node>                                                             " ;
 
-    Node::SPtr root = SceneLoaderXML::loadFromMemory ( "test1",
+    sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ( "test1",
                                                        scene.c_str(),
                                                        scene.size() ) ;
 

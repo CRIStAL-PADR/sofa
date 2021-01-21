@@ -66,8 +66,8 @@ struct BoxROITest :  public ::testing::Test
 {
     typedef BoxROI<TDataType> TheBoxROI;
     Simulation* m_simu  {nullptr};
-    Node::SPtr m_root;
-    Node::SPtr m_node;
+    sofa::core::sptr<sofa::simulation::Node> m_root;
+    sofa::core::sptr<sofa::simulation::Node> m_node;
     typename TheBoxROI::SPtr m_boxroi;
 
     void SetUp() override
@@ -124,7 +124,7 @@ struct BoxROITest :  public ::testing::Test
 
         EXPECT_MSG_EMIT(Error); // Unable to find a MechanicalObject for this component.
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                           scene.c_str(),
                                                           scene.size());
 
@@ -155,7 +155,7 @@ struct BoxROITest :  public ::testing::Test
                 "   </Node>                                                    "
                 "</Node>                                                       ";
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                           scene.c_str(),
                                                           scene.size());
         EXPECT_NE(root.get(), nullptr);
@@ -178,7 +178,7 @@ struct BoxROITest :  public ::testing::Test
                 "   </Node>                                                    "
                 "</Node>                                                       ";
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                           scene.c_str(),
                                                           scene.size());
         EXPECT_NE(root.get(), nullptr);
@@ -201,7 +201,7 @@ struct BoxROITest :  public ::testing::Test
                 "   </Node>                                                    "
                 "</Node>                                                       ";
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                           scene.c_str(),
                                                           scene.size());
         EXPECT_NE(root.get(), nullptr);

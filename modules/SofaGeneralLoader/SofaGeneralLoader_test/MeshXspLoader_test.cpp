@@ -33,7 +33,7 @@ public:
     {
         sofa::simpleapi::importPlugin("SofaComponentAll") ;
         auto simulation = sofa::simpleapi::createSimulation();
-        Node::SPtr root = sofa::simpleapi::createRootNode(simulation, "root");
+        sofa::core::sptr<sofa::simulation::Node> root = sofa::simpleapi::createRootNode(simulation, "root");
 
         sofa::simpleapi::createObject(root, "RequiredPlugin", { { "name","SofaGeneralLoader" } });
         auto loader = sofa::simpleapi::createObject(root, "MeshXspLoader",
@@ -48,7 +48,7 @@ public:
     {
         sofa::simpleapi::importPlugin("SofaComponentAll") ;
         auto simulation = sofa::simpleapi::createSimulation();
-        Node::SPtr root = sofa::simpleapi::createRootNode(simulation, "root");
+        sofa::core::sptr<sofa::simulation::Node> root = sofa::simpleapi::createRootNode(simulation, "root");
 
         {
             EXPECT_MSG_EMIT(Error);

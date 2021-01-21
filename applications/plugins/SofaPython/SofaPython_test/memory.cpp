@@ -38,7 +38,7 @@ struct MemoryTest : public ::testing::Test
         sofa::simulation::setSimulation(simulation = new sofa::simulation::graph::DAGSimulation());
 
         /// Scene creation
-        simulation::Node::SPtr root =  simulation::getSimulation()->load ( scenePath.c_str() );
+        sofa::core::sptr<sofa::simulation::Node>  root =  simulation::getSimulation()->load ( scenePath.c_str() );
 
         component::controller::PythonScriptController *ctr = root->get<component::controller::PythonScriptController>();
 

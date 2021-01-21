@@ -62,7 +62,7 @@ struct SceneChecker_test : public Sofa_test<>
               << "</Node>                                                           \n";
 
         EXPECT_MSG_EMIT(Error); // [PythonScriptController(pythonScriptController1)]
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                           scene.str().c_str(),
                                                           scene.str().size());
         EXPECT_MSG_NOEMIT(Error);
@@ -110,7 +110,7 @@ struct SceneChecker_test : public Sofa_test<>
               << "    </Node>                                                     \n"
               << "</Node>                                                         \n";
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                           scene.str().c_str(),
                                                           scene.str().size());
 
@@ -153,7 +153,7 @@ struct SceneChecker_test : public Sofa_test<>
               << "      <ComponentDeprecated />                                   \n"
               << "</Node>                                                         \n";
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                           scene.str().c_str(),
                                                           scene.str().size());
 
@@ -200,7 +200,7 @@ struct SceneChecker_test : public Sofa_test<>
         SceneCheckerVisitor checker(ExecParams::defaultInstance());
         checker.addCheck( SceneCheckUsingAlias::newSPtr() );
 
-        Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
+        sofa::core::sptr<sofa::simulation::Node> root = SceneLoaderXML::loadFromMemory ("testscene",
                                                           scene.str().c_str(),
                                                           scene.str().size());
         ASSERT_NE(root.get(), nullptr);

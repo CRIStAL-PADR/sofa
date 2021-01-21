@@ -68,7 +68,7 @@ struct NewmarkImplicitDynamic_test : public Elasticity_test<_DataTypes>
 
 
     /// Root of the scene graph
-    simulation::Node::SPtr root;      
+    sofa::core::sptr<sofa::simulation::Node>  root;      
     /// Tested simulation
     simulation::Simulation* simulation;  
     /// Position and velocity array
@@ -167,7 +167,7 @@ struct NewmarkImplicitDynamic_test : public Elasticity_test<_DataTypes>
         double time = root->getTime();
 
         // Get mechanical object
-        simulation::Node::SPtr massNode = root->getChild("MassNode");
+        sofa::core::sptr<sofa::simulation::Node>  massNode = root->getChild("MassNode");
         typename MechanicalObject::SPtr dofs = massNode->get<MechanicalObject>(root->SearchDown);
 
         // Animate

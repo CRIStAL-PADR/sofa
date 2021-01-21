@@ -679,7 +679,7 @@ void SofaModeler::fileOpen(std::string filename)
     {
         filename =  sofa::helper::system::DataRepository.getFile ( filename );
         openPath = sofa::helper::system::SetDirectory::GetParentDir(filename.c_str());
-        Node::SPtr root = NULL;
+        sofa::core::sptr<sofa::simulation::Node> root = NULL;
         root = down_cast<sofa::simulation::Node>( sofa::simulation::getSimulation()->load(filename.c_str()).get() );
         if (root)
         {
@@ -763,7 +763,7 @@ void SofaModeler::exportSofaClasses()
     if(filename.isEmpty())
         return;
 
-    simulation::Node::SPtr root = getSimulation()->createNewGraph("components");
+    sofa::core::sptr<sofa::simulation::Node>  root = getSimulation()->createNewGraph("components");
 
     std::vector< ClassEntry::SPtr > entries;
     sofa::core::ObjectFactory::getInstance()->getAllEntries(entries);
@@ -796,7 +796,7 @@ void SofaModeler::exportSofaClasses()
         std::pair< IteratorInventory,IteratorInventory > rangeCategory;
         rangeCategory = inventory.equal_range(categoryName);
 
-        simulation::Node::SPtr node = root->createChild(categoryName);
+        sofa::core::sptr<sofa::simulation::Node>  node = root->createChild(categoryName);
 
         //Process all the component of the current category, and add them to the group
         for (IteratorInventory itComponent=rangeCategory.first; itComponent != rangeCategory.second; ++itComponent)

@@ -68,7 +68,7 @@ void VisualStyle::bwdDraw(VisualParams* vparams)
     vparams->displayFlags() = backupFlags;
 }
 
-helper::WriteAccessor<sofa::core::visual::DisplayFlags> addVisualStyle( simulation::Node::SPtr node )
+helper::WriteAccessor<sofa::core::visual::DisplayFlags> addVisualStyle( sofa::core::sptr<sofa::simulation::Node>  node )
 {
     VisualStyle::SPtr visualStyle = New<sofa::component::visualmodel::VisualStyle>();
     node->addObject(visualStyle);
