@@ -54,6 +54,11 @@
 #include <sofa/core/behavior/BaseConstraintSet.h>
 #include <sofa/core/behavior/ConstraintSolver.h>
 
+#include <sofa/core/topology/Topology.h>
+#include <sofa/core/topology/BaseTopologyObject.h>
+#include <sofa/core/topology/BaseMeshTopology.h>
+
+
 #include <sofa/core/ObjectFactory.h>
 #include <sofa/helper/Factory.inl>
 #include <sofa/helper/cast.h>

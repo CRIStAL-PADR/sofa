@@ -21,7 +21,7 @@
 ******************************************************************************/
 #pragma once
 #include <SofaValidation/config.h>
-
+#include <sofa/core/topology/BaseMeshTopology.h>
 #include <SofaGeneralLoader/ReadTopology.h>
 #include <sofa/simulation/Visitor.h>
 

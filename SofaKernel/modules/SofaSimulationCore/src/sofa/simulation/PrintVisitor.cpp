@@ -33,6 +33,7 @@
 #include <sofa/core/behavior/BaseForceField.h>
 #include <sofa/core/behavior/BaseInteractionForceField.h>
 #include <sofa/core/behavior/BaseProjectiveConstraintSet.h>
+#include <sofa/core/topology/Topology.h>
 
 namespace sofa
 {

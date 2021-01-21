@@ -30,9 +30,6 @@
 #include <sofa/core/objectmodel/BaseNode.h>
 #include <sofa/core/objectmodel/BaseObjectDescription.h>
 #include <sofa/core/Mapping.h>
-#include <sofa/core/topology/Topology.h>
-#include <sofa/core/topology/BaseTopologyObject.h>
-#include <sofa/core/topology/BaseMeshTopology.h>
 #include <sofa/core/collision/Pipeline.h>
 #include <sofa/core/loader/BaseLoader.h>
 #include <sofa/simulation/MutationListener.h>
@@ -65,6 +62,13 @@ class VisualLoop;
 namespace sofa::core::loader
 {
 class BaseLoader;
+}
+
+namespace sofa::core::topology
+{
+    class Topology;
+    class BaseMeshTopology;
+    class BaseTopologyObject;
 }
 
 namespace sofa::core::behavior
