@@ -135,7 +135,7 @@ int HeadlessRecorder::RegisterGUIParameters(ArgumentParser* argumentParser)
     return 0;
 }
 
-BaseGUI* HeadlessRecorder::CreateGUI(const char* name, sofa::simulation::Node::SPtr groot, const char* filename)
+BaseGUI* HeadlessRecorder::CreateGUI(const char* name, sofa::core::sptr<sofa::simulation::Node> groot, const char* filename)
 {
     SOFA_UNUSED(name);
     SOFA_UNUSED(groot);
@@ -545,7 +545,7 @@ void HeadlessRecorder::newView()
     currentCamera->setDefaultView(groot->getGravity());
 }
 
-void HeadlessRecorder::setScene(sofa::simulation::Node::SPtr scene, const char* filename, bool temporaryFile)
+void HeadlessRecorder::setScene(sofa::core::sptr<sofa::simulation::Node> scene, const char* filename, bool temporaryFile)
 {
     SOFA_UNUSED(temporaryFile);
     std::ostringstream ofilename;

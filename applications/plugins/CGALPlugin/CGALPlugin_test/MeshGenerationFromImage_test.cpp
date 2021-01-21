@@ -48,7 +48,7 @@ using sofa::core::ExecParams;
 
 struct MeshGenerationFromImage_test : public Sofa_test<>
 {
-    sofa::simulation::Node::SPtr m_root;
+    sofa::core::sptr<sofa::simulation::Node> m_root;
     cgal::MeshGenerationFromImage< defaulttype::Vec3dTypes, defaulttype::ImageUC >::SPtr m_meshGenerator;
 
     void SetUp()

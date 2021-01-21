@@ -394,7 +394,7 @@ void GeomagicDriver::updatePosition()
     {
         if (!m_GeomagicVisualModel->isDisplayInitiate()) // first time, need to init visualModel first
         {
-            sofa::simulation::Node::SPtr rootContext = static_cast<simulation::Node*>(this->getContext()->getRootContext());
+            sofa::core::sptr<sofa::simulation::Node> rootContext = static_cast<simulation::Node*>(this->getContext()->getRootContext());
             m_GeomagicVisualModel->initDisplay(rootContext, d_deviceName.getValue(), d_scale.getValue());            
         }
 
@@ -433,7 +433,7 @@ void GeomagicDriver::updateButtonStates()
     if (!d_emitButtonEvent.getValue())
         return;
 
-    sofa::simulation::Node::SPtr rootContext = static_cast<simulation::Node*>(this->getContext()->getRootContext());
+    sofa::core::sptr<sofa::simulation::Node> rootContext = static_cast<simulation::Node*>(this->getContext()->getRootContext());
     if (!rootContext)
     {
         msg_error() << "Rootcontext can't be found using this->getContext()->getRootContext()";

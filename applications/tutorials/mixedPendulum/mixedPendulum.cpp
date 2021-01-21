@@ -64,7 +64,7 @@ int main(int, char** argv)
 
     //-------------------- The graph root node
     sofa::simulation::setSimulation(new sofa::simulation::tree::TreeSimulation());
-    sofa::simulation::Node::SPtr groot = sofa::simulation::getSimulation()->createNewGraph("root");
+    sofa::core::sptr<sofa::simulation::Node> groot = sofa::simulation::getSimulation()->createNewGraph("root");
     groot->setGravity( Coord3(0,-10,0) );
 
     // One solver for all the graph
@@ -74,7 +74,7 @@ int main(int, char** argv)
 
     //-------------------- Deformable body
 
-    sofa::simulation::Node::SPtr deformableBody = groot.get()->createChild("deformableBody");
+    sofa::core::sptr<sofa::simulation::Node> deformableBody = groot.get()->createChild("deformableBody");
     // degrees of freedom
     MechanicalObject3::SPtr DOF = sofa::core::objectmodel::New<MechanicalObject3>();
     deformableBody->addObject(DOF);
@@ -106,7 +106,7 @@ int main(int, char** argv)
 
 
     //-------------------- Rigid body
-    sofa::simulation::Node::SPtr rigidBody = groot.get()->createChild("rigidBody");
+    sofa::core::sptr<sofa::simulation::Node> rigidBody = groot.get()->createChild("rigidBody");
 
     // degrees of freedom
     MechanicalObjectRigid3::SPtr rigidDOF = sofa::core::objectmodel::New<MechanicalObjectRigid3>();
@@ -135,7 +135,7 @@ int main(int, char** argv)
 
 
     //-------------------- the particles attached to the rigid body
-    sofa::simulation::Node::SPtr rigidParticles = groot.get()->createChild("rigidParticles");
+    sofa::core::sptr<sofa::simulation::Node> rigidParticles = groot.get()->createChild("rigidParticles");
 
     // degrees of freedom of the skin
     MechanicalObject3::SPtr rigidParticleDOF = sofa::core::objectmodel::New<MechanicalObject3>();

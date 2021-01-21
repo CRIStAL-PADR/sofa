@@ -97,7 +97,7 @@ int SimpleGUI::InitGUI(const char* /*name*/, const std::vector<std::string>& /*o
     return 0;
 }
 
-BaseGUI* SimpleGUI::CreateGUI(const char* /*name*/,  sofa::simulation::Node::SPtr groot, const char* filename)
+BaseGUI* SimpleGUI::CreateGUI(const char* /*name*/,  sofa::core::sptr<sofa::simulation::Node> groot, const char* filename)
 {
 
     glutInitDisplayMode ( GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE );
@@ -1607,7 +1607,7 @@ void SimpleGUI::exportOBJ(bool exportMTL)
     getSimulation()->exportOBJ(groot.get(), filename.c_str(),exportMTL);
 }
 
-void SimpleGUI::setScene(sofa::simulation::Node::SPtr scene, const char* filename, bool)
+void SimpleGUI::setScene(sofa::core::sptr<sofa::simulation::Node> scene, const char* filename, bool)
 {
     std::ostringstream ofilename;
 

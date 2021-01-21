@@ -24,7 +24,7 @@
 #include <sofa/gui/GUIManager.h>
 
 
-static sofa::gui::BaseGUI* CreateFakeGUI(const char* /*name*/, sofa::simulation::Node::SPtr /*groot*/, const char* /*filename*/)
+static sofa::gui::BaseGUI* CreateFakeGUI(const char* /*name*/, sofa::core::sptr<sofa::simulation::Node> /*groot*/, const char* /*filename*/)
 {
     return new FakeGUI();
 }

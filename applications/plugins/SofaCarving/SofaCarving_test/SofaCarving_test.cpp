@@ -54,7 +54,7 @@ public:
 
 private:
     sofa::simulation::Simulation::SPtr m_simu;
-    sofa::simulation::Node::SPtr m_root;
+    sofa::core::sptr<sofa::simulation::Node> m_root;
 };
 
 

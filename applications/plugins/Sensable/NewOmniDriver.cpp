@@ -461,7 +461,7 @@ void NewOmniDriver::setForceFeedback(ForceFeedback* ff)
 //executed once at the start of Sofa, initialization of all variables excepts haptics-related ones
 void NewOmniDriver::init()
 {
-    sofa::simulation::Node::SPtr rootContext = static_cast<simulation::Node*>(this->getContext()->getRootContext());
+    sofa::core::sptr<sofa::simulation::Node> rootContext = static_cast<simulation::Node*>(this->getContext()->getRootContext());
     if(firstDevice)
     {
         rootContext->getTreeObjects<NewOmniDriver>(&autreOmniDriver);
@@ -490,7 +490,7 @@ void NewOmniDriver::init()
         }
         if (!camera)
         {
-            sofa::simulation::Node::SPtr groot = dynamic_cast<simulation::Node*>(this->getContext());
+            sofa::core::sptr<sofa::simulation::Node> groot = dynamic_cast<simulation::Node*>(this->getContext());
             camera = sofa::core::objectmodel::New<component::visualmodel::InteractiveCamera>();
             camera->setName(core::objectmodel::Base::shortName(camera.get()));
             groot->addObject(camera);

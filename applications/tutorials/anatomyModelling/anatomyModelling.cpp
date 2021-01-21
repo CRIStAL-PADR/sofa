@@ -679,7 +679,7 @@ int main(int argc, char** argv)
     sofa::simulation::setSimulation(new sofa::simulation::graph::DAGSimulation());
 
     //=================================================
-	sofa::simulation::Node::SPtr groot = createScene();
+	sofa::core::sptr<sofa::simulation::Node> groot = createScene();
     //=================================================
 
     sofa::simulation::getSimulation()->init(groot.get());

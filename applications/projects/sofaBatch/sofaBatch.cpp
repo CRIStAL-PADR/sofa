@@ -57,7 +57,7 @@ void apply(std::string &input, unsigned int nbsteps, std::string &output)
     cout<<"\n****SIMULATION*  (.scn:"<< input<<", #steps:"<<nbsteps<<", .simu:"<<output<<")"<<endl;
 
     // --- Create simulation graph ---
-    sofa::simulation::Node::SPtr groot = sofa::core::objectmodel::SPtr_dynamic_cast<sofa::simulation::Node>( sofa::simulation::getSimulation()->load(input.c_str()));
+    sofa::core::sptr<sofa::simulation::Node> groot = sofa::core::objectmodel::SPtr_dynamic_cast<sofa::simulation::Node>( sofa::simulation::getSimulation()->load(input.c_str()));
     if (groot==NULL)
     {
         groot = sofa::simulation::getSimulation()->createNewGraph("");

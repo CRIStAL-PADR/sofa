@@ -44,7 +44,7 @@ int main(int /*argc*/, char** argv)
 
     sofa::simulation::setSimulation(new sofa::simulation::tree::TreeSimulation());
 
-    sofa::simulation::Node::SPtr groot = sofa::core::objectmodel::SPtr_dynamic_cast<sofa::simulation::Node>( sofa::simulation::getSimulation()->load(argv[1]));
+    sofa::core::sptr<sofa::simulation::Node> groot = sofa::core::objectmodel::SPtr_dynamic_cast<sofa::simulation::Node>( sofa::simulation::getSimulation()->load(argv[1]));
 
     if (groot==NULL)
     {

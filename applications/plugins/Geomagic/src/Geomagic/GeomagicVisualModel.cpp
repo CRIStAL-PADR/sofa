@@ -64,7 +64,7 @@ GeomagicVisualModel::~GeomagicVisualModel()
 
 }
 
-void GeomagicVisualModel::initDisplay(sofa::simulation::Node::SPtr node, const std::string& _deviceName, double _scale)
+void GeomagicVisualModel::initDisplay(sofa::core::sptr<sofa::simulation::Node> node, const std::string& _deviceName, double _scale)
 {
     //Initialization of the visual components
     //resize vectors

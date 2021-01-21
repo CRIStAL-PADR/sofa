@@ -66,7 +66,7 @@ int main(int argc, char** argv)
 
     // The graph root node
     sofa::simulation::setSimulation(new sofa::simulation::graph::DAGSimulation());
-    sofa::simulation::Node::SPtr groot = sofa::simulation::getSimulation()->createNewGraph("root");
+    sofa::core::sptr<sofa::simulation::Node> groot = sofa::simulation::getSimulation()->createNewGraph("root");
     groot->setGravity( Coord3(0,-10,0) );
 
     // One solver for all the graph
@@ -76,7 +76,7 @@ int main(int argc, char** argv)
     groot->addObject(solver);
 
     // One node to define the particle
-    sofa::simulation::Node::SPtr particule_node = groot.get()->createChild("particle_node");
+    sofa::core::sptr<sofa::simulation::Node> particule_node = groot.get()->createChild("particle_node");
     // The particule, i.e, its degrees of freedom : a point with a velocity
     MechanicalObject3::SPtr dof = sofa::core::objectmodel::New<MechanicalObject3>();
     dof->setName("particle");

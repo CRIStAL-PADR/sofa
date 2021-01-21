@@ -37,13 +37,13 @@ public:
     bool loadMeshFile();
 
     /// Method to get acces to node containing the meshLoader and the toplogy container.
-    sofa::simulation::Node::SPtr getNode() { return m_root; }
+    sofa::core::sptr<sofa::simulation::Node> getNode() { return m_root; }
 
 protected:
     /// Simulation object
     sofa::simulation::Simulation::SPtr m_simu;
     /// Node containing the topology
-    sofa::simulation::Node::SPtr m_root;
+    sofa::core::sptr<sofa::simulation::Node> m_root;
 
     /// Type of topology asked
     sofa::core::topology::TopologyElementType m_topoType;

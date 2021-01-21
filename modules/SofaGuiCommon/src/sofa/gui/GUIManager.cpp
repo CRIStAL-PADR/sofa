@@ -222,7 +222,7 @@ int GUIManager::Init(const char* argv0, const char* name)
 }
 
 
-int GUIManager::createGUI(sofa::simulation::Node::SPtr groot, const char* filename)
+int GUIManager::createGUI(sofa::core::sptr<sofa::simulation::Node> groot, const char* filename)
 {
     if (!currentGUI)
     {
@@ -264,7 +264,7 @@ sofa::simulation::Node* GUIManager::CurrentSimulation()
         return nullptr;
 }
 
-void GUIManager::SetScene(sofa::simulation::Node::SPtr groot, const char* filename /*=nullptr*/, bool temporaryFile /*=false*/ )
+void GUIManager::SetScene(sofa::core::sptr<sofa::simulation::Node> groot, const char* filename /*=nullptr*/, bool temporaryFile /*=false*/ )
 {
     if (currentGUI)
     {
@@ -274,7 +274,7 @@ void GUIManager::SetScene(sofa::simulation::Node::SPtr groot, const char* filena
 
 }
 
-int GUIManager::MainLoop(sofa::simulation::Node::SPtr groot, const char* filename)
+int GUIManager::MainLoop(sofa::core::sptr<sofa::simulation::Node> groot, const char* filename)
 {
     int ret = 0;
     if (!currentGUI)

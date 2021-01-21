@@ -257,7 +257,7 @@ int main(int argc, char** argv)
     sofa::simulation::setSimulation(new sofa::simulation::tree::TreeSimulation());
 
     //=================================================
-    sofa::simulation::Node::SPtr groot = createGridScene(Vec3(0,0,0), Vec3(5,1,1), 6,2,2, 1.0 );
+    sofa::core::sptr<sofa::simulation::Node> groot = createGridScene(Vec3(0,0,0), Vec3(5,1,1), 6,2,2, 1.0 );
     //=================================================
 
     sofa::simulation::getSimulation()->init(groot.get());

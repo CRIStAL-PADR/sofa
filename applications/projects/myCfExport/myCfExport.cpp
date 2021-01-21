@@ -101,7 +101,7 @@ void apply(std::string &input)
     cout<<"\n****   Processing scene:"<< input<< endl;
 
     // --- Create simulation graph ---
-    sofa::simulation::Node::SPtr groot = sofa::core::objectmodel::SPtr_dynamic_cast<sofa::simulation::Node>( sofa::simulation::getSimulation()->load(input.c_str()));
+    sofa::core::sptr<sofa::simulation::Node> groot = sofa::core::objectmodel::SPtr_dynamic_cast<sofa::simulation::Node>( sofa::simulation::getSimulation()->load(input.c_str()));
     if (groot==NULL)
     {
         cerr << "================== Error, unable to read scene ===============  " << std::endl;

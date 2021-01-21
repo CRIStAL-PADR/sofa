@@ -40,7 +40,7 @@ namespace sofa::component::collision
 
     void AddRecordedCameraPerformer::start()
     {
-        sofa::simulation::Node::SPtr root = down_cast<sofa::simulation::Node>( interactor->getContext()->getRootContext() );
+        sofa::core::sptr<sofa::simulation::Node> root = down_cast<sofa::simulation::Node>( interactor->getContext()->getRootContext() );
         if(root)
         {
             sofa::component::visualmodel::RecordedCamera* currentCamera = root->getNodeObject<sofa::component::visualmodel::RecordedCamera>();

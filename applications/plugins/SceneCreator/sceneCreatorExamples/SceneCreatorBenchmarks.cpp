@@ -37,7 +37,7 @@
 #include <boost/program_options.hpp>
 
 
-void fallingCubeExample(sofa::simulation::Node::SPtr root)
+void fallingCubeExample(sofa::core::sptr<sofa::simulation::Node> root)
 {
     //Add objects
     for (unsigned int i=0; i<10; ++i)
@@ -50,7 +50,7 @@ void fallingCubeExample(sofa::simulation::Node::SPtr root)
                                   sofa::defaulttype::Vec3Types::Deriv(0, 0, 0), sofa::defaulttype::Vec3Types::Deriv(0, 0, 0), sofa::defaulttype::Vec3Types::Deriv(40, 0, 40));
 }
 
-void fallingCylinderExample(sofa::simulation::Node::SPtr root)
+void fallingCylinderExample(sofa::core::sptr<sofa::simulation::Node> root)
 {
     //Add objects
     for (unsigned int i=0; i<10; ++i)
@@ -64,7 +64,7 @@ void fallingCylinderExample(sofa::simulation::Node::SPtr root)
                                   sofa::defaulttype::Vec3Types::Deriv(0, 0, 0), sofa::defaulttype::Vec3Types::Deriv(0, 0, 0), sofa::defaulttype::Vec3Types::Deriv(40, 0, 40));
 }
 
-void fallingSphereExample(sofa::simulation::Node::SPtr root)
+void fallingSphereExample(sofa::core::sptr<sofa::simulation::Node> root)
 {
     //Add objects
     for (unsigned int i=0; i<10; ++i)
@@ -79,7 +79,7 @@ void fallingSphereExample(sofa::simulation::Node::SPtr root)
 }
 
 
-void fallingDrapExample(sofa::simulation::Node::SPtr root)
+void fallingDrapExample(sofa::core::sptr<sofa::simulation::Node> root)
 {
     //Add objects
     for (unsigned int i=0; i<6; ++i){
@@ -146,7 +146,7 @@ int main(int argc, char** argv)
 
 
     // Create the graph root node with collision
-    sofa::simulation::Node::SPtr root = sofa::modeling::createRootWithCollisionPipeline();
+    sofa::core::sptr<sofa::simulation::Node> root = sofa::modeling::createRootWithCollisionPipeline();
     root->setGravity( sofa::defaulttype::Vec3Types::Deriv(0,-10.0,0) );
 
 
