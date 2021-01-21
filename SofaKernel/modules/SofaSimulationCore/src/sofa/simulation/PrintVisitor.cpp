@@ -23,6 +23,7 @@
 #include <sofa/helper/Factory.h>
 #include <sofa/simulation/Node.h>
 #include <sofa/core/CollisionModel.h>
+#include <sofa/core/objectmodel/ContextObject.h>
 
 namespace sofa
 {

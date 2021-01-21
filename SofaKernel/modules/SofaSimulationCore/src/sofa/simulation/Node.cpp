@@ -32,6 +32,10 @@
 
 #include <sofa/core/CollisionModel.h>
 
+#include <sofa/core/objectmodel/ContextObject.h>
+#include <sofa/core/objectmodel/ConfigurationSetting.h>
+
+
 #include <sofa/core/ObjectFactory.h>
 #include <sofa/helper/Factory.inl>
 #include <sofa/helper/cast.h>

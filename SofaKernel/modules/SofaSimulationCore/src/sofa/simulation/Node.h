@@ -29,9 +29,7 @@
 // moved from GNode (27/04/08)
 #include <sofa/core/objectmodel/BaseNode.h>
 #include <sofa/core/objectmodel/BaseObjectDescription.h>
-#include <sofa/core/objectmodel/ConfigurationSetting.h>
 #include <sofa/core/BehaviorModel.h>
-#include <sofa/core/objectmodel/ContextObject.h>
 #include <sofa/core/visual/VisualModel.h>
 #include <sofa/core/visual/VisualManager.h>
 #include <sofa/core/visual/Shader.h>
@@ -62,6 +60,12 @@ namespace sofa::core
     class BaseMapping;
     class Event;
     class CollisionModel;
+}
+
+namespace sofa::core::objectmodel
+{
+    class ContextObject;
+    class ConfigurationSetting;
 }
 
 namespace sofa
