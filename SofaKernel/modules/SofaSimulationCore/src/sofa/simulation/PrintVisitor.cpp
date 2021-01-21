@@ -34,6 +34,7 @@
 #include <sofa/core/behavior/BaseInteractionForceField.h>
 #include <sofa/core/behavior/BaseProjectiveConstraintSet.h>
 #include <sofa/core/topology/Topology.h>
+#include <sofa/core/collision/Pipeline.h>
 
 namespace sofa
 {

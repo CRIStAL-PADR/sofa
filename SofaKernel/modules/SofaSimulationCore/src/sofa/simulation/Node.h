@@ -30,10 +30,8 @@
 #include <sofa/core/objectmodel/BaseNode.h>
 #include <sofa/core/objectmodel/BaseObjectDescription.h>
 #include <sofa/core/Mapping.h>
-#include <sofa/core/collision/Pipeline.h>
 #include <sofa/core/loader/BaseLoader.h>
 #include <sofa/simulation/MutationListener.h>
-#include <sofa/simulation/VisitorScheduler.h>
 #include <sofa/core/behavior/BaseConstraintSet.h>
 
 #include <type_traits>
@@ -85,6 +83,12 @@ class BaseProjectiveConstraintSet;
 class BaseConstraintSet;
 class ConstraintSolver;
 }
+
+namespace sofa::core::collision
+{
+    class Pipeline;
+}
+
 namespace sofa
 {
 namespace simulation
@@ -99,14 +103,6 @@ class Visitor;
 
 namespace sofa
 {
-
-namespace core
-{
-namespace visual
-{
-class VisualParams;
-} // namespace visual
-} // namespace core
 
 namespace simulation
 {
