@@ -85,6 +85,76 @@ class VisualParams;
 namespace simulation
 {
 
+template <class T>
+class NodeContainerSequence
+{
+private:
+    sofa::helper::stable_vector<T*> items;
+public:
+    typedef T pointed_type;
+    typedef T* value_type;
+    typedef typename sofa::helper::stable_vector<T*>::const_iterator iterator;
+    typedef typename sofa::helper::stable_vector<T*>::const_iterator const_iterator;
+    typedef typename sofa::helper::stable_vector<T*>::const_reverse_iterator reverse_iterator;
+
+    // DEPRECATED: replace getSize) with "size"
+    size_t getSize(){ return items.size(); }
+    size_t size(){ return items.size(); }
+
+    void add(value_type value) { items.push_back(value); }
+    void remove(value_type value) { items.erase(std::remove(items.begin(), items.end(), value),end()); }
+    bool empty()const{return items.empty(); }
+
+    value_type operator[](size_t index) const { return items[index]; }
+    value_type get(size_t index) const { return items[index]; }
+
+    // DEPRECATED: replace getValue() with direct access to operator[]
+    auto& getValue(){ return items; }
+
+    //iterator begin() const { return items.begin(); }
+    //iterator end() const { return items.end(); }
+    const_iterator begin() const { return items.cbegin(); }
+    const_iterator end() const { return items.cend(); }
+    reverse_iterator rbegin() const { return items.crbegin(); }
+    reverse_iterator rend() const { return items.crend(); }
+};
+
+/// Class to hold 0-or-1 object. Public access is only readonly using an interface similar to std::vector (size/[]/begin/end), plus an automatic convertion to one pointer.
+/// UPDATE: it is now an alias for the Link pointer container
+template < class T >
+class NodeContainerSingle
+{
+    T* data {nullptr};
+public:
+    typedef T pointed_type;
+    typedef T* value_type;
+    typedef value_type* iterator;
+
+    value_type& operator[](const size_t){ return data; }
+    size_t size() const { return data != nullptr; }
+    bool empty() const {return size()==0;}
+    operator pointed_type*() { return data; }
+    operator pointed_type*() const { return data; }
+    operator const pointed_type*() const { return data; }
+
+    operator bool() const { return data != nullptr; }
+    void set(value_type newData){ data = newData ;}
+    value_type get(){ return data;}
+    void remove(value_type fdata)
+    {
+        if(data==fdata)
+            data=nullptr;
+    }
+    value_type operator->() const { return data; }
+    iterator begin(){ return &data; }
+    iterator end(){
+        if(data==nullptr)
+            return (&data);
+        else
+            return (&data)+1;
+    }
+};
+
 /**
    Implements the object (component) management of the core::Context.
    Contains objects in lists and provides accessors.
@@ -211,75 +281,10 @@ public:
         }
     };
 
-    template <class T>
-    class Sequence
-    {
-    private:
-        sofa::helper::stable_vector<T*> items;
-    public:
-        typedef T pointed_type;
-        typedef T* value_type;
-        typedef typename sofa::helper::stable_vector<T*>::const_iterator iterator;
-        typedef typename sofa::helper::stable_vector<T*>::const_iterator const_iterator;
-        typedef typename sofa::helper::stable_vector<T*>::const_reverse_iterator reverse_iterator;
-
-        // DEPRECATED: replace getSize) with "size"
-        size_t getSize(){ return items.size(); }
-        size_t size(){ return items.size(); }
-
-        void add(value_type value) { items.push_back(value); }
-        void remove(value_type value) { items.erase(std::remove(items.begin(), items.end(), value),end()); }
-        bool empty()const{return items.empty(); }
-
-        value_type operator[](size_t index) const { return items[index]; }
-        value_type get(size_t index) const { return items[index]; }
-
-        // DEPRECATED: replace getValue() with direct access to operator[]
-        auto& getValue(){ return items; }
-
-        //iterator begin() const { return items.begin(); }
-        //iterator end() const { return items.end(); }
-        const_iterator begin() const { return items.cbegin(); }
-        const_iterator end() const { return items.cend(); }
-        reverse_iterator rbegin() const { return items.crbegin(); }
-        reverse_iterator rend() const { return items.crend(); }
-    };
-
-    /// Class to hold 0-or-1 object. Public access is only readonly using an interface similar to std::vector (size/[]/begin/end), plus an automatic convertion to one pointer.
-    /// UPDATE: it is now an alias for the Link pointer container
-    template < class T >
-    class Single
-    {
-        T* data {nullptr};
-    public:
-        typedef T pointed_type;
-        typedef T* value_type;
-        typedef value_type* iterator;
-
-        value_type& operator[](const size_t){ return data; }
-        size_t size() const { return data != nullptr; }
-        bool empty() const {return size()==0;}
-        operator pointed_type*() { return data; }
-        operator pointed_type*() const { return data; }
-        operator const pointed_type*() const { return data; }
-
-        operator bool() const { return data != nullptr; }
-        void set(value_type newData){ data = newData ;}
-        value_type get(){ return data;}
-        void remove(value_type fdata)
-        {
-            if(data==fdata)
-                data=nullptr;
-        }
-        value_type operator->() const { return data; }
-        iterator begin(){ return &data; }
-        iterator end(){
-            if(data==nullptr)
-                return (&data);
-            else
-                return (&data)+1;
-        }
-    };
+    template<class T>
+    using Sequence = NodeContainerSequence<T>;
+    template<class T>
+    using Single = NodeContainerSingle<T>;
 
     SequenceHold<Node,true> child;
     typedef SequenceHold<Node,true>::iterator ChildIterator;
@@ -288,39 +293,39 @@ public:
     typedef SequenceHold<sofa::core::objectmodel::BaseObject,true>::iterator ObjectIterator;
     typedef SequenceHold<sofa::core::objectmodel::BaseObject,true>::reverse_iterator ObjectReverseIterator;
 
-    Single<sofa::core::behavior::BaseAnimationLoop> animationManager;
-    Single<sofa::core::visual::VisualLoop> visualLoop;
+    NodeContainerSingle<sofa::core::behavior::BaseAnimationLoop> animationManager;
+    NodeContainerSingle<sofa::core::visual::VisualLoop> visualLoop;
 
-    Sequence<sofa::core::BehaviorModel> behaviorModel;
-    Sequence<sofa::core::BaseMapping> mapping;
+    NodeContainerSequence<sofa::core::BehaviorModel> behaviorModel;
+    NodeContainerSequence<sofa::core::BaseMapping> mapping;
 
-    Sequence<sofa::core::behavior::OdeSolver> solver;
-    Sequence<sofa::core::behavior::ConstraintSolver> constraintSolver;
-    Sequence<sofa::core::behavior::BaseLinearSolver> linearSolver;
+    NodeContainerSequence<sofa::core::behavior::OdeSolver> solver;
+    NodeContainerSequence<sofa::core::behavior::ConstraintSolver> constraintSolver;
+    NodeContainerSequence<sofa::core::behavior::BaseLinearSolver> linearSolver;
 
-    Single<sofa::core::topology::Topology> topology;
-    Single<sofa::core::topology::BaseMeshTopology> meshTopology;
-    Sequence<sofa::core::topology::BaseTopologyObject> topologyObject;
+    NodeContainerSingle<sofa::core::topology::Topology> topology;
+    NodeContainerSingle<sofa::core::topology::BaseMeshTopology> meshTopology;
+    NodeContainerSequence<sofa::core::topology::BaseTopologyObject> topologyObject;
 
-    Single<sofa::core::BaseState> state;
-    Single<sofa::core::behavior::BaseMechanicalState> mechanicalState;
-    Single<sofa::core::BaseMapping> mechanicalMapping;
-    Single<sofa::core::behavior::BaseMass> mass;
-    Sequence<sofa::core::behavior::BaseForceField> forceField;
-    Sequence<sofa::core::behavior::BaseInteractionForceField> interactionForceField;
-    Sequence<sofa::core::behavior::BaseProjectiveConstraintSet> projectiveConstraintSet;
-    Sequence<sofa::core::behavior::BaseConstraintSet> constraintSet;
-    Sequence<sofa::core::objectmodel::ContextObject> contextObject;
-    Sequence<sofa::core::objectmodel::ConfigurationSetting> configurationSetting;
+    NodeContainerSingle<sofa::core::BaseState> state;
+    NodeContainerSingle<sofa::core::behavior::BaseMechanicalState> mechanicalState;
+    NodeContainerSingle<sofa::core::BaseMapping> mechanicalMapping;
+    NodeContainerSingle<sofa::core::behavior::BaseMass> mass;
+    NodeContainerSequence<sofa::core::behavior::BaseForceField> forceField;
+    NodeContainerSequence<sofa::core::behavior::BaseInteractionForceField> interactionForceField;
+    NodeContainerSequence<sofa::core::behavior::BaseProjectiveConstraintSet> projectiveConstraintSet;
+    NodeContainerSequence<sofa::core::behavior::BaseConstraintSet> constraintSet;
+    NodeContainerSequence<sofa::core::objectmodel::ContextObject> contextObject;
+    NodeContainerSequence<sofa::core::objectmodel::ConfigurationSetting> configurationSetting;
 
-    Sequence<sofa::core::visual::Shader> shaders;
-    Sequence<sofa::core::visual::VisualModel> visualModel;
-    Sequence<sofa::core::visual::VisualManager> visualManager;
+    NodeContainerSequence<sofa::core::visual::Shader> shaders;
+    NodeContainerSequence<sofa::core::visual::VisualModel> visualModel;
+    NodeContainerSequence<sofa::core::visual::VisualManager> visualManager;
 
-    Sequence<sofa::core::CollisionModel> collisionModel;
-    Single<sofa::core::collision::Pipeline> collisionPipeline;
+    NodeContainerSequence<sofa::core::CollisionModel> collisionModel;
+    NodeContainerSingle<sofa::core::collision::Pipeline> collisionPipeline;
 
-    Sequence<sofa::core::objectmodel::BaseObject> unsorted;
+    NodeContainerSequence<sofa::core::objectmodel::BaseObject> unsorted;
 
     /// @}
 
