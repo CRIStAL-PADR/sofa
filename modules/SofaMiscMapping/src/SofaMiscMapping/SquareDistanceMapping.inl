@@ -23,6 +23,7 @@
 
 #include "SquareDistanceMapping.h"
 #include <sofa/core/visual/VisualParams.h>
+#include <sofa/core/behavior/BaseForceField.h>
 #include <iostream>
 #include <sofa/simulation/Node.h>
 

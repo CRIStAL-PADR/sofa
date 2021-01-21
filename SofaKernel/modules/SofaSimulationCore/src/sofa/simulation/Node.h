@@ -30,55 +30,56 @@
 #include <sofa/core/objectmodel/BaseNode.h>
 #include <sofa/core/objectmodel/BaseObjectDescription.h>
 #include <sofa/core/Mapping.h>
-#include <sofa/core/behavior/BaseInteractionForceField.h>
-#include <sofa/core/behavior/BaseProjectiveConstraintSet.h>
-#include <sofa/core/behavior/BaseConstraintSet.h>
 #include <sofa/core/topology/Topology.h>
 #include <sofa/core/topology/BaseTopologyObject.h>
 #include <sofa/core/topology/BaseMeshTopology.h>
-#include <sofa/core/behavior/LinearSolver.h>
-#include <sofa/core/behavior/OdeSolver.h>
-#include <sofa/core/behavior/ConstraintSolver.h>
 #include <sofa/core/collision/Pipeline.h>
 #include <sofa/core/loader/BaseLoader.h>
 #include <sofa/simulation/MutationListener.h>
 #include <sofa/simulation/VisitorScheduler.h>
+#include <sofa/core/behavior/BaseConstraintSet.h>
 
 #include <type_traits>
 
 namespace sofa::core
 {
-    class BaseMapping;
-    class Event;
-    class CollisionModel;
+class BaseMapping;
+class Event;
+class CollisionModel;
 }
 
 namespace sofa::core::objectmodel
 {
-    class ContextObject;
-    class ConfigurationSetting;
+class ContextObject;
+class ConfigurationSetting;
 }
 
 namespace sofa::core::visual
 {
-    class Shader;
-    class VisualManager;
-    class VisualModel;
-    class VisualLoop;
+class Shader;
+class VisualManager;
+class VisualModel;
+class VisualLoop;
 }
 
 namespace sofa::core::loader
 {
-    class BaseLoader;
+class BaseLoader;
 }
 
 namespace sofa::core::behavior
 {
-    class BehaviorModel;
-    class BaseMechanicalState;
-    class BaseForceField;
-    class BaseMass;
-    class BaseAnimationLoop;
+class BehaviorModel;
+class BaseMechanicalState;
+class BaseForceField;
+class BaseMass;
+class BaseAnimationLoop;
+class LinearSolver;
+class OdeSolver;
+class BaseInteractionForceField;
+class BaseProjectiveConstraintSet;
+class BaseConstraintSet;
+class ConstraintSolver;
 }
 namespace sofa
 {
@@ -210,7 +211,7 @@ public:
     /// Apply modifications to the components
     void reinit(const sofa::core::ExecParams* params);
     /// Do one step forward in time
-//    void animate(const core::ExecParams* params, SReal dt);
+    //    void animate(const core::ExecParams* params, SReal dt);
     /// Draw the objects (using visual visitors)
     void draw(sofa::core::visual::VisualParams* params);
     /// @}
@@ -271,7 +272,7 @@ public:
     template < class T, bool strong = false >
     class SequenceHold : public MultiLink<Node, T, BaseLink::FLAG_DOUBLELINK|(strong ? BaseLink::FLAG_STRONGLINK : BaseLink::FLAG_DUPLICATE)>
     {
-    public:
+        public:
         typedef MultiLink<Node, T, BaseLink::FLAG_DOUBLELINK|(strong ? BaseLink::FLAG_STRONGLINK : BaseLink::FLAG_DUPLICATE)> Inherit;
         typedef T pointed_type;
         typedef typename Inherit::DestPtr value_type;
@@ -426,7 +427,7 @@ public:
     template<class Object, class Container>
     void getNodeObjects(Container* list)
     {
-       return BaseContext::getObjects<Object, Container>(list, Local) ;
+        return BaseContext::getObjects<Object, Container>(list, Local) ;
     }
 
     /// Returns a list of object of type passed as a parameter.

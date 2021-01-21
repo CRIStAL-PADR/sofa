@@ -29,6 +29,9 @@
 #include <sofa/core/collision/ContactManager.h>
 
 #include <sofa/core/behavior/BaseAnimationLoop.h>
+#include <sofa/core/behavior/BaseInteractionForceField.h>
+#include <sofa/core/behavior/OdeSolver.h>
+#include <sofa/core/behavior/LinearSolver.h>
 
 namespace sofa::simulation::graph
 {

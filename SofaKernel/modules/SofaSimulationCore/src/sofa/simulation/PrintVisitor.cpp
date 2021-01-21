@@ -28,6 +28,11 @@
 
 #include <sofa/core/behavior/BaseMass.h>
 #include <sofa/core/BehaviorModel.h>
+#include <sofa/core/behavior/OdeSolver.h>
+#include <sofa/core/behavior/LinearSolver.h>
+#include <sofa/core/behavior/BaseForceField.h>
+#include <sofa/core/behavior/BaseInteractionForceField.h>
+#include <sofa/core/behavior/BaseProjectiveConstraintSet.h>
 
 namespace sofa
 {

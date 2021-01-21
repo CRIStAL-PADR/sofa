@@ -22,6 +22,7 @@
 #pragma once
 #include <SofaGeneralLoader/ReadState.h>
 #include <sofa/core/visual/VisualParams.h>
+#include <sofa/core/behavior/OdeSolver.h>
 #include <sofa/simulation/MechanicalVisitor.h>
 #include <sofa/simulation/UpdateMappingVisitor.h>
 
