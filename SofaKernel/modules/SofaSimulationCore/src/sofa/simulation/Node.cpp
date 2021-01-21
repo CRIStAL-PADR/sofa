@@ -35,6 +35,10 @@
 #include <sofa/core/objectmodel/ContextObject.h>
 #include <sofa/core/objectmodel/ConfigurationSetting.h>
 
+#include <sofa/core/visual/VisualModel.h>
+#include <sofa/core/visual/VisualManager.h>
+#include <sofa/core/visual/Shader.h>
+#include <sofa/core/visual/VisualLoop.h>
 
 #include <sofa/core/ObjectFactory.h>
 #include <sofa/helper/Factory.inl>

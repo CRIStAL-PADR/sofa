@@ -30,9 +30,6 @@
 #include <sofa/core/objectmodel/BaseNode.h>
 #include <sofa/core/objectmodel/BaseObjectDescription.h>
 #include <sofa/core/BehaviorModel.h>
-#include <sofa/core/visual/VisualModel.h>
-#include <sofa/core/visual/VisualManager.h>
-#include <sofa/core/visual/Shader.h>
 #include <sofa/core/behavior/MechanicalState.h>
 #include <sofa/core/Mapping.h>
 #include <sofa/core/behavior/ForceField.h>
@@ -47,7 +44,6 @@
 #include <sofa/core/behavior/OdeSolver.h>
 #include <sofa/core/behavior/ConstraintSolver.h>
 #include <sofa/core/behavior/BaseAnimationLoop.h>
-#include <sofa/core/visual/VisualLoop.h>
 #include <sofa/core/collision/Pipeline.h>
 #include <sofa/core/loader/BaseLoader.h>
 #include <sofa/simulation/MutationListener.h>
@@ -66,6 +62,14 @@ namespace sofa::core::objectmodel
 {
     class ContextObject;
     class ConfigurationSetting;
+}
+
+namespace sofa::core::visual
+{
+    class Shader;
+    class VisualManager;
+    class VisualModel;
+    class VisualLoop;
 }
 
 namespace sofa

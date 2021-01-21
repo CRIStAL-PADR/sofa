@@ -20,6 +20,7 @@
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
 #include <sofa/simulation/VisualVisitor.h>
+#include <sofa/core/visual/Shader.h>
 #include <sofa/core/visual/VisualParams.h>
 #include <sofa/helper/AdvancedTimer.h>
 

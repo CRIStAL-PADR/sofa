@@ -24,6 +24,7 @@
 #include <sofa/simulation/Node.h>
 #include <sofa/core/CollisionModel.h>
 #include <sofa/core/objectmodel/ContextObject.h>
+#include <sofa/core/visual/VisualModel.h>
 
 namespace sofa
 {
