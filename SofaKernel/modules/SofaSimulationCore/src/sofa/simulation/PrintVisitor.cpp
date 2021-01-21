@@ -31,11 +31,11 @@
 #include <sofa/core/behavior/OdeSolver.h>
 #include <sofa/core/behavior/LinearSolver.h>
 #include <sofa/core/behavior/BaseForceField.h>
+#include <sofa/core/behavior/BaseConstraintSet.h>
 #include <sofa/core/behavior/BaseInteractionForceField.h>
 #include <sofa/core/behavior/BaseProjectiveConstraintSet.h>
 #include <sofa/core/topology/Topology.h>
 #include <sofa/core/collision/Pipeline.h>
-
 namespace sofa
 {
 

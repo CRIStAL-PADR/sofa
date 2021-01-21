@@ -23,6 +23,7 @@
 #define SOFA_COMPONENT_MISC_WRITESTATE_H
 #include <SofaExporter/config.h>
 
+#include <sofa/core/objectmodel/DataFileName.h>
 #include <sofa/core/behavior/ForceField.h>
 #include <sofa/core/behavior/BaseMechanicalState.h>
 #include <sofa/core/objectmodel/BaseObject.h>

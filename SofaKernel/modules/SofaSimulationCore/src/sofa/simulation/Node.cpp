@@ -60,6 +60,11 @@
 
 #include <sofa/core/collision/Pipeline.h>
 
+#include <sofa/core/Mapping.h>
+#include <sofa/core/loader/BaseLoader.h>
+#include <sofa/simulation/MutationListener.h>
+#include <sofa/core/behavior/BaseConstraintSet.h>
+
 #include <sofa/core/ObjectFactory.h>
 #include <sofa/helper/Factory.inl>
 #include <sofa/helper/cast.h>

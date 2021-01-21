@@ -29,10 +29,7 @@
 // moved from GNode (27/04/08)
 #include <sofa/core/objectmodel/BaseNode.h>
 #include <sofa/core/objectmodel/BaseObjectDescription.h>
-#include <sofa/core/Mapping.h>
-#include <sofa/core/loader/BaseLoader.h>
-#include <sofa/simulation/MutationListener.h>
-#include <sofa/core/behavior/BaseConstraintSet.h>
+
 
 #include <type_traits>
 
@@ -88,6 +85,14 @@ namespace sofa::core::collision
 {
     class Pipeline;
 }
+
+namespace sofa::simulation
+{
+    class MutationListener;
+    class Visitor;
+    class VisitorScheduler;
+}
+
 
 namespace sofa
 {

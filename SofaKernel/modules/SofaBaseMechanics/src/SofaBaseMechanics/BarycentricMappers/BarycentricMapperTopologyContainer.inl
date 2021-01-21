@@ -23,6 +23,7 @@
 #include <SofaBaseMechanics/BarycentricMappers/BarycentricMapperTopologyContainer.h>
 
 #include <sofa/core/visual/VisualParams.h>
+#include <sofa/core/State.h>
 
 namespace sofa::component::mapping::_barycentricmappertopologycontainer_
 {
