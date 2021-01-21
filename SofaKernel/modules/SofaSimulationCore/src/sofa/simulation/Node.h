@@ -178,7 +178,7 @@ public:
     /// Sequence class to hold a list of objects. Public access is only readonly using an interface similar to std::vector (size/[]/begin/end).
     /// UPDATE: it is now an alias for the Link pointer container
     template < class T, bool strong = false >
-    class Sequence : public MultiLink<Node, T, BaseLink::FLAG_DOUBLELINK|(strong ? BaseLink::FLAG_STRONGLINK : BaseLink::FLAG_DUPLICATE)>
+    class SequenceHold : public MultiLink<Node, T, BaseLink::FLAG_DOUBLELINK|(strong ? BaseLink::FLAG_STRONGLINK : BaseLink::FLAG_DUPLICATE)>
     {
     public:
         typedef MultiLink<Node, T, BaseLink::FLAG_DOUBLELINK|(strong ? BaseLink::FLAG_STRONGLINK : BaseLink::FLAG_DUPLICATE)> Inherit;
@@ -190,7 +190,7 @@ public:
         typedef const_iterator iterator;
         typedef const_reverse_iterator reverse_iterator;
 
-        Sequence(const BaseLink::InitLink<Node>& init)
+        SequenceHold(const BaseLink::InitLink<Node>& init)
             : Inherit(init)
         {
         }
@@ -211,45 +211,82 @@ public:
         }
     };
 
+    template <class T>
+    class Sequence
+    {
+    private:
+        sofa::helper::stable_vector<T*> items;
+    public:
+        typedef T pointed_type;
+        typedef T* value_type;
+        typedef typename sofa::helper::stable_vector<T*>::const_iterator iterator;
+        typedef typename sofa::helper::stable_vector<T*>::const_iterator const_iterator;
+        typedef typename sofa::helper::stable_vector<T*>::const_reverse_iterator reverse_iterator;
+
+        // DEPRECATED: replace getSize) with "size"
+        size_t getSize(){ return items.size(); }
+        size_t size(){ return items.size(); }
+
+        void add(value_type value) { items.push_back(value); }
+        void remove(value_type value) { items.erase(std::remove(items.begin(), items.end(), value),end()); }
+        bool empty()const{return items.empty(); }
+
+        value_type operator[](size_t index) const { return items[index]; }
+        value_type get(size_t index) const { return items[index]; }
+
+        // DEPRECATED: replace getValue() with direct access to operator[]
+        auto& getValue(){ return items; }
+
+        //iterator begin() const { return items.begin(); }
+        //iterator end() const { return items.end(); }
+        const_iterator begin() const { return items.cbegin(); }
+        const_iterator end() const { return items.cend(); }
+        reverse_iterator rbegin() const { return items.crbegin(); }
+        reverse_iterator rend() const { return items.crend(); }
+    };
+
     /// Class to hold 0-or-1 object. Public access is only readonly using an interface similar to std::vector (size/[]/begin/end), plus an automatic convertion to one pointer.
     /// UPDATE: it is now an alias for the Link pointer container
     template < class T >
-    class Single : public sofa::helper::fixed_array<T*, 1>
+    class Single
     {
+        T* data {nullptr};
     public:
         typedef T pointed_type;
-        size_t size(){ return this->at(0)!=nullptr; }
-        operator T*() const { return this->at(0); }
-        operator bool() const { return this->at(0)!=nullptr; }
-        void set(T* data){this->elems[0] = data;}
-        T* get(){ return this->elems[0];}
-        void remove(T* data)
+        typedef T* value_type;
+        typedef value_type* iterator;
+
+        value_type& operator[](const size_t){ return data; }
+        size_t size() const { return data != nullptr; }
+        bool empty() const {return size()==0;}
+        operator pointed_type*() { return data; }
+        operator pointed_type*() const { return data; }
+        operator const pointed_type*() const { return data; }
+
+        operator bool() const { return data != nullptr; }
+        void set(value_type newData){ data = newData ;}
+        value_type get(){ return data;}
+        void remove(value_type fdata)
         {
-            if(this->elems[0]==data)
-            {
-                this->elems[0] = nullptr;
-            }
+            if(data==fdata)
+                data=nullptr;
         }
-        T* operator->() const
-        {
-            return this->elems[0];
+        value_type operator->() const { return data; }
+        iterator begin(){ return &data; }
+        iterator end(){
+            if(data==nullptr)
+                return (&data);
+            else
+                return (&data)+1;
         }
-//        T& operator*() const
-//        {
-//            return *this->get();
-//        }
-//        operator T*() const
-//        {
-//            return this->get();
-//        }
     };
 
-    Sequence<Node,true> child;
-    typedef Sequence<Node,true>::iterator ChildIterator;
+    SequenceHold<Node,true> child;
+    typedef SequenceHold<Node,true>::iterator ChildIterator;
 
-    Sequence<sofa::core::objectmodel::BaseObject,true> object;
-    typedef Sequence<sofa::core::objectmodel::BaseObject,true>::iterator ObjectIterator;
-    typedef Sequence<sofa::core::objectmodel::BaseObject,true>::reverse_iterator ObjectReverseIterator;
+    SequenceHold<sofa::core::objectmodel::BaseObject,true> object;
+    typedef SequenceHold<sofa::core::objectmodel::BaseObject,true>::iterator ObjectIterator;
+    typedef SequenceHold<sofa::core::objectmodel::BaseObject,true>::reverse_iterator ObjectReverseIterator;
 
     Single<sofa::core::behavior::BaseAnimationLoop> animationManager;
     Single<sofa::core::visual::VisualLoop> visualLoop;

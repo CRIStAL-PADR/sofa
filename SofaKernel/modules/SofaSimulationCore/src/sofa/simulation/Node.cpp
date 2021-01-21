@@ -62,20 +62,23 @@ public:
         setName(name);
         setHelp(help);
     }
-    virtual void getOwner()const{}
-    virtual void getDest(){}
-    const BaseClass* getDestClass() const { return nullptr; }
-    const BaseClass* getOwnerClass() const { return nullptr; }
+
+    const BaseClass* getDestClass() const { return T::pointed_type::GetClass(); }
+    const BaseClass* getOwnerClass() const { return Node::GetClass(); }
     virtual void clear(){}
-    virtual bool contains(Base*){ return false; }
-    virtual size_t size() const { return container[0]!=nullptr; }
+    virtual bool contains(Base* item){ return container[0] == item ; }
+    virtual size_t size() const { return container.size(); }
     virtual Base* _doGet_(const size_t index) const { return container[index]; }
-    virtual bool _doAdd_(Base* target, const std::string&) { container[0] = dynamic_cast<typename T::pointed_type*>(target); return true; }
-    virtual bool _doRemoveAt_(size_t) {  container[0]=nullptr; return true; }
-    virtual bool _doSet_(Base* target, const size_t index) { container[index] = dynamic_cast<typename T::pointed_type*>(const_cast<Base*>(target)); return true; }
+    virtual bool _doAdd_(Base* target, const std::string&) { container.set(dynamic_cast<typename T::pointed_type*>(target)); return true; }
+    virtual bool _doRemoveAt_(size_t) { return true; }
+    virtual bool _doSet_(Base* target, const size_t index) { set(dynamic_cast<typename T::pointed_type*>(const_cast<Base*>(target))); return true; }
     virtual bool _doSet_(Base* target, const std::string&, size_t index=0) { container[index] =dynamic_cast<typename T::pointed_type*>(target); return true; }
     virtual bool _isCompatibleOwnerType_(const Base* b) const { return dynamic_cast<typename T::pointed_type*>(const_cast<Base*>(b))==nullptr; }
-    virtual std::string _doGetPath_(const size_t) const { return ""; }
+    virtual std::string _doGetPath_(const size_t index) const {
+        if(container[index]==nullptr)
+            return "";
+        return container[index]->getPathName();
+    }
 };
 
 Node::Node(const std::string& name)
@@ -83,28 +86,6 @@ Node::Node(const std::string& name)
     , sofa::core::objectmodel::Context()
     , child(initLink("child", "Child nodes"))
     , object(initLink("object","All objects attached to this node"))
-    , behaviorModel(initLink("behaviorModel", "The BehaviorModel attached to this node (only valid for root node)"))
-    , mapping(initLink("mapping", "The (non-mechanical) Mapping(s) attached to this node (only valid for root node)"))
-
-    , solver(initLink("odeSolver", "The OdeSolver(s) attached to this node (controlling the mechanical time integration of this branch)"))
-    , constraintSolver(initLink("constraintSolver", "The ConstraintSolver(s) attached to this node"))
-    , linearSolver(initLink("linearSolver", "The LinearSolver(s) attached to this node"))
-
-    , topologyObject(initLink("topologyObject", "The topology-related objects attached to this node"))
-    , forceField(initLink("forceField", "The (non-interaction) ForceField(s) attached to this node"))
-    , interactionForceField(initLink("interactionForceField", "The InteractionForceField(s) attached to this node"))
-    , projectiveConstraintSet(initLink("projectiveConstraintSet", "The ProjectiveConstraintSet(s) attached to this node"))
-    , constraintSet(initLink("constraintSet", "The ConstraintSet(s) attached to this node"))
-    , contextObject(initLink("contextObject", "The ContextObject(s) attached to this node"))
-    , configurationSetting(initLink("configurationSetting", "The ConfigurationSetting(s) attached to this node"))
-
-    , shaders(initLink("shaders", "The shaders attached to this node"))
-    , visualModel(initLink("visualModel", "The VisualModel(s) attached to this node"))
-    , visualManager(initLink("visualManager", "The VisualManager(s) attached to this node"))
-
-    , collisionModel(initLink("collisionModel", "The CollisionModel(s) attached to this node"))
-    , unsorted(initLink("unsorted", "The remaining objects attached to this node"))
-
     , debug_(false)
     , initialized(false)
     , depend(initData(&depend,"depend","Dependencies between the nodes.\nname 1 name 2 name3 name4 means that name1 must be initialized before name2 and name3 before name4"))
@@ -123,6 +104,26 @@ Node::Node(const std::string& name)
     addLink(new LinkContainer(mechanicalMapping, "mechanicalMapping", "The MechanicalMapping attached to this node"));
     addLink(new LinkContainer(mass, "mass", "The Mass attached to this node"));
     addLink(new LinkContainer(collisionPipeline, "collisionPipeline", "The collision Pipeline attached to this node"));
+
+//    , behaviorModel(initLink("behaviorModel", "The BehaviorModel attached to this node (only valid for root node)"))
+//    , mapping(initLink("mapping", "The (non-mechanical) Mapping(s) attached to this node (only valid for root node)"))
+//    , solver(initLink("odeSolver", "The OdeSolver(s) attached to this node (controlling the mechanical time integration of this branch)"))
+//    , constraintSolver(initLink("constraintSolver", "The ConstraintSolver(s) attached to this node"))
+//    , linearSolver(initLink("linearSolver", "The LinearSolver(s) attached to this node"))
+//    , topologyObject(initLink("topologyObject", "The topology-related objects attached to this node"))
+//    , forceField(initLink("forceField", "The (non-interaction) ForceField(s) attached to this node"))
+//    , interactionForceField(initLink("interactionForceField", "The InteractionForceField(s) attached to this node"))
+//    , projectiveConstraintSet(initLink("projectiveConstraintSet", "The ProjectiveConstraintSet(s) attached to this node"))
+//    , constraintSet(initLink("constraintSet", "The ConstraintSet(s) attached to this node"))
+//    , contextObject(initLink("contextObject", "The ContextObject(s) attached to this node"))
+//    , configurationSetting(initLink("configurationSetting", "The ConfigurationSetting(s) attached to this node"))
+//    , shaders(initLink("shaders", "The shaders attached to this node"))
+//    , visualModel(initLink("visualModel", "The VisualModel(s) attached to this node"))
+//    , visualManager(initLink("visualManager", "The VisualManager(s) attached to this node"))
+//    , collisionModel(initLink("collisionModel", "The CollisionModel(s) attached to this node"))
+//    , unsorted(initLink("unsorted", "The remaining objects attached to this node"))
+
+
 }
 
 

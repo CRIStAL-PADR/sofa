@@ -742,8 +742,8 @@ struct Assembly_test : public CompliantSolver_test
         pointPairMapping->addInputModel(string1->mechanicalState);
         pointPairMapping->addInputModel(particleOnRigid->mechanicalState);
         pointPairMapping->addOutputModel(pointPair->mechanicalState);
-        pointPairMapping->addPoint(string1->mechanicalState,n-1 );     // last particle
-        pointPairMapping->addPoint(particleOnRigid->mechanicalState,0 );
+        pointPairMapping->addPoint(string1->mechanicalState.get(),n-1 );     // last particle
+        pointPairMapping->addPoint(particleOnRigid->mechanicalState.get(),0 );
 
         //  ...========  Distance between the particles in pointPair
         Node::SPtr extension = pointPair->createChild("extension");
