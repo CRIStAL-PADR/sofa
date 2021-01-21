@@ -32,7 +32,6 @@
 #include <sofa/core/objectmodel/ConfigurationSetting.h>
 #include <sofa/core/BehaviorModel.h>
 #include <sofa/core/objectmodel/ContextObject.h>
-#include <sofa/core/CollisionModel.h>
 #include <sofa/core/visual/VisualModel.h>
 #include <sofa/core/visual/VisualManager.h>
 #include <sofa/core/visual/Shader.h>
@@ -53,11 +52,17 @@
 #include <sofa/core/visual/VisualLoop.h>
 #include <sofa/core/collision/Pipeline.h>
 #include <sofa/core/loader/BaseLoader.h>
-#include <sofa/core/objectmodel/Event.h>
 #include <sofa/simulation/MutationListener.h>
 #include <sofa/simulation/VisitorScheduler.h>
 
 #include <type_traits>
+
+namespace sofa::core
+{
+    class BaseMapping;
+    class Event;
+    class CollisionModel;
+}
 
 namespace sofa
 {

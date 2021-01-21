@@ -512,7 +512,7 @@ protected:
     /// Returns the not resolved path at the provided index.
     std::string _doGetPath_(const std::size_t index) const override
     {
-        assert(index < m_value.getSize() );
+        assert(index < m_value.size() );
         std::string path;
         const ValueType& value = m_value[index];
         TraitsValueType::path(value, path);

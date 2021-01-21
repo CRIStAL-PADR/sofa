@@ -22,6 +22,7 @@
 #define SOFA_SIMULATION_MECHANICALVISITOR_CPP
 #include <sofa/simulation/MechanicalVisitor.h>
 #include <sofa/simulation/Node.h>
+#include <sofa/core/CollisionModel.h>
 #include <iostream>
 
 namespace sofa
