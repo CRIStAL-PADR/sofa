@@ -209,10 +209,11 @@ public:
 
     virtual void readFromData()
     {
-        if(!this->getData()->isRequired() && !this->getData()->isSet())
+        auto data=this->getData();
+        if(data->isRequired() && !(data->isSet() || data->hasDefaultValue()) )
             container.setNoValue();
         else
-            container.readFromData(this->getData()->getValue());
+            container.readFromData(data->getValue());
     }
 
     virtual void setReadOnly(bool readOnly)
