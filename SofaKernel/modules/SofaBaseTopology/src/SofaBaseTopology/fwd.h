@@ -19,54 +19,13 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
-#define SOFA_CORE_OBJECTMODEL_DATA_CPP
+#pragma once
 
-#include <sofa/core/objectmodel/Data.h>
-
-namespace sofa
+#include <SofaBaseTopology/config.h>
+#include <iosfwd>
+namespace sofa::component::topology
 {
-
-namespace core
-{
-
-namespace objectmodel
-{
-
-/// Specialization for reading strings
-template<>
-bool SOFA_CORE_API Data<std::string>::read( const std::string& str )
-{
-    setValue(str);
-    return true;
+class TetrahedronSetTopologyContainer;
+SOFA_SOFABASETOPOLOGY_API std::ostream& operator<< (std::ostream& out, const TetrahedronSetTopologyContainer& t);
+SOFA_SOFABASETOPOLOGY_API std::istream& operator>>(std::istream& in, TetrahedronSetTopologyContainer& t);
 }
-
-/// Specialization for reading booleans
-template<>
-bool SOFA_CORE_API Data<bool>::read( const std::string& str )
-{
-    if (str.empty())
-        return false;
-    bool val;
-    if (str[0] == 'T' || str[0] == 't')
-        val = true;
-    else if (str[0] == 'F' || str[0] == 'f')
-        val = false;
-    else if ((str[0] >= '0' && str[0] <= '9') || str[0] == '-')
-        val = (atoi(str.c_str()) != 0);
-    else
-        return false;
-    setValue(val);
-    return true;
-}
-
-template class SOFA_CORE_API Data< std::string >;
-template class SOFA_CORE_API Data< sofa::helper::vector<std::string> >;
-template class SOFA_CORE_API Data< bool >;
-
-} // objectmodel
-
-} // core
-
-} // sofa
-
-
