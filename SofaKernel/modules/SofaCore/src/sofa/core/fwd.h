@@ -4,9 +4,13 @@
 
 namespace sofa::core
 {
-    class BaseMapping;
-    class ConstraintParams;
-    class ExecParams;
+class ExecParams;
+class ConstraintParams;
+class BaseMapping;
+class CollisionModel;
+class CollisionElementIterator;
+class ConstraintParams;
+class ExecParams;
 }
 
 namespace sofa::core::objectmodel
@@ -39,6 +43,9 @@ class BaseConstraint;
 class BaseConstraintSet;
 class ConstraintSolver;
 class ConstraintResolution;
+
+template<class T>
+class MechanicalState;
 }
 
 namespace sofa::core::topology
@@ -49,7 +56,6 @@ SOFA_CORE_API std::istream& operator>> ( std::istream& in, sofa::core::topology:
 SOFA_CORE_API std::istream& operator>> ( std::istream& in, const sofa::core::topology::TopologyChange*& );
 
 class Topology;
-class TopologyChange;
 }
 
 namespace sofa::core::visual
@@ -70,4 +76,10 @@ namespace sofa::component::topology
 class TetrahedronSetTopologyContainer;
 SOFA_CORE_API std::ostream& operator<< (std::ostream& out, const TetrahedronSetTopologyContainer& t);
 SOFA_CORE_API std::istream& operator>>(std::istream& in, TetrahedronSetTopologyContainer& t);
+}
+
+namespace sofa::core::objectmodel::basecontext
+{
+SOFA_CORE_API SReal getDt(sofa::core::objectmodel::BaseContext* context);
+SOFA_CORE_API SReal getTime(sofa::core::objectmodel::BaseContext* context);
 }
