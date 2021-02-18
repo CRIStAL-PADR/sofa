@@ -19,34 +19,17 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
-#include <sofa/core/objectmodel/BaseClass.h>
+#include <sofa/core/objectmodel/ClassInfoID.h>
+#include <sofa/core/objectmodel/ClassInfoRepository.h>
 
-namespace sofa
+namespace sofa::core::objectmodel
 {
 
-namespace core
+int ClassInfoId::GetNewId(const std::type_info& nfo)
 {
-
-namespace objectmodel
-{
-
-BaseClass* DeprecatedBaseClass::GetSingleton()
-{
-    static DeprecatedBaseClass dpc;
-    return &dpc;
+    return ClassInfoRegistry::AllocateNewTypeId(nfo);
 }
 
-DeprecatedBaseClass::DeprecatedBaseClass()
-{
-    namespaceName= "DeprecatedBaseClass::namespace";
-    className = "DeprecatedBaseClass::classname";
-    templateName = "DeprecatedBaseClass::templatename";
-    shortName = "DeprecatedBaseClass::shortname";
-}
+ClassInfoId::ClassInfoId(int id_, const std::type_info& nfo_) : id(id_), nfo(nfo_) {}
 
-} // namespace objectmodel
-
-} // namespace core
-
-} // namespace sofa
-
+} /// namespace sofa::defaulttype

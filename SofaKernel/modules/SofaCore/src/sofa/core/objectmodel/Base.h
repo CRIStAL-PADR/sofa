@@ -27,6 +27,7 @@
 #include <sofa/core/objectmodel/Link.h>                      //NOTE-FOR-SELF: Remove
 #include <sofa/core/objectmodel/BaseClass.h>
 #include <sofa/core/objectmodel/BaseObjectDescription.h>     //NOTE-FOR-SELF: Remove
+#include <sofa/core/objectmodel/ClassInfoID.h>
 #include <sofa/core/objectmodel/Tag.h>
 #include <list>
 #include <sofa/core/sptr.h>
@@ -129,9 +130,10 @@ public:
 
     using SPtr = sptr<Base>;
     
-    using MyClass = TClass< Base, void >;
-    static const BaseClass* GetClass() { return MyClass::get(); }
-    virtual const BaseClass* getClass() const { return GetClass(); }
+    typedef void ParentClasses; /// There is no parent.
+    static const BaseClass* GetClassInfo(const ClassInfoId&);
+    static const BaseClass* GetClass() { return GetClassInfo(sofa::core::objectmodel::ClassInfoId::GetClassId<Base>()); }
+    virtual const BaseClass* getClass() const { return GetClassInfo(sofa::core::objectmodel::ClassInfoId::GetClassId<Base>()); }
 
 protected:
     /// Constructor cannot be called directly

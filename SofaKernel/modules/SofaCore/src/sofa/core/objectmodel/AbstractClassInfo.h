@@ -19,34 +19,39 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
-#include <sofa/core/objectmodel/BaseClass.h>
+#pragma once
 
-namespace sofa
+#include <sofa/core/config.h>
+#include <sofa/core/fwd.h>
+#include <vector>
+#include <string>
+namespace sofa::core::objectmodel
 {
 
-namespace core
+class SOFA_CORE_API AbstractClassInfo
 {
 
-namespace objectmodel
-{
+protected:
+    AbstractClassInfo(){}
+    virtual ~AbstractClassInfo(){}
 
-BaseClass* DeprecatedBaseClass::GetSingleton()
-{
-    static DeprecatedBaseClass dpc;
-    return &dpc;
-}
+public:
+    std::string compilationTarget;
+    std::string namespaceName;
+    std::string typeName;
+    std::string className;
+    std::string templateName;
+    std::string shortName;
+    std::vector<const AbstractClassInfo*> parents;
 
-DeprecatedBaseClass::DeprecatedBaseClass()
-{
-    namespaceName= "DeprecatedBaseClass::namespace";
-    className = "DeprecatedBaseClass::classname";
-    templateName = "DeprecatedBaseClass::templatename";
-    shortName = "DeprecatedBaseClass::shortname";
-}
+    /// returns true iff c is a parent class of this
+    bool hasParent(const AbstractClassInfo* c) const;
 
-} // namespace objectmodel
+    /// returns true iff a parent class of this is named parentClassName
+    bool hasParent(const std::string& parentClassName) const;
 
-} // namespace core
+    virtual Base* dynamicCast(Base* obj) const = 0;
+    virtual bool isInstance(Base* obj) const = 0;
+};
 
-} // namespace sofa
-
+} ///sofa::core::objectmodel

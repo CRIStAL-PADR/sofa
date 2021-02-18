@@ -19,34 +19,42 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
-#include <sofa/core/objectmodel/BaseClass.h>
+#pragma once
+#include <sofa/core/config.h>
+#include <typeinfo>
 
-namespace sofa
+namespace sofa::core::objectmodel
 {
 
-namespace core
+/** ************************************************************************
+ * @brief Generates unique id for class.
+ *
+ * Compared to type_info.hash_code() this version is guaranteed to be in
+ * constant time
+ *
+ * The common use case is get the type id to access a full AbstractTypeInfo from
+ * the TypeInfoRegistry.
+ * Example:
+ *      ClassInfoId& shortinfo = ClassInfoId::getClassId<double>();
+ *      AbstractClassInfo* info = ClassInfoRegistry::Get(shortinfo.id);
+ *      info->getName()
+ *****************************************************************************/
+class SOFA_CORE_API ClassInfoId
 {
+public:
+    template<class T>
+    static const ClassInfoId& GetClassId()
+    {
+        static ClassInfoId typeId(ClassInfoId::GetNewId(typeid(T)), typeid(T));
+        return typeId;
+    }
 
-namespace objectmodel
-{
+    sofa::Index id;
+    const std::type_info& nfo;
 
-BaseClass* DeprecatedBaseClass::GetSingleton()
-{
-    static DeprecatedBaseClass dpc;
-    return &dpc;
-}
+private:
+    ClassInfoId(int id_, const std::type_info& nfo);
+    static int GetNewId(const std::type_info& nfo);
+};
 
-DeprecatedBaseClass::DeprecatedBaseClass()
-{
-    namespaceName= "DeprecatedBaseClass::namespace";
-    className = "DeprecatedBaseClass::classname";
-    templateName = "DeprecatedBaseClass::templatename";
-    shortName = "DeprecatedBaseClass::shortname";
-}
-
-} // namespace objectmodel
-
-} // namespace core
-
-} // namespace sofa
-
+} /// namespace sofa::defaulttype

@@ -107,6 +107,10 @@ set(HEADER_FILES
     ${SRC_ROOT}/objectmodel/BaseObject.h
     ${SRC_ROOT}/objectmodel/BaseObjectDescription.h
     ${SRC_ROOT}/objectmodel/ClassInfo.h
+    ${SRC_ROOT}/objectmodel/AbstractClassInfo.h
+    ${SRC_ROOT}/objectmodel/ClassInfoID.h
+    ${SRC_ROOT}/objectmodel/ClassInfoFactory.h
+    ${SRC_ROOT}/objectmodel/ClassInfoRepository.h
     ${SRC_ROOT}/objectmodel/ComponentState.h
     ${SRC_ROOT}/objectmodel/ConfigurationSetting.h
     ${SRC_ROOT}/objectmodel/Context.h
@@ -215,6 +219,11 @@ set(SOURCE_FILES
     ${SRC_ROOT}/objectmodel/BaseObject.cpp
     ${SRC_ROOT}/objectmodel/BaseObjectDescription.cpp
     ${SRC_ROOT}/objectmodel/ClassInfo.cpp
+    ${SRC_ROOT}/objectmodel/AbstractClassInfo.cpp
+    ${SRC_ROOT}/objectmodel/ClassInfoID.cpp
+    ${SRC_ROOT}/objectmodel/ClassInfo_T.cpp
+    ${SRC_ROOT}/objectmodel/ClassInfoFactory.cpp
+    ${SRC_ROOT}/objectmodel/ClassInfoRepository.cpp
     ${SRC_ROOT}/objectmodel/ComponentState.cpp
     ${SRC_ROOT}/objectmodel/ConfigurationSetting.cpp
     ${SRC_ROOT}/objectmodel/ContextObject.cpp

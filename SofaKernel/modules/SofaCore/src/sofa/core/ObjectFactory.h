@@ -23,6 +23,8 @@
 #define SOFA_CORE_OBJECTFACTORY_H
 
 #include <sofa/core/objectmodel/BaseObject.h>
+#include <sofa/core/objectmodel/ClassInfoRepository.h>
+#include <sofa/core/objectmodel/ClassInfoFactory.h>
 #include <sofa/helper/NameDecoder.h>
 
 namespace sofa
@@ -292,6 +294,9 @@ public:
     template<class RealObject>
     RegisterObject& add(bool defaultTemplate=false)
     {
+        sofa::core::objectmodel::ClassInfoRegistry::Set(sofa::core::objectmodel::ClassInfoId::GetClassId<RealObject>(),
+                                                        sofa::core::objectmodel::ClassInfoFactory<RealObject>::get(),
+                                                        sofa_tostring(SOFA_TARGET));
         std::string classname = sofa::helper::NameDecoder::getClassName<RealObject>();
         std::string templatename = sofa::helper::NameDecoder::getTemplateName<RealObject>();
 

@@ -23,6 +23,7 @@
 #include <sofa/core/objectmodel/Base.h>
 #include <sofa/helper/Factory.h>
 #include <sofa/core/ObjectFactory.h>
+#include <sofa/core/objectmodel/ClassInfoRepository.h>
 #include <sofa/core/PathResolver.h>
 using sofa::core::PathResolver;
 
@@ -83,6 +84,11 @@ Base::Base()
 
 Base::~Base()
 {
+}
+
+const BaseClass* Base::GetClassInfo(const ClassInfoId& cid)
+{
+    return sofa::core::objectmodel::ClassInfoRegistry::Get(cid);
 }
 
 void Base::addRef()
