@@ -221,7 +221,6 @@ set(SOURCE_FILES
     ${SRC_ROOT}/objectmodel/ClassInfo.cpp
     ${SRC_ROOT}/objectmodel/AbstractClassInfo.cpp
     ${SRC_ROOT}/objectmodel/ClassInfoID.cpp
-    ${SRC_ROOT}/objectmodel/ClassInfo_T.cpp
     ${SRC_ROOT}/objectmodel/ClassInfoFactory.cpp
     ${SRC_ROOT}/objectmodel/ClassInfoRepository.cpp
     ${SRC_ROOT}/objectmodel/ComponentState.cpp
