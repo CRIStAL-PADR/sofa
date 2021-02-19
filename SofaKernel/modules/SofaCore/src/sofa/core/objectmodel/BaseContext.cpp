@@ -104,7 +104,7 @@ BaseContext* BaseContext::getRootContext() const
 /// Generic object access, possibly searching up or down from the current context
 ///
 /// Note that the template wrapper method should generally be used to have the correct return type,
-void* BaseContext::getObject(const ClassInfo& /*class_info*/, SearchDirection /*dir*/) const
+void* BaseContext::getObject(const ClassInfoId& /*class_info*/, SearchDirection /*dir*/) const
 {
     msg_warning("calling unimplemented getObject method");
     return nullptr;
@@ -113,7 +113,7 @@ void* BaseContext::getObject(const ClassInfo& /*class_info*/, SearchDirection /*
 /// Generic object access, given a set of required tags, possibly searching up or down from the current context
 ///
 /// Note that the template wrapper method should generally be used to have the correct return type,
-void* BaseContext::getObject(const ClassInfo& /*class_info*/, const TagSet& /*tags*/, SearchDirection /*dir*/) const
+void* BaseContext::getObject(const ClassInfoId& /*class_info*/, const TagSet& /*tags*/, SearchDirection /*dir*/) const
 {
     msg_warning("calling unimplemented getObject method");
     return nullptr;
@@ -122,7 +122,7 @@ void* BaseContext::getObject(const ClassInfo& /*class_info*/, const TagSet& /*ta
 /// Generic object access, given a path from the current context
 ///
 /// Note that the template wrapper method should generally be used to have the correct return type,
-void* BaseContext::getObject(const ClassInfo& /*class_info*/, const std::string& /*path*/) const
+void* BaseContext::getObject(const ClassInfoId& /*class_info*/, const std::string& /*path*/) const
 {
     msg_warning("calling unimplemented getObject method");
     return nullptr;
@@ -131,7 +131,7 @@ void* BaseContext::getObject(const ClassInfo& /*class_info*/, const std::string&
 /// Generic list of objects access, possibly searching up or down from the current context
 ///
 /// Note that the template wrapper method should generally be used to have the correct return type,
-void BaseContext::getObjects(const ClassInfo& /*class_info*/, GetObjectsCallBack& /*container*/, SearchDirection /*dir*/) const
+void BaseContext::getObjects(const ClassInfoId& /*class_info*/, GetObjectsCallBack& /*container*/, SearchDirection /*dir*/) const
 {
     msg_warning("calling unimplemented getObject method");
 }
@@ -139,7 +139,7 @@ void BaseContext::getObjects(const ClassInfo& /*class_info*/, GetObjectsCallBack
 /// Generic list of objects access, given a set of required tags, possibly searching up or down from the current context
 ///
 /// Note that the template wrapper method should generally be used to have the correct return type,
-void BaseContext::getObjects(const ClassInfo& /*class_info*/, GetObjectsCallBack& /*container*/, const TagSet& /*tags*/, SearchDirection /*dir*/) const
+void BaseContext::getObjects(const ClassInfoId& /*class_info*/, GetObjectsCallBack& /*container*/, const TagSet& /*tags*/, SearchDirection /*dir*/) const
 {
     msg_error("calling unimplemented getObject method");
 }

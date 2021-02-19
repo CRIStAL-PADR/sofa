@@ -36,7 +36,14 @@ template<class T>
 class ClassInfoImpl : public AbstractClassInfo
 {
 public:
-    Base* dynamicCast(Base* obj) const override
+    ClassInfoImpl() : AbstractClassInfo(&typeid(T)) {}
+
+    Base* dynamicCastToBase(Base* obj) const override
+    {
+        return dynamic_cast<T*>(obj);
+    };
+
+    void* dynamicCast(Base* obj) const override
     {
         return dynamic_cast<T*>(obj);
     };

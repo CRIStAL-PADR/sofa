@@ -57,24 +57,27 @@ namespace sofa::core::objectmodel
 class NameOnlyClassInfo : public AbstractClassInfo
 {
 public:
-    NameOnlyClassInfo(std::string className_, std::string typeName_)
+    NameOnlyClassInfo(std::string className_, std::string typeName_) : AbstractClassInfo(&typeid(NameOnlyClassInfo))
     {
         className = className_;
         typeName = typeName_;
     }
-    Base* dynamicCast(Base *) const override{return nullptr;}
+
+    Base* dynamicCastToBase(Base *) const override{return nullptr;}
+    void* dynamicCast(Base *) const override{return nullptr;}
     bool isInstance(Base *) const override{return false;}
 };
 
 class NoClassInfo : public AbstractClassInfo
 {
 public:
-    NoClassInfo()
+    NoClassInfo() : AbstractClassInfo(&typeid(NoClassInfo))
     {
         className = "MissingClassInfo";
         typeName = "MissingClassInfo";
     }
-    Base* dynamicCast(Base *) const override{return nullptr;}
+    Base* dynamicCastToBase(Base *) const override{return nullptr;}
+    void* dynamicCast(Base *) const override{return nullptr;}
     bool isInstance(Base *) const override{return false;}
 
     static AbstractClassInfo* GetInstance(){ static NoClassInfo instance; return &instance; }
@@ -135,7 +138,7 @@ int ClassInfoRegistry::Set(const ClassInfoId& tid, AbstractClassInfo* info, cons
     auto& typeinfos = getStorage();
     sofa::Index id = tid.id;
 
-    msg_info("ClassInfoRegistry") << " Trying to register '"<< info->className << "/" << tid.nfo.name() << "' at index " << id << "";
+    //msg_info("ClassInfoRegistry") << " Trying to register '"<< info->className << "/" << tid.nfo.name() << "' at index " << id << "";
 
     info->compilationTarget = compilationTarget;
     if( id >= typeinfos.size() )

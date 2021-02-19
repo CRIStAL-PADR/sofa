@@ -117,13 +117,13 @@ protected:
     template<class Model1, class Model2>
     void add_impl(ElementIntersector* intersector);
 
-    void add_impl(const objectmodel::ClassInfo& c1, const objectmodel::ClassInfo& c2, ElementIntersector* intersector);
+    void add_impl(const objectmodel::ClassInfoId& c1, const objectmodel::ClassInfoId& c2, ElementIntersector* intersector);
 
     void insert(const helper::TypeInfo& t1, const helper::TypeInfo& t2, ElementIntersector* intersector);
 
     InternalMap intersectorsMap;
     std::map< helper::TypeInfo, helper::TypeInfo > castMap;
-    std::set< const objectmodel::ClassInfo* > classes;
+    std::set< const objectmodel::ClassInfoId* > classes;
 };
 
 /** @brief Given 2 collision elements, test if an intersection is possible (for bounding volumes), or compute intersection points if any

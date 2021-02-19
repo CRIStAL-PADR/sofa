@@ -23,6 +23,7 @@
 
 #include <sofa/core/config.h>
 #include <sofa/core/fwd.h>
+#include <sofa/helper/TypeInfo.h>
 #include <vector>
 #include <string>
 namespace sofa::core::objectmodel
@@ -30,19 +31,27 @@ namespace sofa::core::objectmodel
 
 class SOFA_CORE_API AbstractClassInfo
 {
+private:
+    const std::type_info* pt;
 
 protected:
-    AbstractClassInfo(){}
+    AbstractClassInfo(const std::type_info* ti) { pt = ti; }
     virtual ~AbstractClassInfo(){}
 
 public:
-    std::string compilationTarget;
-    std::string namespaceName;
-    std::string typeName;
-    std::string className;
-    std::string templateName;
+    /// The following was from BaseClass
+    std::string compilationTarget;       ///< In which SOFA_TARGET is registered this type
+    std::string namespaceName;           ///< The c++ namespace
+    std::string typeName;                ///< The c++ typename
+    std::string className;               ///< The 'sofa' object class name (can be customized)
+    std::string templateName;            ///< The 'sofa' object's template name (can be customized)
     std::string shortName;
     std::vector<const AbstractClassInfo*> parents;
+
+    sofa::helper::TypeInfo type() const { return sofa::helper::TypeInfo(*pt); }
+
+    /// The following was from ClassInfo (to deprecate ?)
+    const std::string& name() const { return className; }
 
     /// returns true iff c is a parent class of this
     bool hasParent(const AbstractClassInfo* c) const;
@@ -50,7 +59,8 @@ public:
     /// returns true iff a parent class of this is named parentClassName
     bool hasParent(const std::string& parentClassName) const;
 
-    virtual Base* dynamicCast(Base* obj) const = 0;
+    virtual Base* dynamicCastToBase(Base* obj) const = 0;
+    virtual void* dynamicCast(Base* obj) const = 0;
     virtual bool isInstance(Base* obj) const = 0;
 };
 

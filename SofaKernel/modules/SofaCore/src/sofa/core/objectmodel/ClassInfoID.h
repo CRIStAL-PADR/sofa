@@ -21,6 +21,8 @@
 ******************************************************************************/
 #pragma once
 #include <sofa/core/config.h>
+#include <sofa/core/fwd.h>
+#include <sofa/helper/TypeInfo.h>
 #include <typeinfo>
 
 namespace sofa::core::objectmodel
@@ -49,12 +51,16 @@ public:
         return typeId;
     }
 
+    const AbstractClassInfo* getClassInfo() const;
+    const sofa::helper::TypeInfo type()const { return sofa::helper::TypeInfo(nfo); }
+
     sofa::Index id;
     const std::type_info& nfo;
-
 private:
     ClassInfoId(int id_, const std::type_info& nfo);
     static int GetNewId(const std::type_info& nfo);
 };
+
+#define classid(T) sofa::core::objectmodel::ClassInfoId::GetClassId<T>()
 
 } /// namespace sofa::defaulttype

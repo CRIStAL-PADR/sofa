@@ -32,4 +32,9 @@ int ClassInfoId::GetNewId(const std::type_info& nfo)
 
 ClassInfoId::ClassInfoId(int id_, const std::type_info& nfo_) : id(id_), nfo(nfo_) {}
 
+const AbstractClassInfo* ClassInfoId::getClassInfo() const
+{
+    return ClassInfoRegistry::Get(*this);
+}
+
 } /// namespace sofa::defaulttype

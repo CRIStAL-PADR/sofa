@@ -36,7 +36,7 @@ BaseClass* DeprecatedBaseClass::GetSingleton()
     return &dpc;
 }
 
-DeprecatedBaseClass::DeprecatedBaseClass()
+DeprecatedBaseClass::DeprecatedBaseClass() : BaseClass(&typeid(DeprecatedBaseClass))
 {
     namespaceName= "DeprecatedBaseClass::namespace";
     className = "DeprecatedBaseClass::classname";

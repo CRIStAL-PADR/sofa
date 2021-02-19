@@ -43,7 +43,8 @@ class SOFA_CORE_API DeprecatedBaseClass : public BaseClass
 public:
     DeprecatedBaseClass();
 
-    Base* dynamicCast(Base*) const override { return nullptr; }
+    Base* dynamicCastToBase(Base*) const override { return nullptr; }
+    void* dynamicCast(Base*) const override { return nullptr; }
     bool isInstance(Base*) const override { return false; }
 
     static BaseClass* GetSingleton();

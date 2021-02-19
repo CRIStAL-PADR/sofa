@@ -14,16 +14,16 @@ public:
 
 	static void fail();
 
-	void* getObject(const sofa::core::objectmodel::ClassInfo& class_info, 
+	void* getObject(const sofa::core::objectmodel::ClassInfoId& class_info, 
 					const sofa::core::objectmodel::TagSet& tags, 
 					SearchDirection dir = SearchUp) const override;
 
     Node* findCommonParent( simulation::Node* node2 ) override;
 	
-	virtual void* getObject(const sofa::core::objectmodel::ClassInfo& class_info, 
+	virtual void* getObject(const sofa::core::objectmodel::ClassInfoId& class_info, 
                             const std::string& path) const override;
 
-	void getObjects(const sofa::core::objectmodel::ClassInfo& class_info, 
+	void getObjects(const sofa::core::objectmodel::ClassInfoId& class_info, 
 							GetObjectsCallBack& container, 
 							const sofa::core::objectmodel::TagSet& tags, 
 							SearchDirection dir = SearchUp) const override;

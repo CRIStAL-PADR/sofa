@@ -31,7 +31,7 @@ class GetDownObjectsVisitor : public Visitor
 {
 public:
 
-    GetDownObjectsVisitor(const sofa::core::objectmodel::ClassInfo& class_info, DAGNode::GetObjectsCallBack& container, const sofa::core::objectmodel::TagSet& tags);
+    GetDownObjectsVisitor(const sofa::core::objectmodel::ClassInfoId& class_info, DAGNode::GetObjectsCallBack& container, const sofa::core::objectmodel::TagSet& tags);
     ~GetDownObjectsVisitor() override;
 
     Result processNodeTopDown(simulation::Node* node) override
@@ -49,12 +49,12 @@ public:
     const char* getClassName()    const override { return "GetDownObjectsVisitor"; }
 
 protected:
-    const sofa::core::objectmodel::ClassInfo& _class_info;
+    const sofa::core::objectmodel::ClassInfoId& _class_info;
     DAGNode::GetObjectsCallBack& _container;
     const sofa::core::objectmodel::TagSet& _tags;
 };
 
-GetDownObjectsVisitor::GetDownObjectsVisitor(const sofa::core::objectmodel::ClassInfo& class_info,
+GetDownObjectsVisitor::GetDownObjectsVisitor(const sofa::core::objectmodel::ClassInfoId& class_info,
                                              DAGNode::GetObjectsCallBack& container,
                                              const sofa::core::objectmodel::TagSet& tags)
     : Visitor( core::ExecParams::defaultInstance() )
@@ -70,7 +70,7 @@ class GetUpObjectsVisitor : public Visitor
 {
 public:
 
-    GetUpObjectsVisitor(DAGNode* searchNode, const sofa::core::objectmodel::ClassInfo& class_info, DAGNode::GetObjectsCallBack& container, const sofa::core::objectmodel::TagSet& tags);
+    GetUpObjectsVisitor(DAGNode* searchNode, const sofa::core::objectmodel::ClassInfoId& class_info, DAGNode::GetObjectsCallBack& container, const sofa::core::objectmodel::TagSet& tags);
     ~GetUpObjectsVisitor() override;
 
     Result processNodeTopDown(simulation::Node* node) override
@@ -99,14 +99,14 @@ public:
 protected:
 
     DAGNode* _searchNode;
-    const sofa::core::objectmodel::ClassInfo& _class_info;
+    const sofa::core::objectmodel::ClassInfoId& _class_info;
     DAGNode::GetObjectsCallBack& _container;
     const sofa::core::objectmodel::TagSet& _tags;
 
 };
 
 GetUpObjectsVisitor::GetUpObjectsVisitor(DAGNode* searchNode,
-                                         const sofa::core::objectmodel::ClassInfo& class_info,
+                                         const sofa::core::objectmodel::ClassInfoId& class_info,
                                          DAGNode::GetObjectsCallBack& container,
                                          const sofa::core::objectmodel::TagSet& tags)
     : Visitor( core::ExecParams::defaultInstance() )
@@ -227,23 +227,24 @@ void DAGNode::detachFromGraph()
 /// Generic object access, possibly searching up or down from the current context
 ///
 /// Note that the template wrapper method should generally be used to have the correct return type,
-void* DAGNode::getObject(const sofa::core::objectmodel::ClassInfo& class_info, const sofa::core::objectmodel::TagSet& tags, SearchDirection dir) const
+void* DAGNode::getObject(const sofa::core::objectmodel::ClassInfoId& classInfoId, const sofa::core::objectmodel::TagSet& tags, SearchDirection dir) const
 {
     if (dir == SearchRoot)
     {
-        if (getNbParents()) return getRootContext()->getObject(class_info, tags, dir);
+        if (getNbParents()) return getRootContext()->getObject(classInfoId, tags, dir);
         else dir = SearchDown; // we are the root, search down from here.
     }
     void *result = nullptr;
 
     if (dir != SearchParents)
+    {
+        auto classInfo = classInfoId.getClassInfo();
         for (ObjectIterator it = this->object.begin(); it != this->object.end(); ++it)
         {
             core::objectmodel::BaseObject* obj = it->get();
             if (tags.empty() || (obj)->getTags().includes(tags))
             {
-
-                result = class_info.dynamicCast(obj);
+                result = classInfo->dynamicCast(obj);
                 if (result != nullptr)
                 {
 
@@ -251,6 +252,7 @@ void* DAGNode::getObject(const sofa::core::objectmodel::ClassInfo& class_info, c
                 }
             }
         }
+    }
 
     if (result == nullptr)
     {
@@ -263,7 +265,7 @@ void* DAGNode::getObject(const sofa::core::objectmodel::ClassInfo& class_info, c
             {
                 const LinkParents::Container& parents = l_parents.getValue();
                 for ( unsigned int i = 0; i < parents.size() ; ++i){
-                    result = parents[i]->getObject(class_info, tags, SearchUp);
+                    result = parents[i]->getObject(classInfoId, tags, SearchUp);
                     if (result != nullptr) break;
                 }
             }
@@ -271,7 +273,7 @@ void* DAGNode::getObject(const sofa::core::objectmodel::ClassInfo& class_info, c
             case SearchDown:
                 for(ChildIterator it = child.begin(); it != child.end(); ++it)
                 {
-                    result = (*it)->getObject(class_info, tags, dir);
+                    result = (*it)->getObject(classInfoId, tags, dir);
                     if (result != nullptr) break;
                 }
                 break;
@@ -287,25 +289,25 @@ void* DAGNode::getObject(const sofa::core::objectmodel::ClassInfo& class_info, c
 /// Generic object access, given a path from the current context
 ///
 /// Note that the template wrapper method should generally be used to have the correct return type,
-void* DAGNode::getObject(const sofa::core::objectmodel::ClassInfo& class_info, const std::string& path) const
+void* DAGNode::getObject(const sofa::core::objectmodel::ClassInfoId& classInfoId, const std::string& path) const
 {
     if (path.empty())
     {
         // local object
-        return Node::getObject(class_info, Local);
+        return Node::getObject(classInfoId, Local);
     }
     else if (path[0] == '/')
     {
         // absolute path; let's start from root
-        if (!getNbParents()) return getObject(class_info,std::string(path,1));
-        else return getRootContext()->getObject(class_info,path);
+        if (!getNbParents()) return getObject(classInfoId,std::string(path,1));
+        else return getRootContext()->getObject(classInfoId,path);
     }
     else if (std::string(path,0,2)==std::string("./"))
     {
         std::string newpath = std::string(path, 2);
         while (!newpath.empty() && path[0] == '/')
             newpath.erase(0);
-        return getObject(class_info,newpath);
+        return getObject(classInfoId,newpath);
     }
     else if (std::string(path,0,3)==std::string("../"))
     {
@@ -319,12 +321,12 @@ void* DAGNode::getObject(const sofa::core::objectmodel::ClassInfo& class_info, c
             const LinkParents::Container& parents = l_parents.getValue();
             for ( unsigned int i = 0; i < parents.size() ; ++i)
             {
-                void* obj = parents[i]->getObject(class_info,newpath);
+                void* obj = parents[i]->getObject(classInfoId,newpath);
                 if (obj) return obj;
             }
             return nullptr;   // not found in any parent node at all
         }
-        else return getObject(class_info,newpath);
+        else return getObject(classInfoId,newpath);
     }
     else
     {
@@ -336,7 +338,7 @@ void* DAGNode::getObject(const sofa::core::objectmodel::ClassInfo& class_info, c
         {
             while (pend < path.length() && path[pend] == '/')
                 ++pend;
-            return child->getObject(class_info, std::string(path, pend));
+            return child->getObject(classInfoId, std::string(path, pend));
         }
         else if (pend < path.length())
         {
@@ -344,6 +346,7 @@ void* DAGNode::getObject(const sofa::core::objectmodel::ClassInfo& class_info, c
         }
         else
         {
+            auto classInfo = classInfoId.getClassInfo();
             core::objectmodel::BaseObject* obj = simulation::Node::getObject(name);
             if (obj == nullptr)
             {
@@ -351,10 +354,10 @@ void* DAGNode::getObject(const sofa::core::objectmodel::ClassInfo& class_info, c
             }
             else
             {
-                void* result = class_info.dynamicCast(obj);
+                void* result = classInfo->dynamicCast(obj);
                 if (result == nullptr)
                 {
-                    dmsg_error("DAGNode") << "Object "<<name<<" in "<<getPathName()<<" does not implement class "<<class_info.name() ;
+                    dmsg_error("DAGNode") << "Object "<<name<<" in "<<getPathName()<<" does not implement class "<<classInfo->name() ;
                     return nullptr;
                 }
                 else
@@ -370,7 +373,7 @@ void* DAGNode::getObject(const sofa::core::objectmodel::ClassInfo& class_info, c
 /// Generic list of objects access, possibly searching up or down from the current context
 ///
 /// Note that the template wrapper method should generally be used to have the correct return type,
-void DAGNode::getObjects(const sofa::core::objectmodel::ClassInfo& class_info, GetObjectsCallBack& container, const sofa::core::objectmodel::TagSet& tags, SearchDirection dir) const
+void DAGNode::getObjects(const sofa::core::objectmodel::ClassInfoId& class_info, GetObjectsCallBack& container, const sofa::core::objectmodel::TagSet& tags, SearchDirection dir) const
 {
     if( dir == SearchRoot )
     {
@@ -849,20 +852,18 @@ DAGNode* DAGNode::findCommonParent(DAGNode* node1, DAGNode* node2)
     return this;
 }
 
-void DAGNode::getLocalObjects( const sofa::core::objectmodel::ClassInfo& class_info, DAGNode::GetObjectsCallBack& container, const sofa::core::objectmodel::TagSet& tags ) const
+void DAGNode::getLocalObjects( const sofa::core::objectmodel::ClassInfoId& classInfoId, DAGNode::GetObjectsCallBack& container, const sofa::core::objectmodel::TagSet& tags ) const
 {
+    auto classInfo = classInfoId.getClassInfo();
     for (DAGNode::ObjectIterator it = this->object.begin(); it != this->object.end(); ++it)
     {
         core::objectmodel::BaseObject* obj = it->get();
-        void* result = class_info.dynamicCast(obj);
+        void* result = classInfo->dynamicCast(obj);
         if (result != nullptr && (tags.empty() || (obj)->getTags().includes(tags)))
             container(result);
     }
 }
 
-
-
-//helper::Creator<xml::NodeElement::Factory, DAGNode> DAGNodeDefaultClass("default");
 static helper::Creator<xml::NodeElement::Factory, DAGNode> DAGNodeClass("DAGNode");
 
 } // namespace sofa::simulation::graph

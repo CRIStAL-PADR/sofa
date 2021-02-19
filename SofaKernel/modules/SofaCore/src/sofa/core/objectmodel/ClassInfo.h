@@ -98,7 +98,7 @@ public:
 template<class T>
 const ClassInfo& classidT() { return TClassInfo<T>::get(); }
 
-#define classid(T) sofa::core::objectmodel::classidT<T>()
+//#define classid(T) sofa::core::objectmodel::ClassInfoId::GetClassId<T>()
 
 } // namespace objectmodel
 
