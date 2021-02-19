@@ -21,6 +21,7 @@
 ******************************************************************************/
 #include <sofa/core/collision/Intersection.inl>
 #include <sofa/core/collision/DetectionOutput.h>
+#include <sofa/core/objectmodel/ClassInfo.h>
 #include <sofa/helper/FnDispatcher.h>
 
 namespace sofa

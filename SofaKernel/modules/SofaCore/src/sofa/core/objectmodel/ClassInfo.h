@@ -19,91 +19,55 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
-#ifndef SOFA_CORE_OBJECTMODEL_CLASSINFO_H
-#define SOFA_CORE_OBJECTMODEL_CLASSINFO_H
+#pragma once
 
 #include <sofa/core/config.h>
+#include <sofa/core/fwd.h>
 #include <sofa/helper/TypeInfo.h>
+#include <vector>
 #include <string>
-#include <map>
-
-namespace sofa
+namespace sofa::core::objectmodel
 {
-
-namespace core
-{
-
-namespace objectmodel
-{
-
-class Base;
 
 /**
- *  \brief Meta information class
+ *  \brief Class info reflection class
  *
- *  This class contains reflection-like features to analyse a class deriving from Base
+ *  This class provides information on the class and parent classes of components.
  *
  */
 class SOFA_CORE_API ClassInfo
 {
-protected:
+private:
     const std::type_info* pt;
-    ClassInfo(const std::type_info* ti);
-    virtual ~ClassInfo();
+
+protected:
+    ClassInfo(const std::type_info* ti) { pt = ti; }
+    virtual ~ClassInfo(){}
+
 public:
+    /// The following was from BaseClass
+    std::string compilationTarget;       ///< In which SOFA_TARGET is registered this type
+    std::string namespaceName;           ///< The c++ namespace
+    std::string typeName;                ///< The c++ typename
+    std::string className;               ///< The 'sofa' object class name (can be customized)
+    std::string templateName;            ///< The 'sofa' object's template name (can be customized)
+    std::string shortName;
+    std::vector<const ClassInfo*> parents;
 
-    std::string name() const { return pt->name(); }
-    operator const std::type_info&() const { return *pt; }
-    helper::TypeInfo type() const { return sofa::helper::TypeInfo(*pt); }
-    bool operator==(const ClassInfo& t) const { return *pt == *t.pt; }
-    bool operator!=(const ClassInfo& t) const { return *pt != *t.pt; }
-#ifdef _MSC_VER
-    bool operator<(const ClassInfo& t) const { return (pt->before(*t.pt)!=0); }
-#else
-    bool operator<(const ClassInfo& t) const { return pt->before(*t.pt); }
-#endif
+    sofa::helper::TypeInfo type() const { return sofa::helper::TypeInfo(*pt); }
 
+    /// The following was from ClassInfo (to deprecate ?)
+    const std::string& name() const { return className; }
+
+    /// returns true iff c is a parent class of this
+    bool hasParent(const ClassInfo* c) const;
+
+    /// returns true iff a parent class of this is named parentClassName
+    bool hasParent(const std::string& parentClassName) const;
+
+    virtual Base* dynamicCastToBase(Base* obj) const = 0;
     virtual void* dynamicCast(Base* obj) const = 0;
-
-    virtual bool isInstance(Base* obj) const
-    {
-        return dynamicCast(obj) != nullptr;
-    }
-protected:
-    static std::map<sofa::helper::TypeInfo, ClassInfo*> classes;
+    virtual bool isInstance(Base* obj) const = 0;
 };
 
-template<class T>
-class TClassInfo : public ClassInfo
-{
-protected:
-    TClassInfo()
-        : ClassInfo(&typeid(T))
-    {
-    }
-
-public:
-    static TClassInfo<T>& get()
-    {
-        static TClassInfo<T> inst;
-        return inst;
-    }
-
-    virtual void* dynamicCast(Base* obj) const
-    {
-        return dynamic_cast<T*>(obj);
-    }
-};
-
-template<class T>
-const ClassInfo& classidT() { return TClassInfo<T>::get(); }
-
-//#define classid(T) sofa::core::objectmodel::ClassInfoId::GetClassId<T>()
-
-} // namespace objectmodel
-
-} // namespace core
-
-} // namespace sofa
-
-#endif
+} ///sofa::core::objectmodel

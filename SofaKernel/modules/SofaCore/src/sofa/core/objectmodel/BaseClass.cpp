@@ -30,19 +30,6 @@ namespace core
 namespace objectmodel
 {
 
-BaseClass* DeprecatedBaseClass::GetSingleton()
-{
-    static DeprecatedBaseClass dpc;
-    return &dpc;
-}
-
-DeprecatedBaseClass::DeprecatedBaseClass() : BaseClass(&typeid(DeprecatedBaseClass))
-{
-    namespaceName= "DeprecatedBaseClass::namespace";
-    className = "DeprecatedBaseClass::classname";
-    templateName = "DeprecatedBaseClass::templatename";
-    shortName = "DeprecatedBaseClass::shortname";
-}
 
 } // namespace objectmodel
 

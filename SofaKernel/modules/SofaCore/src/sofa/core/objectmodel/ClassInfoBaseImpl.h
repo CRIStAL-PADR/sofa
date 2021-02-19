@@ -21,47 +21,31 @@
 ******************************************************************************/
 #pragma once
 
-#include <sofa/core/config.h>
-#include <sofa/core/fwd.h>
-#include <sofa/helper/TypeInfo.h>
-#include <vector>
-#include <string>
+#include <sofa/core/objectmodel/ClassInfo.h>
+#include <typeinfo>
 namespace sofa::core::objectmodel
 {
 
-class SOFA_CORE_API AbstractClassInfo
+template<class T>
+class ClassInfoBaseImpl : public ClassInfo
 {
-private:
-    const std::type_info* pt;
-
-protected:
-    AbstractClassInfo(const std::type_info* ti) { pt = ti; }
-    virtual ~AbstractClassInfo(){}
-
 public:
-    /// The following was from BaseClass
-    std::string compilationTarget;       ///< In which SOFA_TARGET is registered this type
-    std::string namespaceName;           ///< The c++ namespace
-    std::string typeName;                ///< The c++ typename
-    std::string className;               ///< The 'sofa' object class name (can be customized)
-    std::string templateName;            ///< The 'sofa' object's template name (can be customized)
-    std::string shortName;
-    std::vector<const AbstractClassInfo*> parents;
+    ClassInfoBaseImpl() : ClassInfo(&typeid(T)) {}
 
-    sofa::helper::TypeInfo type() const { return sofa::helper::TypeInfo(*pt); }
+    Base* dynamicCastToBase(Base* obj) const override
+    {
+        return dynamic_cast<T*>(obj);
+    };
 
-    /// The following was from ClassInfo (to deprecate ?)
-    const std::string& name() const { return className; }
+    void* dynamicCast(Base* obj) const override
+    {
+        return dynamic_cast<T*>(obj);
+    };
 
-    /// returns true iff c is a parent class of this
-    bool hasParent(const AbstractClassInfo* c) const;
-
-    /// returns true iff a parent class of this is named parentClassName
-    bool hasParent(const std::string& parentClassName) const;
-
-    virtual Base* dynamicCastToBase(Base* obj) const = 0;
-    virtual void* dynamicCast(Base* obj) const = 0;
-    virtual bool isInstance(Base* obj) const = 0;
+    bool isInstance(Base* obj) const override
+    {
+        return dynamic_cast<T*>(obj) != nullptr;
+    }
 };
 
-} ///sofa::core::objectmodel
+} /// sofa::core::objectmodel

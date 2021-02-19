@@ -21,7 +21,7 @@
 ******************************************************************************/
 #pragma once
 #include <sofa/core/config.h>
-#include <sofa/core/objectmodel/ClassInfoID.h>
+#include <sofa/core/objectmodel/ClassInfoId.h>
 #include <sofa/core/fwd.h>
 #include <vector>
 #include <string>
@@ -32,36 +32,36 @@ namespace sofa::core::objectmodel
 /** *******************************************************************************
  * @brief An unique singleton to register all the type info defined in Sofa
  *
- * AbstractClassInfo offers an API to manipulate the data content of a specific type
+ * ClassInfo offers an API to manipulate the data content of a specific type
  * without requiering the inner details of the type. Have a look in AbstractTypeInfo
  * for more informations.
  *
  * On its side, ClassInfoRegistry holds all the instances of object thats inherits
- * from AbstractClassInfo
+ * from ClassInfo
  *
- * The common use case is get the type id to access a full AbstractClassInfo from
+ * The common use case is get the type id to access a full ClassInfo from
  * the ClassInfoRegistry. The acces is done with a ClassInfoId instance that stores
  * an unique identifier for each data type.
  *
  * Example of use:
  *      ClassInfoId& shortinfo = ClassInfoId::GetTypeId<double>();
- *      AbstractClassInfo* info = ClassInfoRegistry::Get(shortinfo);
+ *      ClassInfo* info = ClassInfoRegistry::Get(shortinfo);
  *      info->getName()
  **********************************************************************************/
-class SOFA_CORE_API ClassInfoRegistry
+class SOFA_CORE_API ClassInfoRepository
 {
 public:
     /// Returns the abstractTypeInfo corresponding to the provided TypeInfoId
     /// If there is none a NamedOnlyTypeInfo object is created an returned
-    static const AbstractClassInfo* Get(const ClassInfoId& id);
+    static const ClassInfo* Get(const ClassInfoId& id);
 
     /// Register a new AbstractTypeInfo to the provided TypeInfoId. A Third parameter is used to
     /// provides the compilationTarget where the typeinfo is declared to ease the tracking of DataTypes.
-    static int Set(const ClassInfoId& tid, AbstractClassInfo* info, const std::string& compilationTarget);
+    static int Set(const ClassInfoId& tid, ClassInfo* info, const std::string& compilationTarget);
 
     /// Returns a vector with all the AbstractTypeInfo that have been registered in the specified target.
     /// An empty target select everything that is in the registry.
-    static std::vector<const AbstractClassInfo*> GetRegisteredTypes(const std::string& target="");
+    static std::vector<const ClassInfo*> GetRegisteredTypes(const std::string& target="");
 
     /// Returns a new int to generates the corresponding TypeInfoId.
     static int AllocateNewTypeId(const std::type_info& nfo);

@@ -19,36 +19,22 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
-#include "AbstractClassInfo.h"
+#include <sofa/core/objectmodel/ClassInfoId.h>
+#include <sofa/core/objectmodel/ClassInfoRepository.h>
 
 namespace sofa::core::objectmodel
 {
 
-/// returns true iff c is a parent class of this
-bool AbstractClassInfo::hasParent(const AbstractClassInfo* c) const
+int ClassInfoId::GetNewId(const std::type_info& nfo)
 {
-    if (this == c)
-        return true;
-
-    for (unsigned int i=0; i<parents.size(); ++i)
-    {
-        if (parents[i]->hasParent(c))
-            return true;
-    }
-    return false;
+    return ClassInfoRepository::AllocateNewTypeId(nfo);
 }
 
-/// returns true iff a parent class of this is named parentClassName
-bool AbstractClassInfo::hasParent(const std::string& parentClassName) const
+ClassInfoId::ClassInfoId(int id_, const std::type_info& nfo_) : id(id_), nfo(nfo_) {}
+
+const ClassInfo* ClassInfoId::getClassInfo() const
 {
-    if (className==parentClassName)
-        return true;
-    for (unsigned int i=0; i<parents.size(); ++i)
-    {
-        if (parents[i]->hasParent(parentClassName))
-            return true;
-    }
-    return false;
+    return ClassInfoRepository::Get(*this);
 }
 
-}
+} /// namespace sofa::defaulttype

@@ -88,7 +88,7 @@ Base::~Base()
 
 const BaseClass* Base::GetClassInfo(const ClassInfoId& cid)
 {
-    return sofa::core::objectmodel::ClassInfoRegistry::Get(cid);
+    return sofa::core::objectmodel::ClassInfoRepository::Get(cid);
 }
 
 void Base::addRef()

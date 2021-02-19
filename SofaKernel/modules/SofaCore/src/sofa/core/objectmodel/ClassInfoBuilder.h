@@ -21,42 +21,20 @@
 ******************************************************************************/
 #pragma once
 
-#include <sofa/core/objectmodel/AbstractClassInfo.h>
+#include <sofa/core/objectmodel/ClassInfo.h>
+#include <sofa/core/objectmodel/ClassInfoId.h>
+#include <sofa/core/objectmodel/ClassInfoBaseImpl.h>
 #include <sofa/core/objectmodel/ClassInfoRepository.h>
 #include <sofa/helper/NameDecoder.h>
-#include <iostream>
-using sofa::helper::NameDecoder;
+#include <tuple>
 
-/// SEE https://godbolt.org/z/1qoxfq
+using sofa::helper::NameDecoder;
 
 namespace sofa::core::objectmodel
 {
 
 template<class T>
-class ClassInfoImpl : public AbstractClassInfo
-{
-public:
-    ClassInfoImpl() : AbstractClassInfo(&typeid(T)) {}
-
-    Base* dynamicCastToBase(Base* obj) const override
-    {
-        return dynamic_cast<T*>(obj);
-    };
-
-    void* dynamicCast(Base* obj) const override
-    {
-        return dynamic_cast<T*>(obj);
-    };
-
-    bool isInstance(Base* obj) const override
-    {
-        return dynamic_cast<T*>(obj) != nullptr;
-    }
-};
-
-
-template<class T>
-class ClassInfoFactory;
+class ClassInfoBuilder;
 
 template<class Tuple>
 class Parents
@@ -64,13 +42,13 @@ class Parents
 public:
     constexpr static int nb() { return std::tuple_size<Tuple>::value; }
 
-    static AbstractClassInfo* get(const int i) { return getRec<nb()-1>(i); }
+    static ClassInfo* get(const int i) { return getRec<nb()-1>(i); }
 
     template<int j>
-    static AbstractClassInfo* getRec(int i)
+    static ClassInfo* getRec(int i)
     {
         if(i==j)
-            return ClassInfoFactory<typename std::template tuple_element<j, Tuple>::type  >::get();
+            return ClassInfoBuilder<typename std::template tuple_element<j, Tuple>::type  >::get();
         if constexpr (j>0)
             return getRec<j-1>(i);
         return nullptr;
@@ -82,23 +60,23 @@ class Parents<void>
 {
     public:
      constexpr static int nb(){ return 0; }
-     constexpr static AbstractClassInfo* get(int){ return nullptr; }
+     constexpr static ClassInfo* get(int){ return nullptr; }
 };
 
 template<class T>
-class ClassInfoFactory
+class ClassInfoBuilder
 {
 public:
-    static AbstractClassInfo* get()
+    static ClassInfo* get()
     {
-        static AbstractClassInfo* info = createNewInstance();
+        static ClassInfo* info = createNewInstance();
         return info;
     }
 
 private:
-    static AbstractClassInfo* createNewInstance()
+    static ClassInfo* createNewInstance()
     {
-        AbstractClassInfo* info = new ClassInfoImpl<T>();
+        ClassInfo* info = new ClassInfoBaseImpl<T>();
         info->typeName = NameDecoder::getTypeName<T>();
         info->namespaceName = NameDecoder::getNamespaceName<T>();
         info->className = NameDecoder::getClassName<T>();
@@ -110,11 +88,9 @@ private:
         {
             info->parents[i] = Parents<typename T::ParentClasses>::get(i);
         }
-        sofa::core::objectmodel::ClassInfoRegistry::Set(
+        sofa::core::objectmodel::ClassInfoRepository::Set(
                     sofa::core::objectmodel::ClassInfoId::GetClassId<T>(),
-                    info,
-                    "SOFA"
-                    );
+                    info, "");
         return info;
     }
 };

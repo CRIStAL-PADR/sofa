@@ -47,17 +47,17 @@
 #include <algorithm>
 #include <sofa/helper/logging/Messaging.h>
 #include <sofa/helper/NameDecoder.h>
-#include "AbstractClassInfo.h"
-#include "ClassInfoID.h"
+#include "ClassInfo.h"
+#include "ClassInfoId.h"
 #include "ClassInfoRepository.h"
 
 namespace sofa::core::objectmodel
 {
 
-class NameOnlyClassInfo : public AbstractClassInfo
+class NameOnlyClassInfo : public ClassInfo
 {
 public:
-    NameOnlyClassInfo(std::string className_, std::string typeName_) : AbstractClassInfo(&typeid(NameOnlyClassInfo))
+    NameOnlyClassInfo(std::string className_, std::string typeName_) : ClassInfo(&typeid(NameOnlyClassInfo))
     {
         className = className_;
         typeName = typeName_;
@@ -68,10 +68,10 @@ public:
     bool isInstance(Base *) const override{return false;}
 };
 
-class NoClassInfo : public AbstractClassInfo
+class NoClassInfo : public ClassInfo
 {
 public:
-    NoClassInfo() : AbstractClassInfo(&typeid(NoClassInfo))
+    NoClassInfo() : ClassInfo(&typeid(NoClassInfo))
     {
         className = "MissingClassInfo";
         typeName = "MissingClassInfo";
@@ -80,20 +80,20 @@ public:
     void* dynamicCast(Base *) const override{return nullptr;}
     bool isInstance(Base *) const override{return false;}
 
-    static AbstractClassInfo* GetInstance(){ static NoClassInfo instance; return &instance; }
+    static ClassInfo* GetInstance(){ static NoClassInfo instance; return &instance; }
 };
 
 
-static std::vector<const AbstractClassInfo*>& getStorage()
+static std::vector<const ClassInfo*>& getStorage()
 {
-    static std::vector<const AbstractClassInfo*> typeinfos {};
+    static std::vector<const ClassInfo*> typeinfos {};
     return typeinfos;
 }
 
-std::vector<const AbstractClassInfo*> ClassInfoRegistry::GetRegisteredTypes(const std::string& target)
+std::vector<const ClassInfo*> ClassInfoRepository::GetRegisteredTypes(const std::string& target)
 {
     bool selectAll = target == "";
-    std::vector<const AbstractClassInfo*> tmp;
+    std::vector<const ClassInfo*> tmp;
     for(auto info : getStorage())
     {
         if(info==nullptr)
@@ -105,7 +105,7 @@ std::vector<const AbstractClassInfo*> ClassInfoRegistry::GetRegisteredTypes(cons
     return tmp;
 }
 
-const AbstractClassInfo* ClassInfoRegistry::Get(const ClassInfoId& tid)
+const ClassInfo* ClassInfoRepository::Get(const ClassInfoId& tid)
 {
     sofa::Size id = tid.id;
     auto& typeinfos = getStorage();
@@ -119,7 +119,7 @@ const AbstractClassInfo* ClassInfoRegistry::Get(const ClassInfoId& tid)
     return nullptr;
 }
 
-int ClassInfoRegistry::AllocateNewTypeId(const std::type_info& nfo)
+int ClassInfoRepository::AllocateNewTypeId(const std::type_info& nfo)
 {
     auto& typeinfos = getStorage();
     //std::string name = sofa::helper::NameDecoder::decodeTypeName(nfo);
@@ -130,7 +130,7 @@ int ClassInfoRegistry::AllocateNewTypeId(const std::type_info& nfo)
 }
 
 
-int ClassInfoRegistry::Set(const ClassInfoId& tid, AbstractClassInfo* info, const std::string &compilationTarget)
+int ClassInfoRepository::Set(const ClassInfoId& tid, ClassInfo* info, const std::string &compilationTarget)
 {
     if( info == nullptr )
         return -1;

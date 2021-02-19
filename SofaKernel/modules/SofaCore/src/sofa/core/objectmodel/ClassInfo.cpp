@@ -19,33 +19,36 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
-#include <sofa/core/objectmodel/ClassInfo.h>
+#include "ClassInfo.h"
 
-namespace sofa
+namespace sofa::core::objectmodel
 {
 
-namespace core
+/// returns true iff c is a parent class of this
+bool ClassInfo::hasParent(const ClassInfo* c) const
 {
+    if (this == c)
+        return true;
 
-namespace objectmodel
-{
-
-std::map<sofa::helper::TypeInfo, ClassInfo*> ClassInfo::classes;
-
-ClassInfo::ClassInfo(const std::type_info* ti)
-    : pt(ti)
-{
-    classes[sofa::helper::TypeInfo(*ti)] = this;
+    for (unsigned int i=0; i<parents.size(); ++i)
+    {
+        if (parents[i]->hasParent(c))
+            return true;
+    }
+    return false;
 }
 
-ClassInfo::~ClassInfo()
+/// returns true iff a parent class of this is named parentClassName
+bool ClassInfo::hasParent(const std::string& parentClassName) const
 {
+    if (className==parentClassName)
+        return true;
+    for (unsigned int i=0; i<parents.size(); ++i)
+    {
+        if (parents[i]->hasParent(parentClassName))
+            return true;
+    }
+    return false;
 }
 
-
-} // namespace objectmodel
-
-} // namespace core
-
-} // namespace sofa
-
+}

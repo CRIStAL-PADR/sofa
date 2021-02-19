@@ -19,6 +19,8 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
+
+#include <sofa/core/objectmodel/ClassInfo.h>
 #include <sofa/core/objectmodel/Base.h>
 using sofa::core::objectmodel::Base ;
 using sofa::core::objectmodel::ComponentState;

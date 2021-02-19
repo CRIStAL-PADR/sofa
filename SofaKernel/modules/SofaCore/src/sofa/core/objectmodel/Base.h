@@ -27,7 +27,7 @@
 #include <sofa/core/objectmodel/Link.h>                      //NOTE-FOR-SELF: Remove
 #include <sofa/core/objectmodel/BaseClass.h>
 #include <sofa/core/objectmodel/BaseObjectDescription.h>     //NOTE-FOR-SELF: Remove
-#include <sofa/core/objectmodel/ClassInfoID.h>
+#include <sofa/core/objectmodel/ClassInfoId.h>
 #include <sofa/core/objectmodel/Tag.h>
 #include <list>
 #include <sofa/core/sptr.h>

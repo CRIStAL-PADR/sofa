@@ -19,22 +19,48 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
-#include <sofa/core/objectmodel/ClassInfoID.h>
-#include <sofa/core/objectmodel/ClassInfoRepository.h>
+#pragma once
+#include <sofa/core/config.h>
+#include <sofa/core/fwd.h>
+#include <sofa/helper/TypeInfo.h>
+#include <typeinfo>
 
 namespace sofa::core::objectmodel
 {
 
-int ClassInfoId::GetNewId(const std::type_info& nfo)
+/** ************************************************************************
+ * @brief Generates unique id for class.
+ *
+ * Compared to type_info.hash_code() this version is guaranteed to be in
+ * constant time
+ *
+ * The common use case is get the type id to access a full AbstractTypeInfo from
+ * the TypeInfoRegistry.
+ * Example:
+ *      ClassInfoId& shortinfo = ClassInfoId::getClassId<double>();
+ *      ClassInfo* info = ClassInfoRegistry::Get(shortinfo.id);
+ *      info->getName()
+ *****************************************************************************/
+class SOFA_CORE_API ClassInfoId
 {
-    return ClassInfoRegistry::AllocateNewTypeId(nfo);
-}
+public:
+    template<class T>
+    static const ClassInfoId& GetClassId()
+    {
+        static ClassInfoId typeId(ClassInfoId::GetNewId(typeid(T)), typeid(T));
+        return typeId;
+    }
 
-ClassInfoId::ClassInfoId(int id_, const std::type_info& nfo_) : id(id_), nfo(nfo_) {}
+    const ClassInfo* getClassInfo() const;
+    const sofa::helper::TypeInfo type()const { return sofa::helper::TypeInfo(nfo); }
 
-const AbstractClassInfo* ClassInfoId::getClassInfo() const
-{
-    return ClassInfoRegistry::Get(*this);
-}
+    sofa::Index id;
+    const std::type_info& nfo;
+private:
+    ClassInfoId(int id_, const std::type_info& nfo);
+    static int GetNewId(const std::type_info& nfo);
+};
+
+#define classid(T) sofa::core::objectmodel::ClassInfoId::GetClassId<T>()
 
 } /// namespace sofa::defaulttype

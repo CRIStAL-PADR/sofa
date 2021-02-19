@@ -24,32 +24,8 @@
 #include <sofa/core/config.h>
 #include <sofa/core/fwd.h>
 #include <sofa/core/objectmodel/SPtr.h>
-#include <sofa/core/objectmodel/AbstractClassInfo.h>
-
 namespace sofa::core::objectmodel
 {
-
-/**
- *  \brief Class hierarchy reflection base class
- *
- *  This class provides information on the class and parent classes of components.
- *  It is created by using the SOFA_CLASS macro on each new class declaration.
- *  All classes deriving from Base should use the SOFA_CLASS macro within their declaration.
- *
- */
-
-class SOFA_CORE_API DeprecatedBaseClass : public BaseClass
-{
-public:
-    DeprecatedBaseClass();
-
-    Base* dynamicCastToBase(Base*) const override { return nullptr; }
-    void* dynamicCast(Base*) const override { return nullptr; }
-    bool isInstance(Base*) const override { return false; }
-
-    static BaseClass* GetSingleton();
-};
-
 
 // To specify template classes in C macro parameters, we can't write any commas, hence templates with more than 2 parameters have to use the following macros
 #define SOFA_TEMPLATE(Class,P1) Class<P1>

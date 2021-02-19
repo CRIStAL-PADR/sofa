@@ -24,14 +24,14 @@ class BaseLink;
 class BaseNode;
 class Event;
 class AbstractDataLink;
-class AbstractClassInfo;
-typedef AbstractClassInfo BaseClass;
+class ClassInfo;
+typedef ClassInfo BaseClass;
 
 class Tag;
 SOFA_CORE_API std::ostream& operator<<(std::ostream& o, const Tag& t);
 SOFA_CORE_API std::istream& operator>>(std::istream& i, Tag& t);
 
-class AbstractClassInfo;
+class ClassInfo;
 }
 
 namespace sofa::core::behavior
