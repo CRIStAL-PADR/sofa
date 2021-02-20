@@ -126,21 +126,12 @@ namespace objectmodel
 class SOFA_CORE_API Base
 {
 public:
-    typedef Base* Ptr;
-
-    using SPtr = sptr<Base>;
-    
-    typedef void ParentClasses; /// There is no parent.
-    static const BaseClass* GetClassInfo(const ClassInfoId&);
-    static const BaseClass* GetClass() { return GetClassInfo(sofa::core::objectmodel::ClassInfoId::GetClassId<Base>()); }
-    virtual const BaseClass* getClass() const { return GetClassInfo(sofa::core::objectmodel::ClassInfoId::GetClassId<Base>()); }
+    SOFA_BASE_CLASS(Base)
 
 protected:
     /// Constructor cannot be called directly
     /// Use the New() method instead
     Base();
-
-
 
     /// Direct calls to destructor are forbidden.
     /// Smart pointers must be used to manage creation/destruction of objects

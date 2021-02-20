@@ -33,6 +33,16 @@ namespace sofa::core::objectmodel
 #define SOFA_TEMPLATE3(Class,P1,P2,P3) Class<P1,P2,P3>
 #define SOFA_TEMPLATE4(Class,P1,P2,P3,P4) Class<P1,P2,P3,P4>
 
+// This macro should now be used in the root/base class of any sofa hierarchy.
+#define SOFA_BASE_CLASS(T) \
+    typedef T MyType;                                         \
+    typedef T* Ptr;                                           \
+    using SPtr = sofa::core::sptr<T>;                         \
+    typedef void ParentClasses;                               \
+    static const BaseClass* GetClassInfo(const ClassInfoId&); \
+    static const BaseClass* GetClass() { return GetClassInfo(sofa::core::objectmodel::ClassInfoId::GetClassId<Base>()); } \
+    virtual const BaseClass* getClass() const { return GetClassInfo(sofa::core::objectmodel::ClassInfoId::GetClassId<Base>()); } \
+
 // This macro should now be used at the beginning of all declarations of classes with 1 base class
 #define SOFA_CLASS(T,Parent) \
     typedef T MyType;                                               \
