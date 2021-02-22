@@ -19,41 +19,41 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
-#include "DataTracker.h"
-#include "objectmodel/BaseData.h"
-#include "objectmodel/Base.h"
+#include <sofa/core/DataTrackingDDGNode.h>
+#include <sofa/core/objectmodel/BaseData.h>
 
 namespace sofa::core
 {
 
-void DataTracker::trackData( const objectmodel::BaseData& data )
+void DataTrackingDDGNode::addInputs(std::initializer_list<sofa::core::objectmodel::BaseData*> datas)
 {
-    m_dataTrackers[&data] = data.getCounter();
+    for(sofa::core::objectmodel::BaseData* d : datas) {
+        m_dataTracker.trackData(*d);
+        addInput(d);
+    }
 }
 
-bool DataTracker::hasChanged( const objectmodel::BaseData& data ) const
+void DataTrackingDDGNode::addOutputs(std::initializer_list<sofa::core::objectmodel::BaseData*> datas)
 {
-    if (m_dataTrackers.find(&data) != m_dataTrackers.end())
-        return m_dataTrackers.at(&data) != data.getCounter();
-    return false;
+    for(sofa::core::objectmodel::BaseData* d : datas)
+        addOutput(d);
 }
 
-bool DataTracker::hasChanged() const
+void DataTrackingDDGNode::cleanDirty(const core::ExecParams*)
 {
-    for( DataTrackers::const_iterator it=m_dataTrackers.begin(),itend=m_dataTrackers.end() ; it!=itend ; ++it )
-        if( it->second != it->first->getCounter() ) return true;
-    return false;
+    core::objectmodel::DDGNode::cleanDirty();
+
+    /// it is also time to clean the tracked Data
+    m_dataTracker.clean();
 }
 
-void DataTracker::clean( const objectmodel::BaseData& data )
+void DataTrackingDDGNode::updateAllInputsIfDirty()
 {
-    m_dataTrackers[&data] = data.getCounter();
-}
-
-void DataTracker::clean()
-{
-    for( DataTrackers::iterator it=m_dataTrackers.begin(),itend=m_dataTrackers.end() ; it!=itend ; ++it )
-        it->second = it->first->getCounter();
+    const DDGLinkContainer& inputs = DDGNode::getInputs();
+    for(auto input : inputs)
+    {
+        static_cast<core::objectmodel::BaseData*>(input)->updateIfDirty();
+    }
 }
 
 }

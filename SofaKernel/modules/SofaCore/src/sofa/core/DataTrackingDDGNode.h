@@ -19,41 +19,51 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
-#include "DataTracker.h"
-#include "objectmodel/BaseData.h"
-#include "objectmodel/Base.h"
+#pragma once
+
+#include <sofa/core/config.h>
+#include <sofa/core/DataTracker.h>
+#include <sofa/core/objectmodel/DDGNode.h>
 
 namespace sofa::core
 {
 
-void DataTracker::trackData( const objectmodel::BaseData& data )
+/// A DDGNode with trackable input Data (containing a DataTracker)
+class SOFA_CORE_API DataTrackingDDGNode : public core::objectmodel::DDGNode
 {
-    m_dataTrackers[&data] = data.getCounter();
-}
+public:
+    DataTrackingDDGNode() : core::objectmodel::DDGNode() {}
 
-bool DataTracker::hasChanged( const objectmodel::BaseData& data ) const
-{
-    if (m_dataTrackers.find(&data) != m_dataTrackers.end())
-        return m_dataTrackers.at(&data) != data.getCounter();
-    return false;
-}
+    /// Create a DataCallback object associated with multiple Data fields.
+    void addInputs(std::initializer_list<sofa::core::objectmodel::BaseData*> datas);
+    void addOutputs(std::initializer_list<sofa::core::objectmodel::BaseData*> datas);
 
-bool DataTracker::hasChanged() const
-{
-    for( DataTrackers::const_iterator it=m_dataTrackers.begin(),itend=m_dataTrackers.end() ; it!=itend ; ++it )
-        if( it->second != it->first->getCounter() ) return true;
-    return false;
-}
+    /// Set dirty flag to false
+    /// for the DDGNode and for all the tracked Data
+    virtual void cleanDirty(const core::ExecParams* params = nullptr);
 
-void DataTracker::clean( const objectmodel::BaseData& data )
-{
-    m_dataTrackers[&data] = data.getCounter();
-}
+    /// utility function to ensure all inputs are up-to-date
+    /// can be useful for particulary complex DDGNode
+    /// with a lot input/output imbricated access
+    void updateAllInputsIfDirty();
 
-void DataTracker::clean()
-{
-    for( DataTrackers::iterator it=m_dataTrackers.begin(),itend=m_dataTrackers.end() ; it!=itend ; ++it )
-        it->second = it->first->getCounter();
-}
+protected:
 
-}
+    /// @name Tracking Data mechanism
+    /// each Data added to the DataTracker
+    /// is tracked to be able to check if its value changed
+    /// since their last clean, called by default
+    /// in DataEngine::cleanDirty().
+    /// @{
+
+    DataTracker m_dataTracker;
+
+    ///@}
+
+private:
+    DataTrackingDDGNode(const DataTrackingDDGNode&);
+    void operator=(const DataTrackingDDGNode&);
+};
+
+} // namespace sofa::core
+

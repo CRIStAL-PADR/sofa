@@ -14,6 +14,8 @@ set(HEADER_FILES
     ${SRC_ROOT}/ConstraintParams.h
     ${SRC_ROOT}/DataEngine.h
     ${SRC_ROOT}/DataTracker.h
+    ${SRC_ROOT}/DataTrackingDDGNode.h
+    ${SRC_ROOT}/DataTrackingDDGNodeImpl.h
     ${SRC_ROOT}/ExecParams.h
     ${SRC_ROOT}/Mapping.h
     ${SRC_ROOT}/Mapping.inl
@@ -48,6 +50,7 @@ set(HEADER_FILES
     ${SRC_ROOT}/behavior/Constraint.inl
     ${SRC_ROOT}/behavior/ConstraintCorrection.h
     ${SRC_ROOT}/behavior/ConstraintCorrection.inl
+    ${SRC_ROOT}/behavior/ConstraintResolution.h
     ${SRC_ROOT}/behavior/ConstraintSolver.h
     ${SRC_ROOT}/behavior/ForceField.h
     ${SRC_ROOT}/behavior/ForceField.inl
@@ -164,6 +167,8 @@ set(SOURCE_FILES
     ${SRC_ROOT}/ConstraintParams.cpp
     ${SRC_ROOT}/DataEngine.cpp
     ${SRC_ROOT}/DataTracker.cpp
+    ${SRC_ROOT}/DataTrackingDDGNode.cpp
+    ${SRC_ROOT}/DataTrackingDDGNodeImpl.cpp
     ${SRC_ROOT}/ExecParams.cpp
     ${SRC_ROOT}/Mapping.cpp
     ${SRC_ROOT}/MechanicalParams.cpp
@@ -184,6 +189,7 @@ set(SOURCE_FILES
     ${SRC_ROOT}/behavior/BaseProjectiveConstraintSet.cpp
     ${SRC_ROOT}/behavior/Constraint.cpp
     ${SRC_ROOT}/behavior/ConstraintCorrection.cpp
+    ${SRC_ROOT}/behavior/ConstraintResolution.cpp
     ${SRC_ROOT}/behavior/ConstraintSolver.cpp
     ${SRC_ROOT}/behavior/ForceField.cpp
     ${SRC_ROOT}/behavior/LinearSolver.cpp

@@ -19,41 +19,48 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
-#include "DataTracker.h"
-#include "objectmodel/BaseData.h"
-#include "objectmodel/Base.h"
+#include <sofa/core/DataTrackingDDGNodeImpl.h>
+#include <sofa/core/objectmodel/Base.h>
 
 namespace sofa::core
 {
 
-void DataTracker::trackData( const objectmodel::BaseData& data )
+void DataTrackerCallback::setCallback( std::function<sofa::core::objectmodel::ComponentState(const DataTracker&)> f)
 {
-    m_dataTrackers[&data] = data.getCounter();
+    m_callback = f;
 }
 
-bool DataTracker::hasChanged( const objectmodel::BaseData& data ) const
+void DataTrackerCallback::update()
 {
-    if (m_dataTrackers.find(&data) != m_dataTrackers.end())
-        return m_dataTrackers.at(&data) != data.getCounter();
-    return false;
+    updateAllInputsIfDirty();
+
+    auto cs = m_callback(m_dataTracker);
+    if (m_owner)
+        m_owner->d_componentState.setValue(cs); // but what if the state of the component was invalid for a reason that doesn't depend on this update?
+    cleanDirty();
 }
 
-bool DataTracker::hasChanged() const
+
+void DataTrackerEngine::addCallback( std::function<sofa::core::objectmodel::ComponentState(void)> f)
 {
-    for( DataTrackers::const_iterator it=m_dataTrackers.begin(),itend=m_dataTrackers.end() ; it!=itend ; ++it )
-        if( it->second != it->first->getCounter() ) return true;
-    return false;
+    m_callbacks.push_back(f);
 }
 
-void DataTracker::clean( const objectmodel::BaseData& data )
+/// Each callback in the engine is called, setting its owner's component state to the value returned by the last callback.
+/// Because each callback overwrites the state of the same component, it is important that within a component, all
+/// callbacks perform the same checks to determine the value of the ComponentState.
+void DataTrackerEngine::update()
 {
-    m_dataTrackers[&data] = data.getCounter();
+    updateAllInputsIfDirty();
+    core::objectmodel::ComponentState cs = core::objectmodel::ComponentState::Valid;
+
+    for(auto& callback : m_callbacks)
+        cs = callback();
+
+    if (m_owner)
+        m_owner->d_componentState.setValue(cs);
+    cleanDirty();
 }
 
-void DataTracker::clean()
-{
-    for( DataTrackers::iterator it=m_dataTrackers.begin(),itend=m_dataTrackers.end() ; it!=itend ; ++it )
-        it->second = it->first->getCounter();
 }
 
-}

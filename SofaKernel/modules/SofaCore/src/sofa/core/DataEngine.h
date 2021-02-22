@@ -56,7 +56,7 @@ namespace core
  * }
  *
  */
-class SOFA_CORE_API DataEngine : public core::DataTrackerDDGNode, public virtual core::objectmodel::BaseObject
+class SOFA_CORE_API DataEngine : public core::DataTrackingDDGNode, public virtual core::objectmodel::BaseObject
 {
 public:
     SOFA_ABSTRACT_CLASS(DataEngine, core::objectmodel::BaseObject);
