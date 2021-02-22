@@ -112,7 +112,7 @@ sofa::component::collision::SphereCollisionModel<sofa::defaulttype::Rigid3Types>
 
     //editting the OBBModel
     sphCollisionModel->init();
-    Data<sofa::component::collision::SphereCollisionModel<sofa::defaulttype::Rigid3Types>::VecReal> & dVecReal = sphCollisionModel->radius;
+    Data<sofa::component::collision::SphereCollisionModel<sofa::defaulttype::Rigid3Types>::VecReal> & dVecReal = sphCollisionModel->d_radiuses;
     sofa::component::collision::SphereCollisionModel<sofa::defaulttype::Rigid3Types>::VecReal & vecReal = *(dVecReal.beginEdit());
 
     vecReal[0] = radius;

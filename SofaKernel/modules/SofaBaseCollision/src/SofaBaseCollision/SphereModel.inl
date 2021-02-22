@@ -33,8 +33,8 @@ namespace sofa::component::collision
 
 template<class DataTypes>
 SphereCollisionModel<DataTypes>::SphereCollisionModel()
-    : radius(initData(&radius, "listRadius","Radius of each sphere"))
-    , defaultRadius(initData(&defaultRadius,(SReal)(1.0), "radius","Default Radius"))
+    : d_radiuses(initData(&d_radiuses, "listRadius","Radius of each sphere"))
+    , d_defaultRadius(initData(&d_defaultRadius,(SReal)(1.0), "radius","Default Radius"))
     , d_showImpostors(initData(&d_showImpostors, true, "showImpostors", "Draw spheres as impostors instead of \"real\" spheres"))
     , mstate(nullptr)
 {
@@ -43,8 +43,8 @@ SphereCollisionModel<DataTypes>::SphereCollisionModel()
 
 template<class DataTypes>
 SphereCollisionModel<DataTypes>::SphereCollisionModel(core::behavior::MechanicalState<DataTypes>* _mstate )
-    : radius(initData(&radius, "listRadius","Radius of each sphere"))
-    , defaultRadius(initData(&defaultRadius,(SReal)(1.0), "radius","Default Radius. (default=1.0)"))
+    : d_radiuses(initData(&d_radiuses, "listRadius","Radius of each sphere"))
+    , d_defaultRadius(initData(&d_defaultRadius,(SReal)(1.0), "radius","Default Radius. (default=1.0)"))
     , d_showImpostors(initData(&d_showImpostors, true, "showImpostors", "Draw spheres as impostors instead of \"real\" spheres"))
     , mstate(_mstate)
 {
@@ -57,20 +57,20 @@ void SphereCollisionModel<DataTypes>::resize(Size size)
 {
     this->core::CollisionModel::resize(size);
 
-    VecReal &r = *radius.beginEdit();
+    VecReal &r = *d_radiuses.beginEdit();
 
     if (r.size() < size)
     {
         r.reserve(size);
         while (r.size() < size)
-            r.push_back((Real)defaultRadius.getValue());
+            r.push_back((Real)d_defaultRadius.getValue());
     }
     else
     {
         r.resize(size);
     }
 
-    radius.endEdit();
+    d_radiuses.endEdit();
 }
 
 
@@ -250,10 +250,10 @@ void SphereCollisionModel<DataTypes>::computeContinuousBoundingTree(SReal dt, in
 template <class DataTypes>
 typename SphereCollisionModel<DataTypes>::Real SphereCollisionModel<DataTypes>::getRadius(const Index i) const
 {
-    if(i < this->radius.getValue().size())
-        return radius.getValue()[i];
+    if(i < this->d_radiuses.getValue().size())
+        return d_radiuses.getValue()[i];
     else
-        return (Real) defaultRadius.getValue();
+        return (Real) d_defaultRadius.getValue();
 }
 
 template<class DataTypes>

@@ -115,54 +115,15 @@ public:
 
     core::behavior::MechanicalState<DataTypes>* getMechanicalState() { return mstate; }
 
-    const VecReal& getR() const { return this->radius.getValue(); }
+    const VecReal& getR() const { return this->d_radiuses.getValue(); }
 
     Real getRadius(const Index i) const;
 
     const Coord & velocity(Index index)const;
 
-    /// Pre-construction check method called by ObjectFactory.
-    /// Check that DataTypes matches the MechanicalState.
-    template<class T>
-    static bool canCreate(T*& obj, core::objectmodel::BaseContext* context, core::objectmodel::BaseObjectDescription* arg)
-    {
-        if (dynamic_cast<core::behavior::MechanicalState<TDataTypes>*>(context->getMechanicalState()) == nullptr && context->getMechanicalState() != nullptr)
-        {
-            arg->logError(std::string("No mechanical state with the datatype '") + DataTypes::Name() +
-                          "' found in the context node.");
-            return false;
-        }
-
-        return BaseObject::canCreate(obj, context, arg);
-    }
-
-    template<class T>
-    static typename T::SPtr create(T*, core::objectmodel::BaseContext* context, core::objectmodel::BaseObjectDescription* arg)
-    {
-        typename T::SPtr obj;
-        core::behavior::MechanicalState<TDataTypes>* _mstate = nullptr;
-
-        if( context)
-        {
-            _mstate = dynamic_cast<core::behavior::MechanicalState<TDataTypes>*>(context->getMechanicalState());
-            if (_mstate)
-                obj = sofa::core::objectmodel::New<T>(_mstate);
-            else
-                obj = sofa::core::objectmodel::New<T>();
-
-            context->addObject(obj);
-        }
-
-        if (arg) obj->parse(arg);
-
-        return obj;
-    }
-
-    //TODO(dmarchal) guideline de sofa.
-    Data< VecReal > radius; ///< Radius of each sphere
-    Data< SReal > defaultRadius; ///< Default Radius
+    Data< VecReal > d_radiuses; ///< Radius of each sphere
+    Data< SReal > d_defaultRadius; ///< Default Radius
     Data< bool > d_showImpostors; ///< Draw spheres as impostors instead of "real" spheres
-
 
     void computeBBox(const core::ExecParams* params, bool onlyVisible=false) override;
 
@@ -218,7 +179,6 @@ typedef TSphere<sofa::defaulttype::Rigid3Types> RigidSphere;
 extern template class SOFA_SOFABASECOLLISION_API TSphere<defaulttype::Vec3Types>;
 extern template class SOFA_SOFABASECOLLISION_API SphereCollisionModel<defaulttype::Vec3Types>;
 extern template class SOFA_SOFABASECOLLISION_API SphereCollisionModel<defaulttype::Rigid3Types>;
-
 #endif
 
 } // namespace sofa::component::collision
