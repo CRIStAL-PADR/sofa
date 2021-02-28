@@ -26,8 +26,8 @@
 #include <sofa/core/BaseState.h>
 #include <sofa/core/MultiVecId.h>
 #include <sofa/defaulttype/Vec.h>
-#include <sofa/defaulttype/Quat.h>
 #include <sofa/helper/StateMask.h>
+#include <sofa/defaulttype/fwd.h> /// for Quat
 #include <sofa/defaulttype/fwd.h> /// For BaseMatrix
 
 namespace sofa
@@ -283,7 +283,7 @@ public:
     virtual void applyRotation (const SReal /*rx*/, const SReal /*ry*/, const SReal /*rz*/) {}
 
     /// Rotate the current state
-    virtual void applyRotation(const defaulttype::Quat q)=0;
+    virtual void applyRotation(const defaulttype::Quat& q)=0;
 
     /// Scale the current state
     virtual void applyScale(const SReal /*sx*/,const SReal /*sy*/,const SReal /*sz*/)=0;

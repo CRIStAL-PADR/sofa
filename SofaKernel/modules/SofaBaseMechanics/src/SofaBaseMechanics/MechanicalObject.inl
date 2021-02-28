@@ -758,7 +758,7 @@ void MechanicalObject<DataTypes>::applyRotation (const SReal rx, const SReal ry,
 }
 
 template <class DataTypes>
-void MechanicalObject<DataTypes>::applyRotation (const defaulttype::Quat q)
+void MechanicalObject<DataTypes>::applyRotation (const defaulttype::Quat& q)
 {
     helper::WriteAccessor< Data<VecCoord> > x_wA = *this->write(core::VecCoordId::position());
 

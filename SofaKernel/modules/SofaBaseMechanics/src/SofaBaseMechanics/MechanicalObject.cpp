@@ -56,7 +56,7 @@ template class SOFA_SOFABASEMECHANICS_API MechanicalObject<Rigid2Types>;
 
 
 template<>
-void MechanicalObject<defaulttype::Rigid3Types>::applyRotation (const defaulttype::Quat q)
+void MechanicalObject<defaulttype::Rigid3Types>::applyRotation (const sofa::defaulttype::Quat &q)
 {
     helper::WriteAccessor< Data<VecCoord> > x = *this->write(core::VecCoordId::position());
 

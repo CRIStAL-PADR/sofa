@@ -227,7 +227,7 @@ public:
     /// Rotation using Euler Angles in degree.
     void applyRotation (const SReal rx, const SReal ry, const SReal rz) override;
 
-    void applyRotation (const defaulttype::Quat q) override;
+    void applyRotation (const defaulttype::Quat& q) override;
 
     void applyScale (const SReal sx, const SReal sy, const SReal sz) override;
 
@@ -449,7 +449,7 @@ protected :
 };
 
 template<> SOFA_SOFABASEMECHANICS_API
-void MechanicalObject<defaulttype::Rigid3Types>::applyRotation (const defaulttype::Quat q);
+void MechanicalObject<defaulttype::Rigid3Types>::applyRotation (const defaulttype::Quat& q);
 
 template<> SOFA_SOFABASEMECHANICS_API
 void MechanicalObject<defaulttype::Rigid3Types>::addFromBaseVectorSameSize(core::VecId dest, const defaulttype::BaseVector* src, unsigned int &offset );
