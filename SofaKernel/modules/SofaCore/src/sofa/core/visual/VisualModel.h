@@ -151,7 +151,7 @@ public:
     /// Rotate the positions
     ///
     /// This method is optional, it is used when the user want to interactively change the position of an object
-    virtual void applyRotation(const defaulttype::Quat /*q*/)
+    virtual void applyRotation(const defaulttype::Quat& /*q*/)
     {
     }
 

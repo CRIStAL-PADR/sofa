@@ -157,7 +157,7 @@ public:
     /// Apply Rotation from Euler angles (in degree!)
     void applyRotation (const SReal rx, const SReal ry, const SReal rz) override;
 
-    void applyRotation(const sofa::defaulttype::Quat q) override;
+    void applyRotation(const sofa::defaulttype::Quat& q) override;
 
     void applyScale(const SReal sx, const SReal sy, const SReal sz) override;
 

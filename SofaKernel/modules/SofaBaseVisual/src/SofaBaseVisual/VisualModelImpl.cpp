@@ -689,7 +689,7 @@ void VisualModelImpl::applyRotation(const SReal rx, const SReal ry, const SReal 
     applyRotation(q);
 }
 
-void VisualModelImpl::applyRotation(const Quat q)
+void VisualModelImpl::applyRotation(const Quat &q)
 {
     Data< VecCoord >* d_x = this->write(core::VecCoordId::position());
     VecCoord &x = *d_x->beginEdit();
