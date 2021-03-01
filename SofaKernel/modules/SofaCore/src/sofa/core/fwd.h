@@ -11,6 +11,7 @@ class CollisionModel;
 class CollisionElementIterator;
 class ConstraintParams;
 class ExecParams;
+class MechanicalParams;
 }
 
 namespace sofa::core::objectmodel
@@ -38,6 +39,7 @@ class BaseConstraint;
 class BaseConstraintSet;
 class ConstraintSolver;
 class ConstraintResolution;
+class MultiMatrixAccessor;
 
 template<class T>
 class MechanicalState;

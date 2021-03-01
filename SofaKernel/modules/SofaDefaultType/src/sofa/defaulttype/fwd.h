@@ -22,7 +22,6 @@
 #pragma once
 
 #include <sofa/defaulttype/config.h>
-#include <sofa/type/Quat.h>
 #include <sofa/type/fwd.h>
 
 namespace sofa::defaulttype
@@ -57,8 +56,5 @@ using sofa::type::Matrix4;
 class BaseMatrix;
 class BaseVector;
 
-typedef sofa::type::Quat<float> Quatf;
-typedef sofa::type::Quat<double> Quatd;
-typedef sofa::type::Quat<SReal> Quat;
-typedef Quat Quaternion;
+typedef sofa::type::Quat<SReal> Quaternion;
 }

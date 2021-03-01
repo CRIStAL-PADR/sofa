@@ -23,7 +23,6 @@
 #define SOFA_CORE_VISUAL_VISUALMODEL_H
 
 #include <sofa/core/objectmodel/BaseObject.h>
-#include <sofa/defaulttype/Quat.h>
 #include <sofa/defaulttype/TopologyTypes.h>
 
 namespace sofa

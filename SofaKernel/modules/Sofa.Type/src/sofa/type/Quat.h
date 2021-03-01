@@ -44,6 +44,15 @@ public:
     typedef Real value_type;
     typedef sofa::Size Size;
 
+    /// Compile-time constant specifying the number of scalars within this vector (equivalent to the size() method)
+    enum { total_size = 4 };
+
+    enum [[deprecated("There is too much size")]] { static_size = 4 };
+    static constexpr unsigned int size() {return 4;}
+
+    /// Compile-time constant specifying the number of dimensions of space (NOT equivalent to total_size for quaternions)
+    enum { spatial_dimensions = 3 };
+
     Quat();
     ~Quat();
     Quat(Real x, Real y, Real z, Real w);
@@ -142,13 +151,6 @@ public:
     auto quatToRotationVector() const -> Vec3;
     auto toEulerVector() const -> Vec3;
 
-    /*! Returns the slerp interpolation of Quaternions \p a and \p b, at time \p t.
-     \p t should range in [0,1]. Result is \p a when \p t=0 and \p b when \p t=1.
-     When \p allowFlip is \c true (default) the slerp interpolation will always use the "shortest path"
-     between the Quaternions' orientations, by "flipping" the source Quaternion if needed (see
-     negate()). */
-    void slerp(const Quat& a, const Quat& b, Real t, bool allowFlip=true);
-
     /// A useful function, builds a rotation matrix in Matrix based on
     /// given quaternion.
     void buildRotationMatrix(Real m[4][4]) const;
@@ -200,6 +202,15 @@ public:
     [[deprecated("The function print will be removed soon")]]
     void print();
 
+    //TODO(@froy): do we really need so much slerp function ?
+    // with so lovely difference in coding style and in what is actually
+    // implemented. => fast path for slerp, allowFip or not. Cannot we just live with one function ?
+    /*! Returns the slerp interpolation of Quaternions \p a and \p b, at time \p t.
+     \p t should range in [0,1]. Result is \p a when \p t=0 and \p b when \p t=1.
+     When \p allowFlip is \c true (default) the slerp interpolation will always use the "shortest path"
+     between the Quaternions' orientations, by "flipping" the source Quaternion if needed (see
+     negate()). */
+    void slerp(const Quat& a, const Quat& b, Real t, bool allowFlip=true);
     auto slerp(Quat &q1, Real t) -> Quat;
     auto slerp2(Quat &q1, Real t) -> Quat;
 
@@ -208,13 +219,6 @@ public:
     bool operator==(const Quat& q) const;
     bool operator!=(const Quat& q) const;
 
-    enum { static_size = 4 };
-    static unsigned int size() {return 4;}
-
-    /// Compile-time constant specifying the number of scalars within this vector (equivalent to the size() method)
-    enum { total_size = 4 };
-    /// Compile-time constant specifying the number of dimensions of space (NOT equivalent to total_size for quaternions)
-    enum { spatial_dimensions = 3 };
 };
 
 /// write to an output stream

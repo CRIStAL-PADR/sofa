@@ -39,10 +39,6 @@ namespace sofa::component::linearsolver
  * see all scenes in example/Component/linearsolver/MatrixContribution*  for tests
  *
  * */
-
-
-
-
 class SOFA_SOFABASELINEARSOLVER_API DefaultMultiMatrixAccessor : public sofa::core::behavior::MultiMatrixAccessor
 {
 public:

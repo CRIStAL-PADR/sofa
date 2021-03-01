@@ -31,6 +31,7 @@
 #include <sofa/defaulttype/BoundingBox.h>
 #include <limits>
 #include <sofa/simulation/Node.h>
+#include <sofa/core/behavior/MultiMatrixAccessor.h>
 
 namespace sofa::component::forcefield
 {

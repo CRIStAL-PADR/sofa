@@ -25,7 +25,7 @@
 #include <sofa/defaulttype/RigidTypes.h>
 #include <SofaBaseTopology/TopologySubsetData.inl>
 #include <sofa/simulation/Node.h>
-
+#include <sofa/core/behavior/MultiMatrixAccessor.h>
 
 namespace sofa::component::projectiveconstraintset
 {

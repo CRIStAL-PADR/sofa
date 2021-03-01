@@ -22,8 +22,8 @@
 #ifndef SOFA_DEFAULTTYPE_TOPOLOGYTYPES_H
 #define SOFA_DEFAULTTYPE_TOPOLOGYTYPES_H
 
+#include <sofa/core/config.h>
 #include <climits>
-
 namespace sofa
 {
 namespace defaulttype
