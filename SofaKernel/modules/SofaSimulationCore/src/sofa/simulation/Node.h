@@ -331,12 +331,12 @@ public:
     /// Generic object access, given a set of required tags, possibly searching up or down from the current context
     ///
     /// Note that the template wrapper method should generally be used to have the correct return type,
-    void* getObject(const sofa::core::objectmodel::ClassInfo& class_info, const sofa::core::objectmodel::TagSet& tags, SearchDirection dir = SearchUp) const override = 0;
+    void* getObject(const sofa::core::objectmodel::ClassInfoId& class_info, const sofa::core::objectmodel::TagSet& tags, SearchDirection dir = SearchUp) const override = 0;
 
     /// Generic object access, possibly searching up or down from the current context
     ///
     /// Note that the template wrapper method should generally be used to have the correct return type,
-    void* getObject(const sofa::core::objectmodel::ClassInfo& class_info, SearchDirection dir = SearchUp) const override
+    void* getObject(const sofa::core::objectmodel::ClassInfoId& class_info, SearchDirection dir = SearchUp) const override
     {
         return getObject(class_info, sofa::core::objectmodel::TagSet(), dir);
     }
@@ -344,17 +344,17 @@ public:
     /// Generic object access, given a path from the current context
     ///
     /// Note that the template wrapper method should generally be used to have the correct return type,
-    void* getObject(const sofa::core::objectmodel::ClassInfo& class_info, const std::string& path) const override = 0;
+    void* getObject(const sofa::core::objectmodel::ClassInfoId& class_info, const std::string& path) const override = 0;
 
     /// Generic list of objects access, given a set of required tags, possibly searching up or down from the current context
     ///
     /// Note that the template wrapper method should generally be used to have the correct return type,
-    void getObjects(const sofa::core::objectmodel::ClassInfo& class_info, GetObjectsCallBack& container, const sofa::core::objectmodel::TagSet& tags, SearchDirection dir = SearchUp) const  override = 0;
+    void getObjects(const sofa::core::objectmodel::ClassInfoId& class_info, GetObjectsCallBack& container, const sofa::core::objectmodel::TagSet& tags, SearchDirection dir = SearchUp) const  override = 0;
 
     /// Generic list of objects access, possibly searching up or down from the current context
     ///
     /// Note that the template wrapper method should generally be used to have the correct return type,
-    void getObjects(const sofa::core::objectmodel::ClassInfo& class_info, GetObjectsCallBack& container, SearchDirection dir = SearchUp) const override
+    void getObjects(const sofa::core::objectmodel::ClassInfoId& class_info, GetObjectsCallBack& container, SearchDirection dir = SearchUp) const override
     {
         getObjects(class_info, container, sofa::core::objectmodel::TagSet(), dir);
     }

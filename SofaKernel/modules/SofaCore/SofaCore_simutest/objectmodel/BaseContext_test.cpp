@@ -29,6 +29,9 @@ using sofa::simulation::Node ;
 #include <SofaBaseUtils/InfoComponent.h>
 using sofa::component::InfoComponent;
 
+#include <sofa/core/objectmodel/ClassInfoId.h>
+#include <sofa/core/objectmodel/ClassInfo.h>
+
 class BaseContext_test: public BaseSimulationTest
 {
 public:
@@ -36,6 +39,10 @@ public:
     {
         EXPECT_MSG_NOEMIT(Error, Warning) ;
         importPlugin("SofaComponentAll") ;
+
+        auto t = sofa::core::objectmodel::ClassInfoId::GetClassId<InfoComponent>();
+        std::cout << "YOOLO" << t.getClassInfo()->className << std::endl;
+
         std::stringstream scene ;
         scene << "<?xml version='1.0'?>"
                  "<Node name='Root' gravity='0 -9.81 0' time='0' animate='0' >               \n"
@@ -54,6 +61,7 @@ public:
         SceneInstance c("xml", scene.str()) ;
         c.initScene() ;
 
+       
         Node* root = c.root.get() ;
         ASSERT_NE(root, nullptr) ;
         BaseContext* context = root->getChild("child1")->getContext() ;

@@ -25,9 +25,6 @@
 #include <sofa/core/fwd.h>
 #include <sofa/simulation/fwd.h>
 #include <sofa/core/objectmodel/Base.h>
-#include <sofa/core/objectmodel/ClassInfo.h>
-
-
 
 namespace sofa
 {
@@ -135,17 +132,17 @@ public:
     /// Generic object access, possibly searching up or down from the current context
     ///
     /// Note that the template wrapper method should generally be used to have the correct return type,
-    virtual void* getObject(const ClassInfo& class_info, SearchDirection dir = SearchUp) const;
+    virtual void* getObject(const ClassInfoId& class_info, SearchDirection dir = SearchUp) const;
 
     /// Generic object access, given a set of required tags, possibly searching up or down from the current context
     ///
     /// Note that the template wrapper method should generally be used to have the correct return type,
-    virtual void* getObject(const ClassInfo& class_info, const TagSet& tags, SearchDirection dir = SearchUp) const;
+    virtual void* getObject(const ClassInfoId& class_info, const TagSet& tags, SearchDirection dir = SearchUp) const;
 
     /// Generic object access, given a path from the current context
     ///
     /// Note that the template wrapper method should generally be used to have the correct return type,
-    virtual void* getObject(const ClassInfo& class_info, const std::string& path) const;
+    virtual void* getObject(const ClassInfoId& class_info, const std::string& path) const;
 
     class GetObjectsCallBack
     {
@@ -157,12 +154,12 @@ public:
     /// Generic list of objects access, possibly searching up or down from the current context
     ///
     /// Note that the template wrapper method should generally be used to have the correct return type,
-    virtual void getObjects(const ClassInfo& class_info, GetObjectsCallBack& container, SearchDirection dir = SearchUp) const;
+    virtual void getObjects(const ClassInfoId& class_info, GetObjectsCallBack& container, SearchDirection dir = SearchUp) const;
 
     /// Generic list of objects access, given a set of required tags, possibly searching up or down from the current context
     ///
     /// Note that the template wrapper method should generally be used to have the correct return type,
-    virtual void getObjects(const ClassInfo& class_info, GetObjectsCallBack& container, const TagSet& tags, SearchDirection dir = SearchUp) const;
+    virtual void getObjects(const ClassInfoId& class_info, GetObjectsCallBack& container, const TagSet& tags, SearchDirection dir = SearchUp) const;
 
     /// List all objects of this node deriving from a given class
     template<class Object, class Container>

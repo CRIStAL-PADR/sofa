@@ -19,36 +19,47 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
-#include "ClassInfo.h"
+#pragma once
+#include <sofa/core/config.h>
+#include <sofa/core/fwd.h>
+#include <sofa/helper/TypeInfo.h>
 
 namespace sofa::core::objectmodel
 {
 
-/// returns true iff c is a parent class of this
-bool ClassInfo::hasParent(const ClassInfo* c) const
+/** ************************************************************************
+ * @brief Generates unique id for class.
+ *
+ * Compared to type_info.hash_code() this version is guaranteed to be in
+ * constant time
+ *
+ * The common use case is get the type id to access a full AbstractTypeInfo from
+ * the TypeInfoRegistry.
+ * Example:
+ *      ClassInfoId& shortinfo = ClassInfoId::getClassId<double>();
+ *      ClassInfo* info = ClassInfoRegistry::Get(shortinfo.id);
+ *      info->getName()
+ *****************************************************************************/
+class SOFA_CORE_API ClassInfoId
 {
-    if (this == c)
-        return true;
-
-    for (unsigned int i=0; i<parents.size(); ++i)
+public:
+    template<class T>
+    static const ClassInfoId& GetClassId()
     {
-        if (parents[i]->hasParent(c))
-            return true;
+        static ClassInfoId typeId(ClassInfoId::GetId(typeid(T)), typeid(T));
+        return typeId;
     }
-    return false;
-}
 
-/// returns true iff a parent class of this is named parentClassName
-bool ClassInfo::hasParent(const std::string& parentClassName) const
-{
-    if (className==parentClassName)
-        return true;
-    for (unsigned int i=0; i<parents.size(); ++i)
-    {
-        if (parents[i]->hasParent(parentClassName))
-            return true;
-    }
-    return false;
-}
+    const ClassInfo* getClassInfo() const;
+    const sofa::helper::TypeInfo type()const { return sofa::helper::TypeInfo(nfo); }
 
-}
+    sofa::Index id;
+    const std::type_info& nfo;
+public:
+    ClassInfoId(int id_, const std::type_info& nfo);
+    static int GetId(const std::type_info& nfo);
+};
+
+#define classid(T) sofa::core::objectmodel::ClassInfoId::GetClassId<T>()
+
+} /// namespace sofa::defaulttype

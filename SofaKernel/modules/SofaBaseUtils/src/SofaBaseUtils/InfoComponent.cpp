@@ -23,9 +23,17 @@
 using sofa::core::RegisterObject ;
 
 #include <SofaBaseUtils/InfoComponent.h>
-
+#include <sofa/core/objectmodel/ClassInfoRepository.h>
 namespace sofa::component::infocomponent
 {
 int InfoComponentClass = RegisterObject("This object retain the info/error message")
         .add< InfoComponent >();
+
+int f() {
+    auto t = sofa::core::objectmodel::ClassInfoRepository::Get(sofa::core::objectmodel::ClassInfoId::GetClassId<InfoComponent>());
+    return 0;
+}
+
+
+int coucou = f();
 } // namespace sofa::component::infocomponent

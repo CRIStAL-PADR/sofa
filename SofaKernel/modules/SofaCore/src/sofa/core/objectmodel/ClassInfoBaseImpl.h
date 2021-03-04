@@ -19,36 +19,33 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
-#include "ClassInfo.h"
+#pragma once
 
+#include <sofa/core/objectmodel/ClassInfo.h>
+#include <typeinfo>
 namespace sofa::core::objectmodel
 {
 
-/// returns true iff c is a parent class of this
-bool ClassInfo::hasParent(const ClassInfo* c) const
+template<class T>
+class ClassInfoBaseImpl : public ClassInfo
 {
-    if (this == c)
-        return true;
+public:
+    ClassInfoBaseImpl() : ClassInfo(&typeid(T)) {}
 
-    for (unsigned int i=0; i<parents.size(); ++i)
+    Base* dynamicCastToBase(Base* obj) const override
     {
-        if (parents[i]->hasParent(c))
-            return true;
-    }
-    return false;
-}
+        return dynamic_cast<T*>(obj);
+    };
 
-/// returns true iff a parent class of this is named parentClassName
-bool ClassInfo::hasParent(const std::string& parentClassName) const
-{
-    if (className==parentClassName)
-        return true;
-    for (unsigned int i=0; i<parents.size(); ++i)
+    void* dynamicCast(Base* obj) const override
     {
-        if (parents[i]->hasParent(parentClassName))
-            return true;
-    }
-    return false;
-}
+        return dynamic_cast<T*>(obj);
+    };
 
-}
+    bool isInstance(Base* obj) const override
+    {
+        return dynamic_cast<T*>(obj) != nullptr;
+    }
+};
+
+} /// sofa::core::objectmodel

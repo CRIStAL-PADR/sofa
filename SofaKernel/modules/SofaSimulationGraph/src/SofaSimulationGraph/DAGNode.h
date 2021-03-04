@@ -89,17 +89,17 @@ public:
     /// Generic object access, given a set of required tags, possibly searching up or down from the current context
     ///
     /// Note that the template wrapper method should generally be used to have the correct return type,
-    void* getObject(const sofa::core::objectmodel::ClassInfo& class_info, const sofa::core::objectmodel::TagSet& tags, SearchDirection dir = SearchUp) const override;
+    void* getObject(const sofa::core::objectmodel::ClassInfoId& class_info, const sofa::core::objectmodel::TagSet& tags, SearchDirection dir = SearchUp) const override;
 
     /// Generic object access, given a path from the current context
     ///
     /// Note that the template wrapper method should generally be used to have the correct return type,
-    void* getObject(const sofa::core::objectmodel::ClassInfo& class_info, const std::string& path) const override;
+    void* getObject(const sofa::core::objectmodel::ClassInfoId& class_info, const std::string& path) const override;
 
     /// Generic list of objects access, given a set of required tags, possibly searching up or down from the current context
     ///
     /// Note that the template wrapper method should generally be used to have the correct return type,
-    void getObjects(const sofa::core::objectmodel::ClassInfo& class_info, GetObjectsCallBack& container, const sofa::core::objectmodel::TagSet& tags, SearchDirection dir = SearchUp) const override;
+    void getObjects(const sofa::core::objectmodel::ClassInfoId& class_info, GetObjectsCallBack& container, const sofa::core::objectmodel::TagSet& tags, SearchDirection dir = SearchUp) const override;
 
 
     /// Mesh Topology that is relevant for this context
@@ -212,7 +212,7 @@ protected:
     /// @{
 
     /// get node's local objects respecting specified class_info and tags
-    void getLocalObjects( const sofa::core::objectmodel::ClassInfo& class_info, DAGNode::GetObjectsCallBack& container, const sofa::core::objectmodel::TagSet& tags ) const ;
+    void getLocalObjects( const sofa::core::objectmodel::ClassInfoId& class_info, DAGNode::GetObjectsCallBack& container, const sofa::core::objectmodel::TagSet& tags ) const ;
 
     friend class GetDownObjectsVisitor ;
     friend class GetUpObjectsVisitor ;

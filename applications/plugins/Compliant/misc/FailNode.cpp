@@ -14,7 +14,7 @@ void FailNode::fail() {
 	throw std::logic_error("not implemented");
 }
 
-void* FailNode::getObject(const sofa::core::objectmodel::ClassInfo& /*class_info*/,
+void* FailNode::getObject(const sofa::core::objectmodel::ClassInfoId& /*class_info*/,
                 const sofa::core::objectmodel::TagSet& /*tags*/,
                 SearchDirection /*dir*/ ) const {
 	fail();
@@ -23,13 +23,13 @@ void* FailNode::getObject(const sofa::core::objectmodel::ClassInfo& /*class_info
 
 Node* FailNode::findCommonParent( simulation::Node* /*node2*/ ) {fail(); return nullptr; }
 	
-void* FailNode::getObject(const sofa::core::objectmodel::ClassInfo& /*class_info*/,
+void* FailNode::getObject(const sofa::core::objectmodel::ClassInfoId& /*class_info*/,
                 const std::string& /*path*/) const {
 	fail();
     return nullptr;
 }
 
-void FailNode::getObjects(const sofa::core::objectmodel::ClassInfo& /*class_info*/,
+void FailNode::getObjects(const sofa::core::objectmodel::ClassInfoId& /*class_info*/,
                 GetObjectsCallBack& /*container*/,
                 const sofa::core::objectmodel::TagSet& /*tags*/,
                 SearchDirection /*dir*/ ) const {
