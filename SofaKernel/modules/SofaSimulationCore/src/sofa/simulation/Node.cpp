@@ -20,6 +20,7 @@
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
 #include <sofa/simulation/Node.h>
+#include <sofa/core/collision/Pipeline.h>
 #include <sofa/core/objectmodel/ContextObject.h>
 #include <sofa/core/objectmodel/ConfigurationSetting.h>
 #include <sofa/core/topology/Topology.h>
@@ -31,6 +32,7 @@
 #include <sofa/core/visual/VisualParams.h>
 #include <sofa/core/visual/Shader.h>
 #include <sofa/core/CollisionModel.h>
+
 #include <sofa/simulation/Node.inl>
 #include <sofa/simulation/PropagateEventVisitor.h>
 #include <sofa/simulation/UpdateMappingEndEvent.h>
