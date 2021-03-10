@@ -20,9 +20,12 @@
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
 #include <sofa/simulation/Node.h>
-#include <sofa/core/visual/VisualParams.h>
+#include <sofa/core/objectmodel/ContextObject.h>
+#include <sofa/core/objectmodel/ConfigurationSetting.h>
+#include <sofa/core/visual/VisualLoop.h>
 #include <sofa/core/visual/VisualModel.h>
 #include <sofa/core/visual/VisualManager.h>
+#include <sofa/core/visual/VisualParams.h>
 #include <sofa/core/visual/Shader.h>
 #include <sofa/core/CollisionModel.h>
 #include <sofa/simulation/Node.inl>

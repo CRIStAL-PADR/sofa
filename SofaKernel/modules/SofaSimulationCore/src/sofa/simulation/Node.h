@@ -24,12 +24,11 @@
 #include <sofa/simulation/config.h>
 #include <sofa/simulation/fwd.h>
 
-#include <sofa/core/objectmodel/Context.h>
 #include <sofa/core/objectmodel/BaseNode.h>
 #include <sofa/core/objectmodel/BaseObjectDescription.h>
-#include <sofa/core/objectmodel/ConfigurationSetting.h>
+#include <sofa/core/objectmodel/Context.h>
+
 #include <sofa/core/BehaviorModel.h>
-#include <sofa/core/objectmodel/ContextObject.h>
 #include <sofa/core/CollisionModel.h>
 #include <sofa/core/behavior/MechanicalState.h>
 #include <sofa/core/Mapping.h>
@@ -45,10 +44,8 @@
 #include <sofa/core/behavior/OdeSolver.h>
 #include <sofa/core/behavior/ConstraintSolver.h>
 #include <sofa/core/behavior/BaseAnimationLoop.h>
-#include <sofa/core/visual/VisualLoop.h>
 #include <sofa/core/collision/Pipeline.h>
 #include <sofa/core/loader/BaseLoader.h>
-#include <sofa/core/objectmodel/Event.h>
 #include <sofa/simulation/VisitorScheduler.h>
 
 #include <sofa/simulation/fwd.h>
