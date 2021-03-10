@@ -22,6 +22,9 @@
 #include <sofa/simulation/Node.h>
 #include <sofa/core/objectmodel/ContextObject.h>
 #include <sofa/core/objectmodel/ConfigurationSetting.h>
+#include <sofa/core/topology/Topology.h>
+#include <sofa/core/topology/BaseTopologyObject.h>
+#include <sofa/core/topology/BaseMeshTopology.h>
 #include <sofa/core/visual/VisualLoop.h>
 #include <sofa/core/visual/VisualModel.h>
 #include <sofa/core/visual/VisualManager.h>
