@@ -28,7 +28,6 @@
 #include <sofa/core/objectmodel/BaseObjectDescription.h>
 #include <sofa/core/objectmodel/Context.h>
 
-#include <sofa/core/CollisionModel.h>
 #include <sofa/core/behavior/MechanicalState.h>
 #include <sofa/core/behavior/ForceField.h>
 #include <sofa/core/behavior/BaseInteractionForceField.h>
