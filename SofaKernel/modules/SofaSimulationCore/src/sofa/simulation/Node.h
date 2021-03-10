@@ -25,23 +25,9 @@
 #include <sofa/simulation/fwd.h>
 
 #include <sofa/core/objectmodel/BaseNode.h>
-#include <sofa/core/objectmodel/BaseObjectDescription.h>
 #include <sofa/core/objectmodel/Context.h>
 
-#include <sofa/core/behavior/MechanicalState.h>
-#include <sofa/core/behavior/ForceField.h>
-#include <sofa/core/behavior/BaseInteractionForceField.h>
-#include <sofa/core/behavior/Mass.h>
-#include <sofa/core/behavior/BaseProjectiveConstraintSet.h>
-#include <sofa/core/behavior/BaseConstraintSet.h>
-#include <sofa/core/behavior/LinearSolver.h>
-#include <sofa/core/behavior/OdeSolver.h>
-#include <sofa/core/behavior/ConstraintSolver.h>
-#include <sofa/core/behavior/BaseAnimationLoop.h>
-
-#include <sofa/simulation/fwd.h>
 #include <type_traits>
-
 #include <string>
 #include <stack>
 
