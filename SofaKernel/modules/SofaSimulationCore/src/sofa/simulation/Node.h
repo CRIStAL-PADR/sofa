@@ -41,7 +41,6 @@
 #include <sofa/core/behavior/OdeSolver.h>
 #include <sofa/core/behavior/ConstraintSolver.h>
 #include <sofa/core/behavior/BaseAnimationLoop.h>
-#include <sofa/core/loader/BaseLoader.h>
 #include <sofa/simulation/VisitorScheduler.h>
 
 #include <sofa/simulation/fwd.h>

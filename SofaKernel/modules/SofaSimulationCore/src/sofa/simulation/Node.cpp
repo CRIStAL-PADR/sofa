@@ -21,6 +21,7 @@
 ******************************************************************************/
 #include <sofa/simulation/Node.h>
 #include <sofa/core/collision/Pipeline.h>
+#include <sofa/core/loader/BaseLoader.h>
 #include <sofa/core/objectmodel/ContextObject.h>
 #include <sofa/core/objectmodel/ConfigurationSetting.h>
 #include <sofa/core/topology/Topology.h>
