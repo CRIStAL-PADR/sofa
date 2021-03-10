@@ -31,7 +31,6 @@
 #include <sofa/core/BehaviorModel.h>
 #include <sofa/core/CollisionModel.h>
 #include <sofa/core/behavior/MechanicalState.h>
-#include <sofa/core/Mapping.h>
 #include <sofa/core/behavior/ForceField.h>
 #include <sofa/core/behavior/BaseInteractionForceField.h>
 #include <sofa/core/behavior/Mass.h>
@@ -41,7 +40,6 @@
 #include <sofa/core/behavior/OdeSolver.h>
 #include <sofa/core/behavior/ConstraintSolver.h>
 #include <sofa/core/behavior/BaseAnimationLoop.h>
-#include <sofa/simulation/VisitorScheduler.h>
 
 #include <sofa/simulation/fwd.h>
 #include <type_traits>

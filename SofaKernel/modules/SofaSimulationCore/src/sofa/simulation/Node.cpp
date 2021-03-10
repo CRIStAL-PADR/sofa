@@ -32,9 +32,12 @@
 #include <sofa/core/visual/VisualManager.h>
 #include <sofa/core/visual/VisualParams.h>
 #include <sofa/core/visual/Shader.h>
+
 #include <sofa/core/CollisionModel.h>
+#include <sofa/core/Mapping.h>
 
 #include <sofa/simulation/Node.inl>
+#include <sofa/simulation/VisitorScheduler.h>
 #include <sofa/simulation/PropagateEventVisitor.h>
 #include <sofa/simulation/UpdateMappingEndEvent.h>
 #include <sofa/simulation/AnimateVisitor.h>
