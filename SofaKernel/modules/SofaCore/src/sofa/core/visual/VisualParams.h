@@ -26,9 +26,7 @@
 #include <sofa/core/ExecParams.h>
 #include <sofa/core/MultiVecId.h>
 #include <sofa/helper/visual/DrawTool.h>
-#include <sofa/helper/visual/Transformation.h>
 #include <sofa/core/visual/DisplayFlags.h>
-
 
 namespace sofa::core::visual
 {
@@ -45,7 +43,7 @@ enum
 class SOFA_CORE_API VisualParams : public ExecParams
 {
 public:
-	typedef sofa::helper::fixed_array<int, 4> Viewport;
+    typedef sofa::helper::fixed_array<int, 4> Viewport;
 
     /// The enumeration used to describe each step of the rendering.
     enum Pass
@@ -142,16 +140,10 @@ public:
 
     /// set those deprecations as error ASAP
     [[deprecated("sceneTransform in DrawTool is removed from VisualParam, use with the ModelView and Perspective Matrices instead.")]]
-    helper::visual::Transformation& sceneTransform() { return m_sceneTransform; }
+    void sceneTransform() = delete;
     
     [[deprecated("sceneTransform in DrawTool is removed from VisualParam, use with the ModelView and Perspective Matrices instead.")]]
-    const helper::visual::Transformation& sceneTransform() const { return m_sceneTransform; }
-
-    //[[deprecated("frameBufferObject in DrawTool is removed from VisualParam, use your rendering API instead.")]]
-    //helper::gl::FrameBufferObject*& frameBufferObject() { return m_boundFrameBuffer; }
-
-    //[[deprecated("frameBufferObject in DrawTool is removed from VisualParam, use your rendering API instead.")]]
-    //helper::gl::FrameBufferObject*& frameBufferObject() const { return m_boundFrameBuffer; }
+    void sceneTransform() const = delete;
 
     bool isSupported(unsigned int api) const
     {
@@ -168,15 +160,13 @@ public:
 
 protected:
     sofa::defaulttype::BoundingBox      m_sceneBoundingBox;
-    helper::visual::Transformation          m_sceneTransform;
     Viewport                            m_viewport;
-    SReal                              m_zNear;
-    SReal                              m_zFar;
+    SReal                               m_zNear;
+    SReal                               m_zFar;
     CameraType                          m_cameraType;
     Pass                                m_pass;
     DisplayFlags                        m_displayFlags;
     mutable helper::visual::DrawTool*   m_drawTool;
-    //mutable helper::gl::FrameBufferObject*	m_boundFrameBuffer;
     /// Ids of position vector
     ConstMultiVecCoordId m_x;
     /// Ids of velocity vector
