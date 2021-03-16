@@ -24,7 +24,6 @@
 
 #include <sofa/core/objectmodel/BaseObject.h>
 #include <sofa/helper/list.h>
-#include <sofa/defaulttype/TopologyTypes.h>
 #include <climits>
 
 namespace sofa

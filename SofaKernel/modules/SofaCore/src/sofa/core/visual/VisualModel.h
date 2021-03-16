@@ -24,7 +24,6 @@
 
 #include <sofa/core/objectmodel/BaseObject.h>
 #include <sofa/defaulttype/Quat.h>
-#include <sofa/defaulttype/TopologyTypes.h>
 
 namespace sofa
 {
