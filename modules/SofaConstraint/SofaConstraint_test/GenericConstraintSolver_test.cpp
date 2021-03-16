@@ -22,6 +22,8 @@
 #include <SofaSimulationGraph/testing/BaseSimulationTest.h>
 using sofa::helper::testing::BaseSimulationTest;
 
+#include <sofa/core/objectmodel/BaseObject.h>
+
 #include <SofaSimulationGraph/SimpleApi.h>
 using namespace sofa::simpleapi;
 

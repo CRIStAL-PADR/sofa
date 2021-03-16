@@ -20,6 +20,7 @@
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
 #include <sofa/simulation/CleanupVisitor.h>
+#include <sofa/core/objectmodel/BaseObject.h>
 #include <sofa/simulation/Node.h>
 
 namespace sofa

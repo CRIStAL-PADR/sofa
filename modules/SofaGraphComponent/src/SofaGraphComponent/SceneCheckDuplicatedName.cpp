@@ -23,7 +23,7 @@
 
 #include <sofa/version.h>
 #include <sofa/simulation/Node.h>
-
+#include <sofa/core/objectmodel/BaseObject.h>
 namespace sofa::simulation::_scenechecking_
 {
 

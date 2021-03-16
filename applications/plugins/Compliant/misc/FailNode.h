@@ -49,14 +49,14 @@ public:
     virtual void doMoveChild(BaseNode::SPtr node);
 
     /// Add a generic object
-    virtual bool doAddObject(core::objectmodel::BaseObject::SPtr obj) override;
+    virtual bool doAddObject(sptr<BaseObject> obj) override;
 
     /// Remove a generic object
-    virtual bool doRemoveObject(core::objectmodel::BaseObject::SPtr obj) override;
+    virtual bool doRemoveObject(sptr<BaseObject> obj) override;
 
     /// Move an object from a node to another node
     using Node::doMoveObject;
-    virtual void doMoveObject(core::objectmodel::BaseObject::SPtr obj);
+    virtual void doMoveObject(sptr<BaseObject> obj);
 
     /// Test if the given node is a parent of this node.
     bool hasParent(const BaseNode* node) const override; 

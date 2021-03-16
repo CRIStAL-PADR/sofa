@@ -25,6 +25,7 @@
 
 #include <SceneCreator/config.h>
 #include <string>
+#include <sofa/core/objectmodel/BaseObject.h>
 #include <sofa/simulation/Node.h>
 #include <sofa/core/objectmodel/BaseData.h>
 #include <sofa/defaulttype/VecTypes.h>

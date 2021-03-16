@@ -1,8 +1,8 @@
+#include <sofa/core/objectmodel/BaseObject.h>
 #include "FailNode.h"
 
-namespace sofa {
-namespace simulation {
-
+namespace sofa::simulation
+{
 
 using namespace core::objectmodel;
 
@@ -57,13 +57,13 @@ void FailNode::doRemoveChild(BaseNode::SPtr /*node*/){ fail(); }
 void FailNode::doMoveChild(BaseNode::SPtr /*node*/){ fail(); }
 
 /// Add a generic object
-bool FailNode::doAddObject(BaseObject::SPtr /*obj*/){ fail(); return false; }
+bool FailNode::doAddObject(sptr<BaseObject> /*obj*/){ fail(); return false; }
 
 /// Remove a generic object
-bool FailNode::doRemoveObject(BaseObject::SPtr /*obj*/){ fail(); return false; }
+bool FailNode::doRemoveObject(sptr<BaseObject> /*obj*/){ fail(); return false; }
 
 /// Move an object from a node to another node
-void FailNode::doMoveObject(BaseObject::SPtr /*obj*/){ fail(); }
+void FailNode::doMoveObject(sptr<BaseObject> /*obj*/){ fail(); }
 
 /// Test if the given node is a parent of this node.
 bool FailNode::hasParent(const BaseNode* /*node*/) const{ fail(); return 0; }
@@ -90,7 +90,4 @@ std::string FailNode::getRootPath() const {fail(); return 0; }
 
 Base* FailNode::findLinkDestClass(const BaseClass* /*destType*/, const std::string& /*path*/, const BaseLink* /*link*/){ fail(); return nullptr;}
 
-
-
-}
 }

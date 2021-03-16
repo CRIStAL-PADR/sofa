@@ -19,6 +19,7 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
+#include <sofa/core/objectmodel/BaseObject.h>
 #include <sofa/simulation/DeleteVisitor.h>
 #include <sofa/simulation/Node.h>
 
