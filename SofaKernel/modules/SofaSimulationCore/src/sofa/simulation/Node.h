@@ -34,6 +34,12 @@
 namespace sofa::simulation
 {
 
+namespace
+{
+    using sofa::core::sptr;
+    using sofa::core::objectmodel::BaseObject;
+}
+
 /**
    Implements the object (component) management of the core::Context.
    Contains objects in lists and provides accessors.
@@ -259,13 +265,13 @@ public:
     /// @{
 
     /// Add an object and return this. Detect the implemented interfaces and add the object to the corresponding lists.
-    virtual bool addObject(sofa::core::objectmodel::BaseObject::SPtr obj) final;
+    virtual bool addObject(sptr<BaseObject> obj) final;
 
     /// Remove an object
-    virtual bool removeObject(sofa::core::objectmodel::BaseObject::SPtr obj) final;
+    virtual bool removeObject(sptr<BaseObject> obj) final;
 
     /// Move an object from another node
-    virtual void moveObject(sofa::core::objectmodel::BaseObject::SPtr obj) final;
+    virtual void moveObject(sptr<BaseObject> obj) final;
 
     /// Find an object given its name
     sofa::core::objectmodel::BaseObject* getObject(const std::string& name) const;
@@ -495,23 +501,23 @@ protected:
     bool debug_;
     bool initialized;
 
-    virtual bool doAddObject(sofa::core::objectmodel::BaseObject::SPtr obj);
-    virtual bool doRemoveObject(sofa::core::objectmodel::BaseObject::SPtr obj);
-    virtual void doMoveObject(sofa::core::objectmodel::BaseObject::SPtr sobj, Node* prev_parent);
+    virtual bool doAddObject(sptr<BaseObject> obj);
+    virtual bool doRemoveObject(sptr<BaseObject> obj);
+    virtual void doMoveObject(sptr<BaseObject> sobj, Node* prev_parent);
 
     std::stack<Visitor*> actionStack;
 private:    
     virtual void notifyBeginAddChild(Node::SPtr parent, Node::SPtr child) const;
     virtual void notifyBeginRemoveChild(Node::SPtr parent, Node::SPtr child) const;
 
-    virtual void notifyBeginAddObject(Node::SPtr parent, sofa::core::objectmodel::BaseObject::SPtr obj) const;
-    virtual void notifyBeginRemoveObject(Node::SPtr parent, sofa::core::objectmodel::BaseObject::SPtr obj) const;
+    virtual void notifyBeginAddObject(Node::SPtr parent, sptr<BaseObject> obj) const;
+    virtual void notifyBeginRemoveObject(Node::SPtr parent, sptr<BaseObject> obj) const;
 
     virtual void notifyEndAddChild(Node::SPtr parent, Node::SPtr child) const;
     virtual void notifyEndRemoveChild(Node::SPtr parent, Node::SPtr child) const;
 
-    virtual void notifyEndAddObject(Node::SPtr parent, sofa::core::objectmodel::BaseObject::SPtr obj) const;
-    virtual void notifyEndRemoveObject(Node::SPtr parent, sofa::core::objectmodel::BaseObject::SPtr obj) const;
+    virtual void notifyEndAddObject(Node::SPtr parent, sptr<BaseObject> obj) const;
+    virtual void notifyEndRemoveObject(Node::SPtr parent, sptr<BaseObject> obj) const;
 
     virtual void notifySleepChanged(Node* node) const;
 
