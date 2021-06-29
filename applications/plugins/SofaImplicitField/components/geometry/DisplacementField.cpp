@@ -23,11 +23,16 @@
 
 #include "DisplacementField.h"
 #include <sofa/core/objectmodel/Data.h>
+#include <sofa/core/visual/VisualParams.h>
+#include <sofa/type/RGBAColor.h>
+#include <sofa/gl/GLSLShader.h>
 
 namespace sofaimplicitfield
 {
 
 using sofa::helper::getReadAccessor;
+using sofa::type::RGBAColor;
+using sofa::type::Mat3x3d;
 
 /// Register in the Factory
 int ImplicitFieldTransformClass = sofa::core::RegisterObject("registering of ImplicitFieldTransform class") .add<DisplacementField>();
@@ -43,16 +48,44 @@ double DisplacementField::getValue(Vec3d &pos, int &domain)
 {
     SOFA_UNUSED(domain);
 
-    /// Here are the tetrahedron's descriptions
-    /// l_topology->
+    // Here are the tetrahedron's descriptions
+    // l_topology->
 
-    /// Here are the moving position.
-    /// l_dofs->
+    // Here are the moving position.
+    // l_dofs->
 
     auto x = getReadAccessor(*l_dofs->read(sofa::core::VecCoordId::position()));
 
     Vec3d p0 = x[0] - pos;
     return l_field->getValue( p0 );
+}
+
+/// Debug rendering of the Displacement Field.
+void DisplacementField::draw(const sofa::core::visual::VisualParams* v)
+{
+
+    auto drawtools = v->drawTool();
+    auto x = getReadAccessor(*l_dofs->read(sofa::core::VecCoordId::position()));
+    for(auto tetra : l_topology->getTetrahedra())
+    {
+        Vec3d r0 = x[tetra[0]];
+        Vec3d r1 = x[tetra[1]];
+        Vec3d r2 = x[tetra[2]];
+        Vec3d r3 = x[tetra[3]];
+
+        // Draws the deformed state.
+        drawtools->drawTetrahedron(r0, r1, r2, r3, RGBAColor::red());
+
+        // Draws the initial state
+        Mat3x3d T = {r0-r3, r1-r3, r2-r3};
+        T.transpose();
+        Mat3x3d Tinv = T.inverted();
+
+        Vec3d coef0 = Tinv * (r0-r3);
+        Vec3d coef1 = Tinv * (r1-r3);
+        Vec3d coef2 = Tinv * (r2-r3);
+
+    }
 }
 
 } /// sofaimplicitfield

@@ -45,7 +45,7 @@ public:
    SingleLink<DisplacementField, sofa::core::behavior::MechanicalState<Vec3Types>, BaseLink::FLAG_STOREPATH> l_dofs;
 
    double getValue(Vec3d& pos, int& domain) override;
-
+   void draw(const sofa::core::visual::VisualParams*) override;
 protected:
    DisplacementField();
    ~DisplacementField() override {}
