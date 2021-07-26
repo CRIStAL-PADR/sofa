@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 project(SofaImplicitField VERSION 1.0)
 
 sofa_find_package(SofaDistanceGrid REQUIRED)
+sofa_find_package(SofaOpenglVisual REQUIRED)
 
 set(HEADER_FILES
     config.h.in
@@ -82,7 +83,7 @@ endif()
 
 add_library(${PROJECT_NAME} SHARED ${HEADER_FILES} ${SOURCE_FILES} ${EXTRA_FILES})
 target_compile_options(${PROJECT_NAME} PRIVATE "-DSOFA_BUILD_SOFAIMPLICITFIELD")
-target_link_libraries(${PROJECT_NAME} PRIVATE SofaDistanceGrid)
+target_link_libraries(${PROJECT_NAME} PRIVATE SofaDistanceGrid SofaOpenglVisual)
 
 
 ## Install rules for the library and headers; CMake package configurations files

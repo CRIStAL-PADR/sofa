@@ -33,7 +33,7 @@ namespace _scalarfieldintersection_
 using sofa::core::collision::BaseIntersector;
 using sofa::component::collision::ScalarFieldCollisionElement;
 using sofa::component::collision::DiscreteIntersection;
-using sofa::component::collision::PointModel;
+using sofa::component::collision::PointCollisionModel;
 
 class SOFA_SOFAIMPLICITFIELD_API ScalarFieldIntersection : public BaseIntersector
 {

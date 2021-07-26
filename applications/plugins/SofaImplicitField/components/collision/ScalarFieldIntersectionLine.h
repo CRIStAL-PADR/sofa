@@ -34,8 +34,8 @@ namespace _scalarfieldintersectionline_
 using sofa::core::collision::BaseIntersector;
 using sofa::component::collision::ScalarFieldCollisionElement;
 using sofa::component::collision::DiscreteIntersection;
-using sofa::component::collision::PointModel;
-using sofa::component::collision::LineModel;
+using sofa::component::collision::PointCollisionModel;
+using sofa::component::collision::LineCollisionModel;
 using sofa::defaulttype::Vec3d ;
 
 
