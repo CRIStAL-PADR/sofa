@@ -25,6 +25,7 @@
 #include <sofa/core/topology/BaseMeshTopology.h>
 #include <sofa/core/behavior/MechanicalState.h>
 #include <sofa/defaulttype/VecTypes.h>
+#include <SofaOpenglVisual/OglShader.h>
 
 namespace sofaimplicitfield
 {
@@ -35,6 +36,7 @@ using sofa::component::geometry::ScalarField;
 using sofa::defaulttype::Vec3d ;
 using sofa::defaulttype::Vec3Types ;
 
+
 class SOFA_SOFAIMPLICITFIELD_API DisplacementField : public sofaimplicitfield::ScalarField
 {
 public:
@@ -44,12 +46,16 @@ public:
    SingleLink<DisplacementField, sofa::core::topology::BaseMeshTopology, BaseLink::FLAG_STOREPATH> l_topology;
    SingleLink<DisplacementField, sofa::core::behavior::MechanicalState<Vec3Types>, BaseLink::FLAG_STOREPATH> l_dofs;
 
+   SingleLink<DisplacementField, sofa::component::visualmodel::OglShader, BaseLink::FLAG_STOREPATH> l_shader;
+
    double getValue(Vec3d& pos, int& domain) override;
    void draw(const sofa::core::visual::VisualParams*) override;
 protected:
    DisplacementField();
    ~DisplacementField() override {}
 
+    class InternalData;
+    std::unique_ptr<InternalData> data;
 };
 
 }

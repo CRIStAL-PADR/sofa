@@ -18,14 +18,13 @@
     </Node>      
    
     <Node name="RigidField">
+            <OglShader name="spheretracer" listening="True" printLog="True" 
+                       fileVertexShaders="['shaders/sphereTracer.vert']" fileFragmentShaders="['shaders/sphereTracer.frag']"/>
             <SphericalField name="field" center="1.0 0.0 0.0" radius="2.0"/>
             <DisplacementField name="displacement" 
                                field="@field" 
+                               shader="@spheretracer"
                                topology="@../DisplacementField/topo"
                                dofs="@../DisplacementField/dofs"/>
-            <RayMarchingEngine name="raymarching" field="@field"/>
-            <PointSplatRenderer name="renderer" 
-                                points="@raymarching.intersections" 
-                                radius="0.1"/>
-    </Node>
+     </Node>
 </Node>
