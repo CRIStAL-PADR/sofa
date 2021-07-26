@@ -21,7 +21,7 @@
 ******************************************************************************/
 
 #include <map>
-#include <sofa/helper/gl/template.h>
+#include <sofa/gl/template.h>
 #include <sofa/core/ObjectFactory.h>
 #include <SofaOpenglVisual/PointSplatRenderer.h>
 #include <sofa/core/visual/VisualParams.h>
@@ -30,7 +30,7 @@
 namespace sofa::component::visualmodel
 {
 
-static int PointSplatRendererClass = core::RegisterObject("Render a set of points using point splatting technique.")
+int PointSplatRendererClass = core::RegisterObject("Render a set of points using point splatting technique.")
         .add< PointSplatRenderer >();
 
 
