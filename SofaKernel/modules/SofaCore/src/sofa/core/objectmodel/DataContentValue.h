@@ -27,54 +27,9 @@
 namespace sofa::core::objectmodel
 {
 
-/// To handle the Data link:
-/// - CopyOnWrite==false: an independent copy (duplicated memory)
-/// - CopyOnWrite==true: shared memory while the Data is not modified (in that case the memory is duplicated to get an independent copy)
-template <class T, bool CopyOnWrite>
-class DataContentValue;
-
+/// To handle the Data link
 template <class T>
-class DataContentValue<T, false>
-{
-    T data;
-public:
-
-    DataContentValue()
-        : data(T())// BUGFIX (Jeremie A.): Force initialization of basic types to 0 (bool, int, float, etc).
-    {
-    }
-
-    explicit DataContentValue(const T &value)
-        : data(value)
-    {
-    }
-
-    DataContentValue(const DataContentValue& dc)
-        : data(dc.getValue())
-    {
-    }
-
-    DataContentValue& operator=(const DataContentValue& dc )
-    {
-        data = dc.getValue(); // copy
-        return *this;
-    }
-
-    T* beginEdit() { return &data; }
-    void endEdit() {}
-    const T& getValue() const { return data; }
-    void setValue(const T& value)
-    {
-        data = value;
-    }
-    void release()
-    {
-    }
-};
-
-
-template <class T>
-class DataContentValue<T, true>
+class DataContentValue
 {
     std::shared_ptr<T> ptr;
 public:

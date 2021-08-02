@@ -253,10 +253,10 @@ public:
     bool copyValueFrom(const BaseData* data){ return doCopyValueFrom(data); }
     bool copyValueFrom(const Data<T>* data);
 
-    bool isCopyOnWrite(){ return std::is_scalar_v<T> || std::is_pointer_v<T>; }
+    bool isCopyOnWrite(){ return true; }
 
 protected:
-    typedef DataContentValue<T, std::is_scalar_v<T> || std::is_pointer_v<T>> ValueType;
+    typedef DataContentValue<T> ValueType;
 
     /// Value
     ValueType m_value;
