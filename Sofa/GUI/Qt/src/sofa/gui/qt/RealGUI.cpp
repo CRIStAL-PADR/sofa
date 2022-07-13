@@ -21,7 +21,7 @@
 ******************************************************************************/
 #include "RealGUI.h"
 #include <sofa/version.h>
-
+#include "WebService.h"
 #ifdef SOFA_PML
 #  include <sofa/filemanager/sofapml/PMLReader.h>
 #  include <sofa/filemanager/sofapml/LMLReader.h>
@@ -512,6 +512,8 @@ RealGUI::RealGUI ( const char* viewername)
     connect(helpAboutAction, SIGNAL(triggered()), this, SLOT(showAbout()));
 
     m_filelistener = new RealGUIFileListener(this);
+
+    WebService::start();
 }
 
 //------------------------------------
