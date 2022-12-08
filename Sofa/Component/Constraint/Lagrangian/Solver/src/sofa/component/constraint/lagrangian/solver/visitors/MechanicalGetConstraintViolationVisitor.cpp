@@ -44,7 +44,8 @@ simulation::Visitor::Result MechanicalGetConstraintViolationVisitor::fwdConstrai
 bool MechanicalGetConstraintViolationVisitor::stopAtMechanicalMapping(simulation::Node* node,
     core::BaseMapping* base_mapping)
 {
-    return false; // !map->isMechanical();
+    SOFA_UNUSED(node);
+    return false;
 }
 }
 
