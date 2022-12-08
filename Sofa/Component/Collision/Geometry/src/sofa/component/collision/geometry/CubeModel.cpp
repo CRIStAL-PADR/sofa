@@ -104,7 +104,7 @@ Index CubeCollisionModel::addCube(Cube subcellsBegin, Cube subcellsEnd)
 
     this->core::CollisionModel::resize(index + 1);
     elems.resize(index + 1);
-    
+
     elems[index].subcells.first = subcellsBegin;
     elems[index].subcells.second = subcellsEnd;
     elems[index].children.first = core::CollisionElementIterator();
@@ -143,7 +143,7 @@ void CubeCollisionModel::updateCube(sofa::Index index)
             }
             else
                 elems[index].coneAngle = 2*M_PI;
-            
+
             for (int j=0; j<3; j++)
             {
                 if (cmax[j] > maxBBox[j]) maxBBox[j] = cmax[j];
@@ -177,7 +177,8 @@ void CubeCollisionModel::draw(const core::visual::VisualParams* vparams)
         color *= 0.8f;
     }
 
-    sofa::type::RGBAColor c(getColor4f()[0], getColor4f()[1], getColor4f()[2], getColor4f()[3]);
+    const float* tmpColor = getColor4f();
+    sofa::type::RGBAColor c(tmpColor[0], tmpColor[1], tmpColor[2], tmpColor[3]*color);
 
     std::vector< Vec3 > points;
     points.reserve( size * 8 * 3);
