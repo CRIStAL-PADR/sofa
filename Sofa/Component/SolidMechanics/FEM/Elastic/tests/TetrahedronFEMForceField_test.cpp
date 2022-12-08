@@ -44,7 +44,7 @@ using sofa::simulation::SceneLoaderXML ;
 #include <sofa/component/solidmechanics/fem/elastic/TetrahedralCorotationalFEMForceField.h>
 #include <sofa/component/solidmechanics/fem/elastic/FastTetrahedralCorotationalForceField.h>
 
-using sofa::core::execparams::defaultInstance; 
+using sofa::core::execparams::defaultInstance;
 
 namespace sofa {
 
@@ -131,8 +131,7 @@ struct TetrahedronFEMForceField_stepTest : public ForceField_test<_TetrahedronFE
                  "</Node>                                               \n" ;
 
         Node::SPtr root = SceneLoaderXML::loadFromMemory ("testscene",
-                                                          scene.str().c_str(),
-                                                          scene.str().size()) ;
+                                                          scene.str().c_str()) ;
         root->init(sofa::core::execparams::defaultInstance()) ;
 
         BaseObject* fem = root->getTreeNode("FEMnode")->getObject("fem") ;
@@ -209,7 +208,7 @@ public:
         }
     }
 
-    
+
     void createSingleTetrahedronFEMScene(int FEMType, float young, float poisson, std::string method)
     {
         m_root = sofa::simpleapi::createRootNode(m_simulation, "root");
@@ -223,7 +222,7 @@ public:
         createObject(m_root, "TetrahedronSetGeometryAlgorithms", { {"template","Vec3d"} });
 
         addTetraFEMForceField(m_root, FEMType, young, poisson, method);
-        
+
         createObject(m_root, "DiagonalMass", {
             {"name","mass"}, {"massDensity","0.1"} });
         /// Init simulation
@@ -240,7 +239,7 @@ public:
         createObject(m_root, "DefaultAnimationLoop");
         createObject(m_root, "DefaultVisualManagerLoop");
         createObject(m_root, "GenericConstraintSolver", { {"tolerance", "1e-3"}, {"maxIt", "1000"} });
-        
+
         createObject(m_root, "RegularGridTopology", { {"name", "grid"},
                     {"n", str(nbrGrid)}, {"min", "0 0 20"}, {"max", "10 40 30"} });
 
@@ -322,7 +321,7 @@ public:
 
         createObject(m_root, "MechanicalObject", { {"template","Vec3d"}, {"position", "0 0 0  1 0 0  0 1 0  0 0 1"} });
         addTetraFEMForceField(m_root, FEMType, 100, 0.3, "large");
-        
+
         EXPECT_MSG_EMIT(Error);
 
         /// Init simulation
@@ -363,8 +362,8 @@ public:
         createObject(m_root, "TetrahedronSetTopologyContainer", { {"tetrahedra","2 3 1 0"} });
         createObject(m_root, "TetrahedronSetTopologyModifier");
         createObject(m_root, "TetrahedronSetGeometryAlgorithms", { {"template","Vec3d"} });
-       
-        if (FEMType == 0) 
+
+        if (FEMType == 0)
         {
             createObject(m_root, "TetrahedronFEMForceField");
         }
@@ -390,13 +389,13 @@ public:
             sofa::simulation::getSimulation()->init(m_root.get());
         }
 
-       
+
         if (FEMType == 0)
         {
             typename TetrahedronFEM::SPtr tetraFEM = m_root->getTreeObject<TetrahedronFEM>();
             ASSERT_TRUE(tetraFEM.get() != nullptr);
-            
-            ASSERT_FLOAT_EQ(tetraFEM->_poissonRatio.getValue(), 0.45);           
+
+            ASSERT_FLOAT_EQ(tetraFEM->_poissonRatio.getValue(), 0.45);
             ASSERT_FLOAT_EQ(tetraFEM->_youngModulus.getValue()[0], 5000);
             ASSERT_EQ(tetraFEM->f_method.getValue(), "large");
         }
@@ -436,7 +435,7 @@ public:
 
         Transformation exp_curRot = { Vec3(0, 0.816497, 0.57735), Vec3(-0.707107, -0.408248, 0.57735), Vec3(0.707107, -0.408248, 0.57735) };
 
-        MaterialStiffness exp_stiffnessMat = { Vec6(224.359, 96.1538, 96.1538, 0, 0, 0), Vec6(96.1538, 224.359, 96.1538, 0, 0, 0), Vec6(96.1538, 96.1538, 224.359, 0, 0, 0), 
+        MaterialStiffness exp_stiffnessMat = { Vec6(224.359, 96.1538, 96.1538, 0, 0, 0), Vec6(96.1538, 224.359, 96.1538, 0, 0, 0), Vec6(96.1538, 96.1538, 224.359, 0, 0, 0),
             Vec6(0, 0, 0, 64.1026, 0, 0), Vec6(0, 0, 0, 0, 64.1026, 0), Vec6(0, 0, 0, 0, 0, 64.1026) };
 
         StrainDisplacement exp_strainD = { Vec6(0.707107, 0, 0, 0.408248, 0, -0.57735),
@@ -496,7 +495,7 @@ public:
 
             // Expected specific values
             TetraCoord exp_shapeVector = { Coord(0, 1, 0), Coord(0, 0, 1), Coord(1, 0, 0), Coord(-1, -1, -1) };
-            Transformation exp_linearDfDxDiag[4]; 
+            Transformation exp_linearDfDxDiag[4];
             exp_linearDfDxDiag[0] = { Vec3(64.1026, 0, 0), Vec3(0, 224.359, 0), Vec3(0, 0, 64.1026) };
             exp_linearDfDxDiag[1] = { Vec3(64.1026, 0, -0), Vec3(0, 64.1026, -0), Vec3(-0, -0, 224.359) };
             exp_linearDfDxDiag[2] = { Vec3(224.359, 0, 0), Vec3(0, 64.1026, 0), Vec3(0, 0, 64.1026) };
@@ -509,7 +508,7 @@ public:
             exp_linearDfDx[3] = { Vec3(0, -0, 96.1538), Vec3(-0, 0, 0), Vec3(64.1026, 0, 0) };
             exp_linearDfDx[4] = { Vec3(-64.1026, 0, -96.1538), Vec3(0, -64.1026, -96.1538), Vec3(-64.1026, -64.1026, -224.359) };
             exp_linearDfDx[5] = { Vec3(-224.359, -64.1026, -64.1026), Vec3(-96.1538, -64.1026, -0), Vec3(-96.1538, -0, -64.1026) };
-   
+
 
             // check rotations
             for (int i = 0; i < 3; ++i)
@@ -546,7 +545,7 @@ public:
             // Fast method do not share the other data.
             return;
         }
-            
+
 
 
         // check rotations
@@ -585,7 +584,7 @@ public:
                 EXPECT_NEAR(exp_strainD[i][j], strainD[i][j], 1e-4);
             }
         }
-        
+
     }
 
 
@@ -683,8 +682,8 @@ public:
 
             const typename FastTetraCorotationalFEM::TetrahedronRestInformation& tetraInfo = tetraFEM->tetrahedronInfo.getValue()[100];
             initRot.transpose(tetraInfo.restRotation); // TODO check why transposed is stored in this version
-            curRot = tetraInfo.rotation; 
-            
+            curRot = tetraInfo.rotation;
+
             // Expected specific values
             exp_curRot = { Vec3(0.99999985, 0.00032076406, -0.00043657642), Vec3(-0.00033142383, 0.99969634, -0.024639719), Vec3(0.00042854031, 0.024639861, 0.9996963) };
             TetraCoord exp_shapeVector = { Coord(0.3, 0.224999, -0.3), Coord(-0.3, 0, 0.3), Coord(0, 0, -0.3), Coord(0, -0.224999, 0.3) };
@@ -739,9 +738,9 @@ public:
             // Fast method do not share the other data.
             return;
         }
-        
 
-       
+
+
 
         // check rotations
         for (int i = 0; i < 3; ++i)
