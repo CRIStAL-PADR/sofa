@@ -5,12 +5,14 @@ project(SofaAssimp VERSION 0.2)
 set(HEADER_FILES
     config.h
     AssimpLoader.h
+    PrefabLoader.h
     SceneColladaLoader.h
 )
 
 set(SOURCE_FILES
     initAssimpPlugin.cpp
     AssimpLoader.cpp
+    PrefabLoader.cpp
     SceneColladaLoader.cpp
 )
 
@@ -35,7 +37,7 @@ sofa_find_package(Flexible QUIET)
 # Create the plugin library.
 add_library(${PROJECT_NAME} SHARED ${HEADER_FILES} ${SOURCE_FILES} ${README_FILES})
 set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "-DSOFA_BUILD_SOFAASSIMP")
-target_link_libraries(${PROJECT_NAME} PUBLIC ${ASSIMP_LIBRARY} Sofa.Core Sofa.Component.Constraint.Projective Sofa.Component.Mass Sofa.Component.Mapping Sofa.GL.Component.Rendering3D Sofa.Component.StateContainer Sofa.Component.Collision.Geometry) 
+target_link_libraries(${PROJECT_NAME} PUBLIC ${ASSIMP_LIBRARY} Sofa.Core Sofa.Component.Constraint.Projective Sofa.Component.Mass Sofa.Component.Mapping Sofa.GL.Component.Rendering3D Sofa.Component.StateContainer Sofa.Component.Collision.Geometry)
 
 if(image_FOUND)
     target_link_libraries(${PROJECT_NAME} PUBLIC image)
