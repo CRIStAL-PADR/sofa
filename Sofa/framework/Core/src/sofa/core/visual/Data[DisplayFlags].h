@@ -25,4 +25,4 @@
 #include <sofa/core/visual/DisplayFlags.h>
 
 template <> SOFA_CORE_API
-std::istream& sofa::core::objectmodel::Data<sofa::core::visual::DisplayFlags>::readValue(std::istream& in);
+void sofa::core::objectmodel::Data<sofa::core::visual::DisplayFlags>::doRead(std::istream& in);

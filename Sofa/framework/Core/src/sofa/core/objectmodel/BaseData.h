@@ -329,7 +329,7 @@ private:
     virtual void doOnUpdate() {}
 
     virtual void doClear() = 0;
-    virtual void doRead(std::istringstream& stream) = 0;
+    virtual void doRead(std::istream& stream) = 0;
 };
 
 /** A WriteAccessWithRawPtr is a RAII class, holding a reference to a given container

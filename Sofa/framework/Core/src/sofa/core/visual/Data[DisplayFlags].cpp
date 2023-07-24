@@ -56,7 +56,7 @@ void showErrorLetterCase(sofa::core::visual::DisplayFlags& value,
 }
 
 template <>
-std::istream& sofa::core::objectmodel::Data<sofa::core::visual::DisplayFlags>::readValue(std::istream& in)
+void sofa::core::objectmodel::Data<sofa::core::visual::DisplayFlags>::doRead(std::istream& in)
 {
     auto& value = *beginEdit();
 
@@ -71,6 +71,4 @@ std::istream& sofa::core::objectmodel::Data<sofa::core::visual::DisplayFlags>::r
         });
 
     endEdit();
-
-    return in;
 }

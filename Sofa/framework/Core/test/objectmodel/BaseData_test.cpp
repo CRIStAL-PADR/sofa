@@ -48,7 +48,7 @@ public:
     void* doBeginEditVoidPtr() override { return nullptr; }
     void doEndEditVoidPtr() override {}
     void doClear() override {}
-    void doRead(std::istringstream&) override {}
+    void doRead(std::istream&) override {}
 };
 
 class MyObject : public BaseObject

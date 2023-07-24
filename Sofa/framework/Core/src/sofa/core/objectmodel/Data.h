@@ -226,14 +226,14 @@ private:
     void* doBeginEditVoidPtr() override  { return beginEdit(); }
     void doEndEditVoidPtr() override  { endEdit(); }
     void doClear() override { setValue(T{}); };
-    void doRead(std::istringstream& in) override { in >> *beginWriteOnly(); endEdit(); }
+    void doRead(std::istream& in) override { in >> *beginWriteOnly(); endEdit(); }
 };
 
 class EmptyData : public Data<void*> {};
 
 /// Specialization for reading booleans
 template<>
-void Data<bool>::doRead( std::istringstream& str );
+void Data<bool>::doRead( std::istream& str );
 
 /// General case for printing default value
 template<class T>

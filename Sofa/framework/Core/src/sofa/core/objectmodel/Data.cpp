@@ -28,7 +28,7 @@ namespace sofa::core::objectmodel
 
 /// Specialization for reading booleans
 template<>
-void  SOFA_CORE_API Data<bool>::doRead( std::istringstream& str )
+void  SOFA_CORE_API Data<bool>::doRead( std::istream& str )
 {
     bool val;
     int c = str.peek();
