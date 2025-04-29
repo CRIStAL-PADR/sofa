@@ -191,6 +191,8 @@ public:
     SOFA_ATTRIBUTE_DEPRECATED__RENAME_DATA_IN_SOLIDMECHANICS_FEM_ELASTIC()
     core::objectmodel::lifecycle::RenamedData<VecCoord> _initialPoints;
 
+    Data< sofa::type::vector<type::Vec6d> > d_DJT;
+
     Data< VecCoord > d_initialPoints; ///< Initial Position
     int method;
 

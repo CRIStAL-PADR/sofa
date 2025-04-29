@@ -43,6 +43,7 @@ TetrahedronFEMForceField<DataTypes>::TetrahedronFEMForceField()
     : _indexedElements(nullptr)
     , needUpdateTopology(false)
     , m_VonMisesColorMap(nullptr)
+    , d_DJT(initData(&d_DJT, "elasticStrain", "Elastic Strain"))
     , d_initialPoints(initData(&d_initialPoints, "initialPoints", "Initial Position"))
     , d_method(initData(&d_method, std::string("large"), "method", "\"small\", \"large\" (by QR), \"polar\" or \"svd\" displacements"))
     , d_localStiffnessFactor(initData(&d_localStiffnessFactor, "localStiffnessFactor", "Allow specification of different stiffness per element. If there are N element and M values are specified, the youngModulus factor for element i would be localStiffnessFactor[i*M/N]"))
@@ -66,6 +67,7 @@ TetrahedronFEMForceField<DataTypes>::TetrahedronFEMForceField()
     , d_showElementGapScale(initData(&d_showElementGapScale, (Real)0.333, "showElementGapScale", "draw gap between elements (when showWireFrame is disabled) [0,1]: 0: no gap, 1: no element"))
     , d_updateStiffness(initData(&d_updateStiffness, false, "updateStiffness", "update structures (precomputed in init) using stiffness parameters in each iteration (set listening=1)"))
 {
+    d_DJT.setGroup("Plastic parameters");
     data.initPtrData(this);
     this->addAlias(&d_assembling, "assembling");
     minYoung = 0.0;
@@ -384,6 +386,9 @@ inline void TetrahedronFEMForceField<DataTypes>::computeForce( Displacement &F, 
             J[ 3][5]*Depl[ 3]+/*J[ 4][5]*Depl[ 4]*/ J[ 5][5]*Depl[ 5]+
             J[ 6][5]*Depl[ 6]+/*J[ 7][5]*Depl[ 7]*/ J[ 8][5]*Depl[ 8]+
             J[ 9][5]*Depl[ 9]+/*J[10][5]*Depl[10]*/ J[11][5]*Depl[11];
+
+    auto djt = helper::getWriteAccessor(d_DJT);
+    djt->push_back(JtD);
 
     // eventually remove a part of the strain to simulate plasticity
     if(d_plasticMaxThreshold.getValue() > 0 )
@@ -1584,6 +1589,8 @@ inline void TetrahedronFEMForceField<DataTypes>::addForce (const core::Mechanica
     VecDeriv& f = *d_f.beginEdit();
     const VecCoord& p = d_x.getValue();
 
+    auto djt = helper::getWriteAccessor(d_DJT);
+    djt.clear();
 
     f.resize(p.size());
 
