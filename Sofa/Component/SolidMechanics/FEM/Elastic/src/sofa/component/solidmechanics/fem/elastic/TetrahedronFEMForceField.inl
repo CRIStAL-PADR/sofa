@@ -43,14 +43,15 @@ TetrahedronFEMForceField<DataTypes>::TetrahedronFEMForceField()
     : _indexedElements(nullptr)
     , needUpdateTopology(false)
     , m_VonMisesColorMap(nullptr)
-    , d_DJT(initData(&d_DJT, "elasticStrain", "Elastic Strain"))
+    , d_elasticStrains(initData(&d_elasticStrains, "elasticStrains", "Per element elastic strain"))
+    , d_plasticStrains(initData(&d_plasticStrains, "plasticStrains", "Per element plastic strain"))
     , d_initialPoints(initData(&d_initialPoints, "initialPoints", "Initial Position"))
     , d_method(initData(&d_method, std::string("large"), "method", "\"small\", \"large\" (by QR), \"polar\" or \"svd\" displacements"))
     , d_localStiffnessFactor(initData(&d_localStiffnessFactor, "localStiffnessFactor", "Allow specification of different stiffness per element. If there are N element and M values are specified, the youngModulus factor for element i would be localStiffnessFactor[i*M/N]"))
     , d_updateStiffnessMatrix(initData(&d_updateStiffnessMatrix, false, "updateStiffnessMatrix", ""))
     , d_assembling(initData(&d_assembling, false, "computeGlobalMatrix", ""))
-    , d_plasticMaxThreshold(initData(&d_plasticMaxThreshold, (Real)0.f, "plasticMaxThreshold", "Plastic Max Threshold (2-norm of the strain)"))
-    , d_plasticYieldThreshold(initData(&d_plasticYieldThreshold, (Real)0.0001f, "plasticYieldThreshold", "Plastic Yield Threshold (2-norm of the strain)"))
+    , d_plasticMaxThreshold(initData(&d_plasticMaxThreshold, (Real)0.f, "plasticMaxThreshold", "Maximum value allowed for the plastic strain, values above are clamped to this maximum"))
+    , d_plasticYieldThreshold(initData(&d_plasticYieldThreshold, (Real)0.0001f, "plasticYieldThreshold", "Minimum value at wich plasticity occurs"))
     , d_plasticCreep(initData(&d_plasticCreep, (Real)0.9f, "plasticCreep", "Plastic Creep Factor * dt [0,1]. Warning this factor depends on dt."))
     , d_gatherPt(initData(&d_gatherPt, "gatherPt", "number of dof accumulated per threads during the gather operation (Only use in GPU version)"))
     , d_gatherBsize(initData(&d_gatherBsize, "gatherBsize", "number of dof accumulated per threads during the gather operation (Only use in GPU version)"))
@@ -67,7 +68,9 @@ TetrahedronFEMForceField<DataTypes>::TetrahedronFEMForceField()
     , d_showElementGapScale(initData(&d_showElementGapScale, (Real)0.333, "showElementGapScale", "draw gap between elements (when showWireFrame is disabled) [0,1]: 0: no gap, 1: no element"))
     , d_updateStiffness(initData(&d_updateStiffness, false, "updateStiffness", "update structures (precomputed in init) using stiffness parameters in each iteration (set listening=1)"))
 {
-    d_DJT.setGroup("Plastic parameters");
+    d_elasticStrains.setGroup("Strain");
+    d_plasticStrains.setGroup("Strain");
+
     data.initPtrData(this);
     this->addAlias(&d_assembling, "assembling");
     minYoung = 0.0;
@@ -387,9 +390,6 @@ inline void TetrahedronFEMForceField<DataTypes>::computeForce( Displacement &F, 
             J[ 6][5]*Depl[ 6]+/*J[ 7][5]*Depl[ 7]*/ J[ 8][5]*Depl[ 8]+
             J[ 9][5]*Depl[ 9]+/*J[10][5]*Depl[10]*/ J[11][5]*Depl[11];
 
-    auto djt = helper::getWriteAccessor(d_DJT);
-    djt->push_back(JtD);
-
     // eventually remove a part of the strain to simulate plasticity
     if(d_plasticMaxThreshold.getValue() > 0 )
     {
@@ -402,6 +402,14 @@ inline void TetrahedronFEMForceField<DataTypes>::computeForce( Displacement &F, 
         Real plasticStrainNorm2 = plasticStrain.norm2();
         if(plasticStrainNorm2 > d_plasticMaxThreshold.getValue() * d_plasticMaxThreshold.getValue() )
             plasticStrain *= d_plasticMaxThreshold.getValue() / helper::rsqrt(plasticStrainNorm2 );
+
+        // save the elastic strain in a data field
+        auto elasticStrains = helper::getWriteAccessor(d_elasticStrains);
+        elasticStrains->push_back(JtD);
+
+        // save the plastic strain in a data field
+        auto plasticStrains = helper::getWriteAccessor(d_plasticStrains);
+        plasticStrains->push_back(plasticStrain);
 
         // remaining elasticStrain = totatStrain - plasticStrain
         JtD -= plasticStrain;
@@ -1589,8 +1597,12 @@ inline void TetrahedronFEMForceField<DataTypes>::addForce (const core::Mechanica
     VecDeriv& f = *d_f.beginEdit();
     const VecCoord& p = d_x.getValue();
 
-    auto djt = helper::getWriteAccessor(d_DJT);
-    djt.clear();
+    auto elasticStrains = helper::getWriteAccessor(d_elasticStrains);
+    elasticStrains.clear();
+
+    auto plasticStrains = helper::getWriteAccessor(d_plasticStrains);
+    plasticStrains.clear();
+
 
     f.resize(p.size());
 

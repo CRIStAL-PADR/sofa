@@ -7,8 +7,12 @@ class MyController(Sofa.Core.Controller):
         self.fem = kwargs.get("fem")
 
     def onAnimateEndEvent(self, param):
-        print(f"elasticStrain at {param['dt']} is {self.fem.elasticStrain.value}")
-        print(f"elasticStrain at {param['dt']} is of size {len(self.fem.elasticStrain.value)}")
+        print(f"elasticStrains at {param['dt']} is {self.fem.elasticStrains.value}")
+        print(f"elasticStrains at {param['dt']} is of size {len(self.fem.elasticStrains.value)}")
+
+        print(f"plasticStrains at {param['dt']} is {self.fem.plasticStrains.value}")
+        print(f"plasticStrains at {param['dt']} is of size {len(self.fem.plasticStrains.value)}")
+
 
 def createScene(root):
     root.addObject("EulerImplicitSolver")
@@ -17,7 +21,7 @@ def createScene(root):
     root.addObject("MeshGmshLoader", filename="mesh/liver.msh", name="loader")
     root.addObject("MechanicalObject", src=root.loader.linkpath)
     root.addObject("MeshTopology", src=root.loader.linkpath)
-    root.addObject("TetrahedronFEMForceField", name="fem", method="small", computeGlobalMatrix=False)
+    root.addObject("TetrahedronFEMForceField", name="fem", method="small", computeGlobalMatrix=False, plasticMaxThreshold=1.000000000, plasticYieldThreshold=0.5000)
     root.addObject(MyController(fem=root.fem))
     
 
