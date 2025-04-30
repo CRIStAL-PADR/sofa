@@ -328,7 +328,9 @@ void TetrahedronFEMForceField<DataTypes>::computeMaterialStiffness(Index i, Inde
 }
 
 template<class DataTypes>
-inline void TetrahedronFEMForceField<DataTypes>::computeForce( Displacement &F, const Displacement &Depl, VoigtTensor &plasticStrain, const MaterialStiffness &K, const StrainDisplacement &J )
+inline void TetrahedronFEMForceField<DataTypes>::computeForce( Displacement &F, const Displacement &Depl,
+                                                               VoigtTensor& elasticStrains,
+                                                               VoigtTensor& plasticStrains, const MaterialStiffness &K, const StrainDisplacement &J )
 {
 
     // Unit of K = unit of youngModulus / unit of volume = Pa / m^3 = kg m^-4 s^-2
@@ -394,25 +396,21 @@ inline void TetrahedronFEMForceField<DataTypes>::computeForce( Displacement &F, 
     if(d_plasticMaxThreshold.getValue() > 0 )
     {
         VoigtTensor elasticStrain = JtD; // JtD is the total strain
-        elasticStrain -= plasticStrain; // totalStrain = elasticStrain + plasticStrain
+        elasticStrain -= plasticStrains; // totalStrain = elasticStrain + plasticStrain
 
         if(elasticStrain.norm2() > d_plasticYieldThreshold.getValue() * d_plasticYieldThreshold.getValue() )
-            plasticStrain += d_plasticCreep.getValue() * elasticStrain;
+            plasticStrains += d_plasticCreep.getValue() * elasticStrain;
 
-        Real plasticStrainNorm2 = plasticStrain.norm2();
-        if(plasticStrainNorm2 > d_plasticMaxThreshold.getValue() * d_plasticMaxThreshold.getValue() )
-            plasticStrain *= d_plasticMaxThreshold.getValue() / helper::rsqrt(plasticStrainNorm2 );
+        Real plasticStrainsNorm2 = plasticStrains.norm2();
+        if(plasticStrainsNorm2 > d_plasticMaxThreshold.getValue() * d_plasticMaxThreshold.getValue() )
+            plasticStrains *= d_plasticMaxThreshold.getValue() / helper::rsqrt(plasticStrainsNorm2 );
 
         // save the elastic strain in a data field
-        auto elasticStrains = helper::getWriteAccessor(d_elasticStrains);
-        elasticStrains->push_back(JtD);
+        //auto elasticStrains = helper::getWriteAccessor(d_elasticStrains);
+        elasticStrains = elasticStrain;
 
-        // save the plastic strain in a data field
-        auto plasticStrains = helper::getWriteAccessor(d_plasticStrains);
-        plasticStrains->push_back(plasticStrain);
-
-        // remaining elasticStrain = totatStrain - plasticStrain
-        JtD -= plasticStrain;
+        // remaining elasticStrain = totatStrain - plasticStrains
+        JtD -= plasticStrains;
     }
 
 
@@ -577,7 +575,10 @@ void TetrahedronFEMForceField<DataTypes>::initSmall(Index i, Index&a, Index&b, I
 }
 
 template<class DataTypes>
-inline void TetrahedronFEMForceField<DataTypes>::accumulateForceSmall( Vector& f, const Vector & p, typename VecElement::const_iterator elementIt, Index elementIndex )
+inline void TetrahedronFEMForceField<DataTypes>::accumulateForceSmall( Vector& f, const Vector & p,
+                                                                       type::vector<VoigtTensor>& elasticStrains,
+                                                                       type::vector<VoigtTensor>& plasticStrains,
+                                                                       typename VecElement::const_iterator elementIt, Index elementIndex )
 {
     const VecCoord &initialPoints=d_initialPoints.getValue();
     Element index = *elementIt;
@@ -602,7 +603,8 @@ inline void TetrahedronFEMForceField<DataTypes>::accumulateForceSmall( Vector& f
     Displacement F;
     if(!d_assembling.getValue())
     {
-        computeForce( F, D, _plasticStrains[elementIndex],
+        computeForce( F, D,
+                      elasticStrains[elementIndex], plasticStrains[elementIndex],
                       materialsStiffnesses[elementIndex],
                       strainDisplacements[elementIndex] );
     }
@@ -914,6 +916,7 @@ void TetrahedronFEMForceField<DataTypes>::initLarge(Index i, Index&a, Index&b, I
 
 template<class DataTypes>
 inline void TetrahedronFEMForceField<DataTypes>::accumulateForceLarge( Vector& f, const Vector & p,
+                                                                       type::vector<VoigtTensor>& elasticStrains, type::vector<VoigtTensor>& plasticStrains,
                                                                        typename VecElement::const_iterator elementIt, Index elementIndex )
 {
     Element index = *elementIt;
@@ -969,7 +972,9 @@ inline void TetrahedronFEMForceField<DataTypes>::accumulateForceLarge( Vector& f
     if(!d_assembling.getValue())
     {
         // compute force on element
-        computeForce( F, D, _plasticStrains[elementIndex], materialsStiffnesses[elementIndex], strainDisplacements[elementIndex] );
+        computeForce( F, D,
+                      elasticStrains[elementIndex], plasticStrains[elementIndex],
+                      materialsStiffnesses[elementIndex], strainDisplacements[elementIndex] );
         for(int i=0; i<12; i+=3)
             f[index[i/3]] += rotations[elementIndex] * Deriv( F[i], F[i+1],  F[i+2] );
     }
@@ -1068,7 +1073,9 @@ void TetrahedronFEMForceField<DataTypes>::initPolar(Index i, Index& a, Index&b, 
 }
 
 template<class DataTypes>
-inline void TetrahedronFEMForceField<DataTypes>::accumulateForcePolar( Vector& f, const Vector & p, typename VecElement::const_iterator elementIt, Index elementIndex )
+inline void TetrahedronFEMForceField<DataTypes>::accumulateForcePolar( Vector& f, const Vector & p,
+                                                                       type::vector<VoigtTensor>& elasticStrains, type::vector<VoigtTensor>& plasticStrains,
+                                                                       typename VecElement::const_iterator elementIt, Index elementIndex )
 {
     Element index = *elementIt;
 
@@ -1113,7 +1120,8 @@ inline void TetrahedronFEMForceField<DataTypes>::accumulateForcePolar( Vector& f
 
     if(!d_assembling.getValue())
     {
-        computeForce( F, D, _plasticStrains[elementIndex], materialsStiffnesses[elementIndex], strainDisplacements[elementIndex] );
+        computeForce( F, D,
+                      elasticStrains[elementIndex], plasticStrains[elementIndex], materialsStiffnesses[elementIndex], strainDisplacements[elementIndex] );
         for(int i=0; i<12; i+=3)
             f[index[i/3]] += rotations[elementIndex] * Deriv( F[i], F[i+1],  F[i+2] );
     }
@@ -1165,7 +1173,9 @@ void TetrahedronFEMForceField<DataTypes>::initSVD(Index i, Index& a, Index&b, In
 
 
 template<class DataTypes>
-inline void TetrahedronFEMForceField<DataTypes>::accumulateForceSVD( Vector& f, const Vector & p, typename VecElement::const_iterator elementIt, Index elementIndex )
+inline void TetrahedronFEMForceField<DataTypes>::accumulateForceSVD( Vector& f, const Vector & p,
+                                                                     type::vector<VoigtTensor>& elasticStrains, type::vector<VoigtTensor>& plasticStrains,
+                                                                     typename VecElement::const_iterator elementIt, Index elementIndex )
 {
     if( d_assembling.getValue() )
     {
@@ -1222,7 +1232,8 @@ inline void TetrahedronFEMForceField<DataTypes>::accumulateForceSVD( Vector& f, 
     }
 
     Displacement Forces;
-    computeForce( Forces, D, _plasticStrains[elementIndex], materialsStiffnesses[elementIndex], strainDisplacements[elementIndex] );
+    computeForce( Forces, D, elasticStrains[elementIndex], plasticStrains[elementIndex],
+                  materialsStiffnesses[elementIndex], strainDisplacements[elementIndex] );
     for( int i=0 ; i<12 ; i+=3 )
     {
         f[index[i/3]] += rotations[elementIndex] * Deriv( Forces[i], Forces[i+1],  Forces[i+2] );
@@ -1597,12 +1608,11 @@ inline void TetrahedronFEMForceField<DataTypes>::addForce (const core::Mechanica
     VecDeriv& f = *d_f.beginEdit();
     const VecCoord& p = d_x.getValue();
 
-    auto elasticStrains = helper::getWriteAccessor(d_elasticStrains);
-    elasticStrains.clear();
+    auto elasticStrains = helper::getWriteOnlyAccessor(d_elasticStrains);
+    elasticStrains.resize(_indexedElements->size());
 
-    auto plasticStrains = helper::getWriteAccessor(d_plasticStrains);
-    plasticStrains.clear();
-
+    auto plasticStrains = helper::getWriteOnlyAccessor(d_plasticStrains);
+    plasticStrains.resize(_indexedElements->size());
 
     f.resize(p.size());
 
@@ -1620,7 +1630,7 @@ inline void TetrahedronFEMForceField<DataTypes>::addForce (const core::Mechanica
     {
         for(it=_indexedElements->begin(), i = 0 ; it!=_indexedElements->end(); ++it,++i)
         {
-            accumulateForceSmall( f, p, it, i );
+            accumulateForceSmall( f, p, elasticStrains.wref(), plasticStrains.wref(), it, i );
         }
         break;
     }
@@ -1629,7 +1639,7 @@ inline void TetrahedronFEMForceField<DataTypes>::addForce (const core::Mechanica
         for(it=_indexedElements->begin(), i = 0 ; it!=_indexedElements->end(); ++it,++i)
         {
 
-            accumulateForceLarge( f, p, it, i );
+            accumulateForceLarge( f, p, elasticStrains.wref(), plasticStrains.wref(), it, i );
         }
         break;
     }
@@ -1637,7 +1647,7 @@ inline void TetrahedronFEMForceField<DataTypes>::addForce (const core::Mechanica
     {
         for(it=_indexedElements->begin(), i = 0 ; it!=_indexedElements->end(); ++it,++i)
         {
-            accumulateForcePolar( f, p, it, i );
+            accumulateForcePolar( f, p, elasticStrains.wref(), plasticStrains.wref(), it, i );
         }
         break;
     }
@@ -1645,7 +1655,7 @@ inline void TetrahedronFEMForceField<DataTypes>::addForce (const core::Mechanica
     {
         for(it=_indexedElements->begin(), i = 0 ; it!=_indexedElements->end(); ++it,++i)
         {
-            accumulateForceSVD( f, p, it, i );
+            accumulateForceSVD( f, p, elasticStrains.wref(), plasticStrains.wref(), it, i );
         }
         break;
     }

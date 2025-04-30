@@ -126,7 +126,7 @@ protected:
     typedef type::Mat<12, 12, Real> StiffnessMatrix;
 
     /// Symmetrical tensor written as a vector following the Voigt notation
-    typedef type::VecNoInit<6,Real> VoigtTensor;
+    typedef type::Vec<6,Real> VoigtTensor;
 
     /// @}
 
@@ -191,8 +191,8 @@ public:
     SOFA_ATTRIBUTE_DEPRECATED__RENAME_DATA_IN_SOLIDMECHANICS_FEM_ELASTIC()
     core::objectmodel::lifecycle::RenamedData<VecCoord> _initialPoints;
 
-    Data< sofa::type::vector<type::Vec6d> > d_elasticStrains;
-    Data< sofa::type::vector<type::Vec6d> > d_plasticStrains;
+    Data< sofa::type::vector<VoigtTensor> > d_elasticStrains;
+    Data< sofa::type::vector<VoigtTensor> > d_plasticStrains;
 
     Data< VecCoord > d_initialPoints; ///< Initial Position
     int method;
@@ -372,13 +372,18 @@ protected:
     virtual void computeMaterialStiffness(Index i, Index&a, Index&b, Index&c, Index&d);
 
 
-    void computeForce( Displacement &F, const Displacement &Depl, VoigtTensor &plasticStrain, const MaterialStiffness &K, const StrainDisplacement &J );
-    void computeForce( Displacement &F, const Displacement &Depl, const MaterialStiffness &K, const StrainDisplacement &J, SReal fact );
+    void computeForce( Displacement &F, const Displacement &Depl,
+                       VoigtTensor &elasticStrain, VoigtTensor &plasticStrain,
+                       const MaterialStiffness &K, const StrainDisplacement &J );
+    void computeForce( Displacement &F, const Displacement &Depl,
+                       const MaterialStiffness &K, const StrainDisplacement &J, SReal fact );
 
 
     ////////////// small displacements method
     void initSmall(Index i, Index&a, Index&b, Index&c, Index&d);
-    void accumulateForceSmall( Vector& f, const Vector & p, typename VecElement::const_iterator elementIt, Index elementIndex );
+    void accumulateForceSmall( Vector& f, const Vector & p,
+                               type::vector<VoigtTensor>& elasticStrains, type::vector<VoigtTensor>& plasticStrains,
+                               typename VecElement::const_iterator elementIt, Index elementIndex );
     void applyStiffnessSmall( Vector& f, const Vector& x, Index i=0, Index a=0,Index b=1,Index c=2,Index d=3, SReal fact=1.0  );
 
     ////////////// large displacements method
@@ -386,17 +391,23 @@ protected:
     type::vector<Transformation> _initialRotations;
     void initLarge(Index i, Index&a, Index&b, Index&c, Index&d);
     void computeRotationLarge( Transformation &r, const Vector &p, const Index &a, const Index &b, const Index &c);
-    void accumulateForceLarge( Vector& f, const Vector & p, typename VecElement::const_iterator elementIt, Index elementIndex );
+    void accumulateForceLarge( Vector& f, const Vector & p,
+                               type::vector<VoigtTensor>& elasticStrains, type::vector<VoigtTensor>& plasticStrains,
+                               typename VecElement::const_iterator elementIt, Index elementIndex );
 
     ////////////// polar decomposition method
     type::vector<unsigned int> _rotationIdx;
     void initPolar(Index i, Index&a, Index&b, Index&c, Index&d);
-    void accumulateForcePolar( Vector& f, const Vector & p, typename VecElement::const_iterator elementIt, Index elementIndex );
+    void accumulateForcePolar( Vector& f, const Vector & p,
+                               type::vector<VoigtTensor>& elasticStrains, type::vector<VoigtTensor>& plasticStrains,
+                               typename VecElement::const_iterator elementIt, Index elementIndex );
 
     ////////////// svd decomposition method
     type::vector<Transformation>  _initialTransformation;
     void initSVD(Index i, Index&a, Index&b, Index&c, Index&d);
-    void accumulateForceSVD( Vector& f, const Vector & p, typename VecElement::const_iterator elementIt, Index elementIndex );
+    void accumulateForceSVD( Vector& f, const Vector & p,
+                             type::vector<VoigtTensor>& elasticStrains, type::vector<VoigtTensor>& plasticStrains,
+                             typename VecElement::const_iterator elementIt, Index elementIndex );
 
     void applyStiffnessCorotational( Vector& f, const Vector& x, Index i=0, Index a=0,Index b=1,Index c=2,Index d=3, SReal fact=1.0  );
 
