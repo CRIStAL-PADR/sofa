@@ -374,7 +374,8 @@ protected:
 
     void computeForce( Displacement &F, const Displacement &Depl,
                        VoigtTensor &elasticStrain, VoigtTensor &plasticStrain,
-                       const MaterialStiffness &K, const StrainDisplacement &J );
+                       const MaterialStiffness &K, const StrainDisplacement &J,
+                       Real plasticYieldThreshold, Real plasticMaxThreshold, Real plasticCreep);
     void computeForce( Displacement &F, const Displacement &Depl,
                        const MaterialStiffness &K, const StrainDisplacement &J, SReal fact );
 
@@ -383,7 +384,8 @@ protected:
     void initSmall(Index i, Index&a, Index&b, Index&c, Index&d);
     void accumulateForceSmall( Vector& f, const Vector & p,
                                type::vector<VoigtTensor>& elasticStrains, type::vector<VoigtTensor>& plasticStrains,
-                               typename VecElement::const_iterator elementIt, Index elementIndex );
+                               typename VecElement::const_iterator elementIt, Index elementIndex,
+                               Real plasticYieldThreshold, Real plasticMaxThreshold, Real plasticCreep);
     void applyStiffnessSmall( Vector& f, const Vector& x, Index i=0, Index a=0,Index b=1,Index c=2,Index d=3, SReal fact=1.0  );
 
     ////////////// large displacements method
@@ -393,21 +395,24 @@ protected:
     void computeRotationLarge( Transformation &r, const Vector &p, const Index &a, const Index &b, const Index &c);
     void accumulateForceLarge( Vector& f, const Vector & p,
                                type::vector<VoigtTensor>& elasticStrains, type::vector<VoigtTensor>& plasticStrains,
-                               typename VecElement::const_iterator elementIt, Index elementIndex );
+                               typename VecElement::const_iterator elementIt, Index elementIndex,
+                               Real plasticYieldThreshold, Real plasticMaxThreshold, Real plasticCreep);
 
     ////////////// polar decomposition method
     type::vector<unsigned int> _rotationIdx;
     void initPolar(Index i, Index&a, Index&b, Index&c, Index&d);
     void accumulateForcePolar( Vector& f, const Vector & p,
                                type::vector<VoigtTensor>& elasticStrains, type::vector<VoigtTensor>& plasticStrains,
-                               typename VecElement::const_iterator elementIt, Index elementIndex );
+                               typename VecElement::const_iterator elementIt, Index elementIndex,
+                               Real plasticYieldThreshold, Real plasticMaxThreshold, Real plasticCreep);
 
     ////////////// svd decomposition method
     type::vector<Transformation>  _initialTransformation;
     void initSVD(Index i, Index&a, Index&b, Index&c, Index&d);
     void accumulateForceSVD( Vector& f, const Vector & p,
                              type::vector<VoigtTensor>& elasticStrains, type::vector<VoigtTensor>& plasticStrains,
-                             typename VecElement::const_iterator elementIt, Index elementIndex );
+                             typename VecElement::const_iterator elementIt, Index elementIndex,
+                             Real plasticYieldThreshold, Real plasticMaxThreshold, Real plasticCreep);
 
     void applyStiffnessCorotational( Vector& f, const Vector& x, Index i=0, Index a=0,Index b=1,Index c=2,Index d=3, SReal fact=1.0  );
 
