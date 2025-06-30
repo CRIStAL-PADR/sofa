@@ -20,13 +20,12 @@
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
 #include <sofa/component/visual/init.h>
+#include <sofa/component/visual/fwd.h>
 #include <sofa/core/ObjectFactory.h>
 #include <sofa/helper/system/PluginManager.h>
 
 namespace sofa::component::visual
 {
-
-extern void registerCamera(sofa::core::ObjectFactory* factory);
 extern void registerCylinderVisualModel(sofa::core::ObjectFactory* factory);
 extern void registerInteractiveCamera(sofa::core::ObjectFactory* factory);
 extern void registerLineAxis(sofa::core::ObjectFactory* factory);
@@ -63,7 +62,7 @@ const char* getModuleVersion()
 
 void registerObjects(sofa::core::ObjectFactory* factory)
 {
-    registerCamera(factory);
+    registerToFactory<sofa::component::visual::Camera>(factory);
     registerInteractiveCamera(factory);
     registerCylinderVisualModel(factory);
     registerLineAxis(factory);
