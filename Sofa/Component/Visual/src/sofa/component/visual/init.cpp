@@ -26,17 +26,8 @@
 
 namespace sofa::component::visual
 {
-extern void registerCylinderVisualModel(sofa::core::ObjectFactory* factory);
-extern void registerInteractiveCamera(sofa::core::ObjectFactory* factory);
-extern void registerLineAxis(sofa::core::ObjectFactory* factory);
-extern void registerRecordedCamera(sofa::core::ObjectFactory* factory);
+
 extern void registerTrailRenderer(sofa::core::ObjectFactory* factory);
-extern void registerVisual3DText(sofa::core::ObjectFactory* factory);
-extern void registerVisualBoundingBox(sofa::core::ObjectFactory* factory);
-extern void registerVisualGrid(sofa::core::ObjectFactory* factory);
-extern void registerVisualModelImpl(sofa::core::ObjectFactory* factory);
-extern void registerVisualStyle(sofa::core::ObjectFactory* factory);
-extern void registerVisualTransform(sofa::core::ObjectFactory* factory);
 
 extern "C" {
     SOFA_EXPORT_DYNAMIC_LIBRARY void initExternalModule();
@@ -62,18 +53,18 @@ const char* getModuleVersion()
 
 void registerObjects(sofa::core::ObjectFactory* factory)
 {
-    registerToFactory<sofa::component::visual::Camera>(factory);
-    registerInteractiveCamera(factory);
-    registerCylinderVisualModel(factory);
-    registerLineAxis(factory);
-    registerRecordedCamera(factory);
+    registerToFactory<Camera>(factory);
+    registerToFactory<InteractiveCamera>(factory);
+    registerToFactory<CylinderVisualModel>(factory);
+    registerToFactory<LineAxis>(factory);
+    registerToFactory<RecordedCamera>(factory);
     registerTrailRenderer(factory);
-    registerVisual3DText(factory);
-    registerVisualBoundingBox(factory);
-    registerVisualGrid(factory);
-    registerVisualModelImpl(factory);
-    registerVisualStyle(factory);
-    registerVisualTransform(factory);
+    registerToFactory<Visual3DText>(factory);
+    registerToFactory<VisualBoundingBox>(factory);
+    registerToFactory<VisualGrid>(factory);
+    registerToFactory<VisualModelImpl>(factory);
+    registerToFactory<VisualStyle>(factory);
+    registerToFactory<VisualTransform>(factory);
 }
 
 void init()

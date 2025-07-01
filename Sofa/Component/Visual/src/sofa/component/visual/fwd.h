@@ -26,4 +26,16 @@
 namespace sofa::component::visual
 {
     class Camera;
+    class CylinderVisualModel;
+    class InteractiveCamera;
+    class LineAxis;
+    class RecordedCamera;
+    class TrailRenderer;
+    class Visual3DText;
+    class VisualBoundingBox;
+    class VisualGrid;
+    class VisualModelImpl;
+    class VisualStyle;
+    class VisualTransform;
+
 } // namespace sofa::component::visual
