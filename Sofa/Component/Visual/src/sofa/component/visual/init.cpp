@@ -27,8 +27,6 @@
 namespace sofa::component::visual
 {
 
-extern void registerTrailRenderer(sofa::core::ObjectFactory* factory);
-
 extern "C" {
     SOFA_EXPORT_DYNAMIC_LIBRARY void initExternalModule();
     SOFA_EXPORT_DYNAMIC_LIBRARY const char* getModuleName();
@@ -58,7 +56,7 @@ void registerObjects(sofa::core::ObjectFactory* factory)
     registerToFactory<CylinderVisualModel>(factory);
     registerToFactory<LineAxis>(factory);
     registerToFactory<RecordedCamera>(factory);
-    registerTrailRenderer(factory);
+    registerToFactory<TrailRenderer>(factory);
     registerToFactory<Visual3DText>(factory);
     registerToFactory<VisualBoundingBox>(factory);
     registerToFactory<VisualGrid>(factory);

@@ -415,4 +415,8 @@ public:
 template<class T>
 void registerToFactory(sofa::core::ObjectFactory* factory);
 
+template<template<typename> class T>
+void registerToFactory(sofa::core::ObjectFactory* factory);
+
+
 } // namespace sofa::core
