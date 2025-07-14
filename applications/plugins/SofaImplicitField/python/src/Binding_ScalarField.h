@@ -1,6 +1,6 @@
 /******************************************************************************
-*                 SOFA, Simulation Open-Framework Architecture                *
-*                    (c) 2006 INRIA, USTL, UJF, CNRS, MGH                     *
+*                              SofaImplicitField plugin                       *
+*                  (c) 2021 CNRS, University of Lille, INRIA                  *
 *                                                                             *
 * This program is free software; you can redistribute it and/or modify it     *
 * under the terms of the GNU Lesser General Public License as published by    *
@@ -15,27 +15,15 @@
 * You should have received a copy of the GNU Lesser General Public License    *
 * along with this program. If not, see <http://www.gnu.org/licenses/>.        *
 *******************************************************************************
-* Authors: The SOFA Team and external contributors (see Authors.txt)          *
-*                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
+
 #pragma once
 
-#include <sofa/component/visual/config.h>
+#include <pybind11/pybind11.h>
 
-namespace sofa::component::visual
-{
-    class Camera;
-    class CylinderVisualModel;
-    class InteractiveCamera;
-    class LineAxis;
-    class RecordedCamera;
-    class TrailRenderer;
-    class Visual3DText;
-    class VisualBoundingBox;
-    class VisualGrid;
-    class VisualModelImpl;
-    class VisualStyle;
-    class VisualPointCloud;
-    class VisualTransform;
-} // namespace sofa::component::visual
+namespace sofaimplicitfield {
+
+void moduleAddScalarField(pybind11::module &m);
+
+}

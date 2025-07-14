@@ -19,63 +19,28 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
-#include <sofa/component/visual/init.h>
-#include <sofa/component/visual/fwd.h>
+#define SOFA_COMPONENT_VISUAL_VISUALPOINTCLOUD_CPP
+#include <sofa/component/visual/VisualPointCloud.inl>
+
+////////////////////////////////////////// Factory registration ////////////////////////////////////////
 #include <sofa/core/ObjectFactory.h>
-#include <sofa/helper/system/PluginManager.h>
+namespace sofa::core{
+using namespace sofa::component::visual;
 
-namespace sofa::component::visual
+template<>
+void registerToFactory<VisualPointCloud>(sofa::core::ObjectFactory* factory)
 {
-
-extern "C" {
-    SOFA_EXPORT_DYNAMIC_LIBRARY void initExternalModule();
-    SOFA_EXPORT_DYNAMIC_LIBRARY const char* getModuleName();
-    SOFA_EXPORT_DYNAMIC_LIBRARY const char* getModuleVersion();
-    SOFA_EXPORT_DYNAMIC_LIBRARY void registerObjects(sofa::core::ObjectFactory* factory);
+    factory->registerObjects(core::ObjectRegistrationData("Render a point cloud.")
+        .add<VisualPointCloud<defaulttype::Vec3Types>>(true)
+        .add<VisualPointCloud<defaulttype::Rigid3Types>>()
+    );
 }
 
-void initExternalModule()
-{
-    init();
 }
 
-const char* getModuleName()
-{
-    return MODULE_NAME;
+namespace sofa::component::visual{
+
+template class SOFA_COMPONENT_VISUAL_API VisualPointCloud<defaulttype::Vec3Types>;
+template class SOFA_COMPONENT_VISUAL_API VisualPointCloud<defaulttype::Rigid3Types>;
+
 }
-
-const char* getModuleVersion()
-{
-    return MODULE_VERSION;
-}
-
-void registerObjects(sofa::core::ObjectFactory* factory)
-{
-    registerToFactory<Camera>(factory);
-    registerToFactory<CylinderVisualModel>(factory);
-    registerToFactory<InteractiveCamera>(factory);
-    registerToFactory<LineAxis>(factory);
-    registerToFactory<RecordedCamera>(factory);
-    registerToFactory<TrailRenderer>(factory);
-    registerToFactory<Visual3DText>(factory);
-    registerToFactory<VisualBoundingBox>(factory);
-    registerToFactory<VisualGrid>(factory);
-    registerToFactory<VisualPointCloud>(factory);
-    registerToFactory<VisualModelImpl>(factory);
-    registerToFactory<VisualStyle>(factory);
-    registerToFactory<VisualTransform>(factory);
-}
-
-void init()
-{
-    static bool first = true;
-    if (first)
-    {
-        // make sure that this plugin is registered into the PluginManager
-        sofa::helper::system::PluginManager::getInstance().registerPlugin(MODULE_NAME);
-
-        first = false;
-    }
-}
-
-} // namespace sofa::component::visual
