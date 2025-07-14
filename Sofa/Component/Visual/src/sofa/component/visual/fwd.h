@@ -34,8 +34,8 @@ namespace sofa::component::visual
     class Visual3DText;
     class VisualBoundingBox;
     class VisualGrid;
+    class VisualPointCloud;
     class VisualModelImpl;
     class VisualStyle;
-    class VisualPointCloud;
     class VisualTransform;
 } // namespace sofa::component::visual
