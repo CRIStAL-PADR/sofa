@@ -20,6 +20,7 @@
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
 #include <sofa/component/mapping/nonlinear/init.h>
+#include <sofa/component/mapping/nonlinear/fwd.h>
 #include <sofa/core/ObjectFactory.h>
 #include <sofa/helper/system/PluginManager.h>
 
@@ -30,7 +31,6 @@ extern void registerAreaMapping(sofa::core::ObjectFactory* factory);
 extern void registerDistanceFromTargetMapping(sofa::core::ObjectFactory* factory);
 extern void registerDistanceMapping(sofa::core::ObjectFactory* factory);
 extern void registerDistanceMultiMapping(sofa::core::ObjectFactory* factory);
-extern void registerRigidMapping(sofa::core::ObjectFactory* factory);
 extern void registerSquareDistanceMapping(sofa::core::ObjectFactory* factory);
 extern void registerSquareMapping(sofa::core::ObjectFactory* factory);
 extern void registerVolumeMapping(sofa::core::ObjectFactory* factory);
@@ -63,7 +63,7 @@ void registerObjects(sofa::core::ObjectFactory* factory)
     registerDistanceFromTargetMapping(factory);
     registerDistanceMapping(factory);
     registerDistanceMultiMapping(factory);
-    registerRigidMapping(factory);
+    registerToFactory<RigidMapping>(factory);
     registerSquareDistanceMapping(factory);
     registerSquareMapping(factory);
     registerVolumeMapping(factory);

@@ -22,15 +22,22 @@
 #include <sofa/component/visual/VisualVectorField.inl>
 #include <sofa/core/ObjectFactory.h>
 
-namespace sofa::component::visual
+namespace sofa::core
 {
+using namespace sofa::component::visual;
 
-void registerVisualVectorField(sofa::core::ObjectFactory* factory)
+template<>
+void registerToFactory<VisualVectorField>(sofa::core::ObjectFactory* factory)
 {
     factory->registerObjects(core::ObjectRegistrationData("Render a vector field.")
         .add<VisualVectorField<defaulttype::Vec3Types>>(true)
     );
 }
+
+}
+
+namespace sofa::component::visual
+{
 
 template class SOFA_COMPONENT_VISUAL_API VisualVectorField<defaulttype::Vec3Types>;
 

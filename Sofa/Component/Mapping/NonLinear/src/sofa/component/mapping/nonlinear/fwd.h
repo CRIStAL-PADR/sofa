@@ -19,44 +19,11 @@
 *                                                                             *
 * Contact information: contact@sofa-framework.org                             *
 ******************************************************************************/
+#pragma once
 
-#include <sofa/component/visual/VisualBoundingBox.h>
-#include <sofa/core/visual/VisualParams.h>
-#include <sofa/core/ObjectFactory.h>
-#include <sofa/defaulttype/VecTypes.h>
+#include <sofa/component/mapping/nonlinear/config.h>
 
-////////////////////////////////////////// Factory registration ////////////////////////////////////////
-#include <sofa/core/ObjectFactory.h>
-namespace sofa::core{
-using namespace sofa::component::visual;
-
-template<>
-void registerToFactory<VisualBoundingBox>(sofa::core::ObjectFactory* factory)
+namespace sofa::component::mapping::nonlinear
 {
-    factory->registerObjects(core::ObjectRegistrationData("Display an Axis Aligned Bounding Box (AABB).")
-        .add<VisualBoundingBox>());
-}
-
-}
-
-
-namespace sofa::component::visual
-{
-
-VisualBoundingBox::VisualBoundingBox()
-    : d_color(initData(&d_color, sofa::type::RGBAColor::yellow(),  "color", "Color of the lines of the box."))
-    , d_thickness(initData(&d_thickness, 1.0f,  "thickness", "Thickness of the lines of the box."))
-{
-
-}
-
-void VisualBoundingBox::doDrawVisual(const core::visual::VisualParams* vparams)
-{
-    
-    const auto& bbox = f_bbox.getValue();
-    vparams->drawTool()->disableLighting();
-    vparams->drawTool()->setMaterial(d_color.getValue());
-    vparams->drawTool()->drawBoundingBox(bbox.minBBox(), bbox.maxBBox(), d_thickness.getValue());
-}
-
-} // namespace sofa::component::visual
+    template<class In, class Out> class RigidMapping;
+} // namespace sofa::component::mapping::nonlinear
