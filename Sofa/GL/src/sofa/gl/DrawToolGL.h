@@ -25,6 +25,7 @@
 
 #include <sofa/type/RGBAColor.h>
 #include <sofa/gl/BasicShapesGL.h>
+#include "Texture.h"
 
 namespace sofa::gl
 {
@@ -39,6 +40,10 @@ public:
     virtual ~DrawToolGL() override;
 
     void init() override;
+
+    void newRenderingFrame() override;
+    void waitEndOfPendingOperations() override;
+    void endRenderingFrame() override;
 
     void drawPoint(const type::Vec3 &p, const type::RGBAColor &c) override;
     //normal on a point is useless
@@ -148,6 +153,9 @@ public:
 
     void drawBoundingBox( const type::Vec3 &min, const type::Vec3 &max, float size = 1.0) override;
 
+    void drawRGBAImage(const std::string& id, const Vec3 &p, const int w, const int h, const int mode, const char* data) override;
+    void drawRGBAImage(const std::string& id, const Vec3 &p, const std::string& filename) override;
+
     void draw3DText(const type::Vec3 &p, float scale, const type::RGBAColor &color, const char* text) override;
 
     virtual void draw3DText_Indices(const std::vector<type::Vec3> &positions, float scale, const type::RGBAColor &color) override;
@@ -238,6 +246,12 @@ public:
 
     int getPolygonMode() {return mPolygonMode;}
     bool getWireFrameEnabled() {return mWireFrameEnabled;}
+
+private:
+    std::vector<std::tuple<const sofa::type::Vec3, Texture*>> images;
+    std::unordered_map<std::string, sofa::helper::io::Image*> image_cache;
+    std::unordered_map<std::string, Texture*> texture_cache;
+
 };
 
 }//namespace sofa::gl

@@ -169,6 +169,9 @@ public:
 
     virtual void drawBoundingBox( const Vec3 &min, const Vec3 &max, float size = 1.0 ) = 0;
 
+    virtual void drawRGBAImage(const std::string& id, const Vec3 &p, const int w, const int h, const int mode, const char* data) = 0;
+    virtual void drawRGBAImage(const std::string& id, const Vec3 &p, const std::string& filename) = 0;
+
     virtual void draw3DText(const Vec3 &p, float scale, const RGBAColor &color, const char* text) = 0;
     virtual void draw3DText_Indices(const std::vector<Vec3> &positions, float scale, const RGBAColor &color) = 0;
     /// @}
@@ -234,6 +237,10 @@ public:
 
     /// Compatibility wrapper functions
     using Vec4f = sofa::type::Vec4f;
+
+    virtual void newRenderingFrame() = 0;
+    virtual void waitEndOfPendingOperations() = 0;
+    virtual void endRenderingFrame() = 0;
 };
 
 struct SOFA_HELPER_API DrawTool::StateLifeCycle

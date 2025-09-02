@@ -30,6 +30,7 @@
 #include <sofa/gl/Cylinder.h>
 #include <sofa/gl/template.h>
 #include <sofa/gl/glText.inl>
+#include <sofa/helper/io/STBImage.h>
 #include <cmath>
 
 namespace sofa::gl
@@ -54,11 +55,74 @@ DrawToolGL::DrawToolGL()
 
 DrawToolGL::~DrawToolGL()
 {
+    for(auto& [name, image] : image_cache)
+    {
+        delete image;
+    }
+    image_cache.clear();
+
+    for(auto& [name, texture] : texture_cache)
+    {
+        delete texture;
+    }
+    texture_cache.clear();
 }
 
 void DrawToolGL::init()
 {
+}
 
+void DrawToolGL::newRenderingFrame()
+{
+    images.clear();
+}
+
+void DrawToolGL::waitEndOfPendingOperations()
+{
+    for(auto& image : images)
+    {
+        auto&[pos1, texture] = image;
+        glEnable(GL_TEXTURE_2D);
+
+        texture->bind();
+        texture->update();
+        auto w = texture->getImage()->getWidth();
+        auto h = texture->getImage()->getHeight();
+
+        SReal ratio = ((SReal)h) / w;
+
+        Vec3 pos2 = pos1 + Vec3(0.0,1.0*ratio,0.0);
+        Vec3 pos3 = pos1 + Vec3(1.0,1.0*ratio,0.0);
+        Vec3 pos4 = pos1 + Vec3(1.0,0.0,0.0);
+        Vec3 normal = Vec3(0.0,0.0,1.0);
+        {
+            glBegin(GL_QUADS);
+
+            glColor3f(1.0f, 1.0f, 1.0f);
+            glNormalT(normal);
+
+            glTexCoord2d(0.,1.);
+            glVertexNv<3>(pos1.ptr());
+
+            glTexCoord2d(0.,0.);
+            glVertexNv<3>(pos2.ptr());
+
+            glTexCoord2d(1.,0.);
+            glVertexNv<3>(pos3.ptr());
+
+            glTexCoord2d(1.,1.);
+            glVertexNv<3>(pos4.ptr());
+
+            glEnd();
+        }
+
+        texture->unbind();
+    }
+}
+
+void DrawToolGL::endRenderingFrame()
+{
+    waitEndOfPendingOperations();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1232,6 +1296,52 @@ void DrawToolGL::drawBoundingBox( const Vec3 &min, const Vec3 &max, float size)
     glLineWidth(1.0);
 }
 
+void DrawToolGL::drawRGBAImage(const std::string& id, const Vec3 &p, const int w, const int h, const int mode, const char* data)
+{
+    if(!image_cache.contains(id))
+    {
+        std::cout << "LOADING IMAGE FROM MEMORY " << id << std::endl;
+        auto image = new helper::io::Image();
+        image->loadFromMemory(w,h,mode,data);
+        image_cache[id] = image;
+    }
+
+    if(!texture_cache.contains(id))
+    {
+        std::cout << "LOADING TEXTURE FROM MEMORY " << id << std::endl;
+        auto texture = new gl::Texture(image_cache[id]);
+        texture->init();
+        texture_cache[id] = texture;
+    }
+
+    // Check that the image is
+    images.push_back({p, texture_cache[id]});
+}
+
+void DrawToolGL::drawRGBAImage(const std::string& id, const Vec3 &p, const std::string& filename)
+{
+    // Check in the image cache if the image exists
+    // If not load it
+    if(!image_cache.contains(filename))
+    {
+        std::cout << "LOADING IMAGE FROM FILENAME " << filename << std::endl;
+        auto image = new helper::io::STBImage();
+        image->load(filename);
+        image_cache[filename] = image;
+    }
+
+    if(!texture_cache.contains(filename))
+    {
+        std::cout << "LOADING TEXTURE FROM FILENAME" << filename << std::endl;
+        auto texture = new gl::Texture(image_cache[filename]);
+        texture->init();
+        texture_cache[filename] = texture;
+    }
+
+    // Check that the image is
+    images.push_back({p, texture_cache[filename]});
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void DrawToolGL::setPolygonMode(int _mode, bool _wireframe)
@@ -1453,6 +1563,7 @@ void DrawToolGL::restoreLastState()
 
 void DrawToolGL::readPixels(int x, int y, int w, int h, float* rgb, float* z)
 {
+    waitEndOfPendingOperations();
     if(rgb != nullptr && sizeof(*rgb) == 3 * sizeof(float) * w * h)
         glReadPixels(x, y, w, h, GL_RGB, GL_FLOAT, rgb);
 
