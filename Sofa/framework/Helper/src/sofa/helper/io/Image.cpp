@@ -149,6 +149,7 @@ Image::Image()
 
 Image::~Image()
 {
+    std::cout << "DESTRUCTOR ... " << std::endl;
     clear();
 }
 
@@ -344,7 +345,6 @@ void Image::init(unsigned width, unsigned height, unsigned bpp)
 {
     ChannelFormat channels;
     DataType type;
-
     // Guess the real format.
     switch (bpp)
     {
@@ -388,6 +388,13 @@ void Image::init(unsigned width, unsigned height, unsigned bpp)
     init(width, height, 1, 1, type, channels);
 }
 
+bool Image::loadFromMemory(unsigned width, unsigned height, unsigned bpp, const char* srcdata)
+{
+    init(width,height,bpp);
+    std::memcpy(data, srcdata, getImageSize());
+    m_bLoaded = true;
+    return m_bLoaded;
+}
 
 bool Image::load(std::string filename)
 {

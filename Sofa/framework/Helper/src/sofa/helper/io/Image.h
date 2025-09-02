@@ -134,6 +134,7 @@ public:
     }
 	bool isLoaded() const { return (m_bLoaded>0); }
 
+    virtual bool loadFromMemory(unsigned width, unsigned height, unsigned bpp, const char* data);
     virtual bool load(std::string filename);
     virtual bool save(std::string filename, int compression_level=-1);
 
