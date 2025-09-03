@@ -55,8 +55,9 @@ DrawToolGL::DrawToolGL()
 
 DrawToolGL::~DrawToolGL()
 {
-    for(auto& [name, image] : image_cache)
+    for(auto& [name, image_rev] : image_cache)
     {
+        auto& [image, revision] = image_rev;
         delete image;
     }
     image_cache.clear();
@@ -81,7 +82,7 @@ void DrawToolGL::waitEndOfPendingOperations()
 {
     for(auto& image : images)
     {
-        auto&[pos1, texture] = image;
+        auto& [pos1, texture, scale, revision] = image;
         glEnable(GL_TEXTURE_2D);
 
         texture->bind();
@@ -91,9 +92,9 @@ void DrawToolGL::waitEndOfPendingOperations()
 
         SReal ratio = ((SReal)h) / w;
 
-        Vec3 pos2 = pos1 + Vec3(0.0,1.0*ratio,0.0);
-        Vec3 pos3 = pos1 + Vec3(1.0,1.0*ratio,0.0);
-        Vec3 pos4 = pos1 + Vec3(1.0,0.0,0.0);
+        Vec3 pos2 = pos1 + Vec3(0.0,1.0*ratio*scale,0.0);
+        Vec3 pos3 = pos1 + Vec3(1.0*scale,1.0*ratio*scale,0.0);
+        Vec3 pos4 = pos1 + Vec3(1.0*scale,0.0,0.0);
         Vec3 normal = Vec3(0.0,0.0,1.0);
         {
             glBegin(GL_QUADS);
@@ -1296,29 +1297,42 @@ void DrawToolGL::drawBoundingBox( const Vec3 &min, const Vec3 &max, float size)
     glLineWidth(1.0);
 }
 
-void DrawToolGL::drawRGBAImage(const std::string& id, const Vec3 &p, const int w, const int h, const int mode, const char* data)
+void DrawToolGL::drawRGBAImage(const std::string& id,
+                               const int revision, const Vec3 &p, const double scale,
+                               const int w, const int h, const int mode, const char* data)
 {
     if(!image_cache.contains(id))
     {
         std::cout << "LOADING IMAGE FROM MEMORY " << id << std::endl;
         auto image = new helper::io::Image();
         image->loadFromMemory(w,h,mode,data);
-        image_cache[id] = image;
+        image_cache[id] = {image, revision};
     }
 
     if(!texture_cache.contains(id))
     {
         std::cout << "LOADING TEXTURE FROM MEMORY " << id << std::endl;
-        auto texture = new gl::Texture(image_cache[id]);
+        auto& [image, revision] = image_cache[id];
+        auto texture = new gl::Texture(image);
         texture->init();
         texture_cache[id] = texture;
     }
 
+    // search in the cache
+    auto& [image, irevision] = image_cache[id];
+    if( irevision != revision ){
+        std::cout << "UPDATE FROM MEMORY " << id << std::endl;
+        // we need to update both image and texture,
+        image->loadFromMemory(w,h,mode,data);
+        texture_cache[id]->update();
+        image_cache[id] = {image, revision};
+    }
+
     // Check that the image is
-    images.push_back({p, texture_cache[id]});
+    images.push_back({p, texture_cache[id], scale, revision});
 }
 
-void DrawToolGL::drawRGBAImage(const std::string& id, const Vec3 &p, const std::string& filename)
+void DrawToolGL::drawRGBAImage(const std::string& id, const int revision, const Vec3 &p, const double scale, const std::string& filename)
 {
     // Check in the image cache if the image exists
     // If not load it
@@ -1327,19 +1341,30 @@ void DrawToolGL::drawRGBAImage(const std::string& id, const Vec3 &p, const std::
         std::cout << "LOADING IMAGE FROM FILENAME " << filename << std::endl;
         auto image = new helper::io::STBImage();
         image->load(filename);
-        image_cache[filename] = image;
+        image_cache[filename] = {image, revision};
     }
 
     if(!texture_cache.contains(filename))
     {
+        auto& [image, revision] = image_cache[id];
         std::cout << "LOADING TEXTURE FROM FILENAME" << filename << std::endl;
-        auto texture = new gl::Texture(image_cache[filename]);
+        auto texture = new gl::Texture(image);
         texture->init();
         texture_cache[filename] = texture;
     }
 
-    // Check that the image is
-    images.push_back({p, texture_cache[filename]});
+    // search in the cache
+    auto& [image, irevision] = image_cache[id];
+    if( irevision != revision ){
+
+        // we need to update both image and texture,
+        image->load(filename);
+        texture_cache[id]->update();
+        image_cache[id] = {image, revision};
+    }
+
+    // Check the image
+    images.push_back({p, texture_cache[filename], scale, revision});
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -153,8 +153,8 @@ public:
 
     void drawBoundingBox( const type::Vec3 &min, const type::Vec3 &max, float size = 1.0) override;
 
-    void drawRGBAImage(const std::string& id, const Vec3 &p, const int w, const int h, const int mode, const char* data) override;
-    void drawRGBAImage(const std::string& id, const Vec3 &p, const std::string& filename) override;
+    void drawRGBAImage(const std::string& id, const int revision, const Vec3 &p, const double scale, const int w, const int h, const int mode, const char* data) override;
+    void drawRGBAImage(const std::string& id, const int revision, const Vec3 &p, const double scale, const std::string& filename) override;
 
     void draw3DText(const type::Vec3 &p, float scale, const type::RGBAColor &color, const char* text) override;
 
@@ -248,8 +248,8 @@ public:
     bool getWireFrameEnabled() {return mWireFrameEnabled;}
 
 private:
-    std::vector<std::tuple<const sofa::type::Vec3, Texture*>> images;
-    std::unordered_map<std::string, sofa::helper::io::Image*> image_cache;
+    std::vector<std::tuple<const sofa::type::Vec3, Texture*, double, int>> images;
+    std::unordered_map<std::string, std::tuple<sofa::helper::io::Image*,int>> image_cache;
     std::unordered_map<std::string, Texture*> texture_cache;
 
 };
