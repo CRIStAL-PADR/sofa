@@ -40,24 +40,37 @@ StopperLagrangianConstraint<DataTypes>::StopperLagrangianConstraint(MechanicalSt
 template<class DataTypes>
 void StopperLagrangianConstraint<DataTypes>::buildConstraintMatrix(const core::ConstraintParams* /*cParams*/, DataMatrixDeriv &c_d, unsigned int &cIndex, const DataVecCoord &/*x*/)
 {
+    auto x = this->getMState()->readPositions();
     auto c = sofa::helper::getWriteAccessor(c_d);
-
-    MatrixDerivRowIterator c_it = c->writeLine(cIndex++);
-    c_it.setCol(d_index.getValue(), Coord(1));
+    for(unsigned int i=0;i<x.size();i++)
+    {
+        auto cId = cIndex++;
+        MatrixDerivRowIterator c_it = c->writeLine(cId);
+        c_it.setCol(i, Coord(1));
+    }
 }
 
 template<class DataTypes>
-void StopperLagrangianConstraint<DataTypes>::getConstraintViolation(const core::ConstraintParams* /*cParams*/, linearalgebra::BaseVector *resV, const DataVecCoord &x, const DataVecDeriv &/*v*/)
+void StopperLagrangianConstraint<DataTypes>::getConstraintViolation(const core::ConstraintParams* /*cParams*/, linearalgebra::BaseVector *resV, const DataVecCoord& x_, const DataVecDeriv &/*v*/)
 {
     const auto constraintIndex = this->d_constraintIndex.getValue();
-    resV->set(constraintIndex, x.getValue()[d_index.getValue()][0]);
+
+    auto pos = this->getMState()->readPositions();
+    auto x = x_.getValue();
+    for(unsigned int i=0;i<x.size();i++)
+    {
+        resV->set(constraintIndex+i, x[i][0]);
+    }
 }
 
 template<class DataTypes>
 void StopperLagrangianConstraint<DataTypes>::getConstraintResolution(const core::ConstraintParams *, std::vector<core::behavior::ConstraintResolution*>& resTab, unsigned int& offset)
 {
-    for(int i=0; i<1; i++)
-        resTab[offset++] = new StopperLagrangianConstraintResolution1Dof(d_min.getValue(), d_max.getValue());
+    auto pos = this->getMState()->readPositions();
+    auto min = d_min.getValue();
+    auto max = d_max.getValue();
+    for(int i=0; i<pos.size(); i++)
+        resTab[offset++] = new StopperLagrangianConstraintResolution1Dof(min, max);
 }
 
 } //namespace sofa::component::constraint::lagrangian::model
