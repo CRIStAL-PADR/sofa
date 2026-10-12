@@ -109,21 +109,16 @@ protected:
         ids.push_back("Unilateral");
         return ids;
     }
-
     virtual type::vector<std::string> getStopperIdentifiers(){ return {}; }
-
-
 
 public:
     void buildConstraintMatrix(const core::ConstraintParams* cParams, DataMatrixDeriv &c_d, unsigned int &cIndex, const DataVecCoord &x) override;
     void getConstraintViolation(const core::ConstraintParams* cParams, linearalgebra::BaseVector *resV, const DataVecCoord &x, const DataVecDeriv &v) override;
-
     void getConstraintResolution(const core::ConstraintParams *, std::vector<core::behavior::ConstraintResolution*>& resTab, unsigned int& offset) override;
 };
 
 #if !defined(SOFA_COMPONENT_CONSTRAINTSET_STOPPERLAGRANGIANCONSTRAINT_CPP)
 extern template class SOFA_COMPONENT_CONSTRAINT_LAGRANGIAN_MODEL_API StopperLagrangianConstraint<defaulttype::Vec1Types>;
-
 #endif
 
 } //namespace sofa::component::constraint::lagrangian::model

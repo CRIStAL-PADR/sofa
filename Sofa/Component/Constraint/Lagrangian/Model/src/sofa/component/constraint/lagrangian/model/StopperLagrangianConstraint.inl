@@ -59,8 +59,6 @@ void StopperLagrangianConstraint<DataTypes>::init()
         }
     }
 
-
-
     d_componentState = sofa::core::objectmodel::ComponentState::Valid;
 }
 
